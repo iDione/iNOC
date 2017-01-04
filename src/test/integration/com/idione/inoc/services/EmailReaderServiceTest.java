@@ -1,4 +1,4 @@
-package com.idione.inoc.email.services;
+package com.idione.inoc.services;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -7,8 +7,9 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.idione.inoc.filter.services.FilterMatchingService;
 import com.idione.inoc.models.Email;
+import com.idione.inoc.services.EmailReaderService;
+import com.idione.inoc.services.FilterMatchingService;
 import com.idione.inoc.test.AbstractIntegrationTest;
 
 import mockit.Expectations;

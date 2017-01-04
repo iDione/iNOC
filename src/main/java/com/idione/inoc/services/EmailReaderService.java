@@ -1,8 +1,7 @@
-package com.idione.inoc.email.services;
+package com.idione.inoc.services;
 
 import org.springframework.stereotype.Service;
 
-import com.idione.inoc.filter.services.FilterMatchingService;
 import com.idione.inoc.models.Email;
 
 @Service

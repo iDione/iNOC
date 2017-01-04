@@ -1,4 +1,4 @@
-package com.idione.inoc.issue.services;
+package com.idione.inoc.services;
 
 import java.util.List;
 
@@ -8,7 +8,6 @@ import com.idione.inoc.models.Issue;
 import com.idione.inoc.models.IssuePocUser;
 import com.idione.inoc.models.MailingGroup;
 import com.idione.inoc.models.PocUser;
-import com.idione.inoc.telephone.services.TelephoneService;
 
 @Service
 public class IssueAssignmentService {

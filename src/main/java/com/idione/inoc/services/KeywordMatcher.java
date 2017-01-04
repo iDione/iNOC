@@ -1,4 +1,4 @@
-package com.idione.inoc.filter.services;
+package com.idione.inoc.services;
 
 import org.javalite.activejdbc.LazyList;
 import org.springframework.stereotype.Service;

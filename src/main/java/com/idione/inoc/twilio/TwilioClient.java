@@ -6,7 +6,7 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.stereotype.Service;
 
 import com.idione.inoc.models.TelephoneCall;
-import com.idione.inoc.telephone.services.TelephoneService;
+import com.idione.inoc.services.TelephoneService;
 import com.twilio.http.TwilioRestClient;
 import com.twilio.rest.api.v2010.account.Call;
 import com.twilio.rest.api.v2010.account.CallCreator;

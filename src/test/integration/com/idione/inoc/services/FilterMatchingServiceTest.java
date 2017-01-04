@@ -1,4 +1,4 @@
-package com.idione.inoc.filter.services;
+package com.idione.inoc.services;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -8,11 +8,13 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.idione.inoc.issue.services.IssueAssignmentService;
 import com.idione.inoc.models.Client;
 import com.idione.inoc.models.Email;
 import com.idione.inoc.models.Filter;
 import com.idione.inoc.models.Issue;
+import com.idione.inoc.services.FilterMatchingService;
+import com.idione.inoc.services.IssueAssignmentService;
+import com.idione.inoc.services.KeywordMatcher;
 import com.idione.inoc.test.AbstractIntegrationTest;
 
 import mockit.Expectations;

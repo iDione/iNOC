@@ -1,8 +1,7 @@
-package com.idione.inoc.filter.services;
+package com.idione.inoc.services;
 
 import org.springframework.stereotype.Service;
 
-import com.idione.inoc.issue.services.IssueAssignmentService;
 import com.idione.inoc.models.Filter;
 import com.idione.inoc.models.Issue;
 

@@ -1,4 +1,4 @@
-package com.idione.inoc.issue.services;
+package com.idione.inoc.services;
 
 import org.springframework.stereotype.Service;
 

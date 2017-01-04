@@ -1,4 +1,4 @@
-package com.idione.inoc.telephone.services;
+package com.idione.inoc.services;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -16,6 +16,7 @@ import com.idione.inoc.models.IssuePocUser;
 import com.idione.inoc.models.MailingGroup;
 import com.idione.inoc.models.PocUser;
 import com.idione.inoc.models.TelephoneCall;
+import com.idione.inoc.services.TelephoneService;
 import com.idione.inoc.test.AbstractIntegrationTest;
 import com.idione.inoc.twilio.TwilioClient;
 
