@@ -19,36 +19,36 @@ import mockit.integration.junit4.JMockit;
 @RunWith(JMockit.class)
 public class EmailReaderServiceTest extends AbstractIntegrationTest {
 
-	EmailReaderService emailReaderService;
+    EmailReaderService emailReaderService;
 
-	private int clientId = 2016;
-	private String emailText = "This is an email text.";
-	private String emailId = "6ad7248DFG12345";
+    private int clientId = 2016;
+    private String emailText = "This is an email text.";
+    private String emailId = "6ad7248DFG12345";
 
-	@Test
-	public void processEmailCreatesEmailRecord(@Mocked FilterMatchingService filterMatchingService) throws Exception {
-		int beforeEmailCount = Email.findAll().size();
-		new Expectations() {
-			{
-				filterMatchingService.matchFiltersForEmail(anyInt, anyInt, anyString);
-				result = true;
-			}
-		};
-		emailReaderService = new EmailReaderService(filterMatchingService);
-		emailReaderService.processEmail(clientId, emailText, emailId);
-		int afterEmailCount = Email.findAll().size();
-		assertThat(afterEmailCount, is(equalTo(beforeEmailCount + 1)));
-	}
+    @Test
+    public void processEmailCreatesEmailRecord(@Mocked FilterMatchingService filterMatchingService) throws Exception {
+        int beforeEmailCount = Email.findAll().size();
+        new Expectations() {
+            {
+                filterMatchingService.matchFiltersForEmail(anyInt, anyInt, anyString);
+                result = true;
+            }
+        };
+        emailReaderService = new EmailReaderService(filterMatchingService);
+        emailReaderService.processEmail(clientId, emailText, emailId);
+        int afterEmailCount = Email.findAll().size();
+        assertThat(afterEmailCount, is(equalTo(beforeEmailCount + 1)));
+    }
 
-	@Test
-	public void processEmailCallsTheFilterMatchingService(@Mocked FilterMatchingService filterMatchingService) throws Exception {
-		emailReaderService = new EmailReaderService(filterMatchingService);
-		emailReaderService.processEmail(clientId, emailText, emailId);
-		int lastEmailId = Email.where("external_email_id = ?", emailId).orderBy("id desc").get(0).getInteger("id");
-		new Verifications() {
-			{
-				filterMatchingService.matchFiltersForEmail(lastEmailId, clientId, emailText);
-			}
-		};
-	}
+    @Test
+    public void processEmailCallsTheFilterMatchingService(@Mocked FilterMatchingService filterMatchingService) throws Exception {
+        emailReaderService = new EmailReaderService(filterMatchingService);
+        emailReaderService.processEmail(clientId, emailText, emailId);
+        int lastEmailId = Email.where("external_email_id = ?", emailId).orderBy("id desc").get(0).getInteger("id");
+        new Verifications() {
+            {
+                filterMatchingService.matchFiltersForEmail(lastEmailId, clientId, emailText);
+            }
+        };
+    }
 }
