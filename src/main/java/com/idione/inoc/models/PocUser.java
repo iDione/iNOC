@@ -5,9 +5,7 @@ import org.javalite.activejdbc.annotations.BelongsTo;
 import org.javalite.activejdbc.annotations.BelongsToParents;
 import org.javalite.activejdbc.annotations.Table;
 
-@BelongsToParents({
-    @BelongsTo(parent = Client.class, foreignKeyName = "client_id")
-})
+@BelongsToParents({ @BelongsTo(parent = Client.class, foreignKeyName = "client_id") })
 
 @Table("poc_users")
 public class PocUser extends Model {
