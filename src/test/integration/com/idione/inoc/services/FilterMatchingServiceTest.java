@@ -12,6 +12,7 @@ import com.idione.inoc.models.Client;
 import com.idione.inoc.models.Email;
 import com.idione.inoc.models.Filter;
 import com.idione.inoc.models.Issue;
+import com.idione.inoc.models.MailingGroup;
 import com.idione.inoc.services.FilterMatchingService;
 import com.idione.inoc.services.IssueAssignmentService;
 import com.idione.inoc.services.KeywordMatcher;
@@ -29,13 +30,15 @@ public class FilterMatchingServiceTest extends AbstractIntegrationTest {
     Client client;
     Email email;
     Filter filter;
+    MailingGroup mailingGroup;
     private String emailText = "This is an email text.";
 
     @Before
     public void createFilter() {
         client = Client.createIt("name", "Mickey Mouse Club House");
         email = Email.createIt("client_id", client.getInteger("id"));
-        filter = Filter.createIt("name", "A Filter", "client_id", client.getInteger("id"), "time_interval", 5, "retries", 1, "mailing_group_id", 1);
+        mailingGroup = MailingGroup.createIt("client_id", client.getInteger("id"), "name", "A Mailing Group");
+        filter = Filter.createIt("name", "A Filter", "client_id", client.getInteger("id"), "time_interval", 5, "retries", 1, "mailing_group_id", mailingGroup.getInteger("id"));
     }
 
     @Test

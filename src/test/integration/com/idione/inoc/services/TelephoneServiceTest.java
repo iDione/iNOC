@@ -95,29 +95,6 @@ public class TelephoneServiceTest extends AbstractIntegrationTest {
         };
     }
 
-    // @Test
-    // public void
-    // itCallsTheUserUntilRetriesLimitReachedEvenForCallCompletedIfUserDoesntRespond(@Mocked
-    // TwilioClient twilioClient) {
-    // TelephoneCall telephoneCall = new TelephoneCall();
-    // telephoneCall.set("call_status", TelephoneService.COMPLETED_STATUS,
-    // "issue_poc_user_id", issuePocUser.getInteger("id"));
-    // telephoneCall.saveIt();
-    // new Expectations() {{
-    // twilioClient.makeIssueAcceptanceCall(anyInt, anyString); result =
-    // telephoneCall;
-    // }};
-    //
-    // telephoneService = new TelephoneService(twilioClient);
-    // telephoneService.makeIssueAcceptanceCall(issuePocUser.getInteger("id"),
-    // telephoneNumber, retries);
-    //
-    // new Verifications() {{
-    // twilioClient.makeIssueAcceptanceCall(issuePocUser.getInteger("id"),
-    // telephoneNumber); times = 3;
-    // }};
-    // }
-
     @Test
     public void itStopsCallingIfUserResponds(@Mocked TwilioClient twilioClient) {
         TelephoneCall telephoneCall = new TelephoneCall();

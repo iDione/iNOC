@@ -104,7 +104,7 @@ CREATE TABLE issue_poc_users (
 
 CREATE TABLE telephone_calls (
   id                 SERIAL PRIMARY KEY,
-  issue_poc_user_id  INT NOT NULL,
+  issue_poc_user_id  INT,
   external_call_id   VARCHAR(32),
   call_status        VARCHAR(16),
   user_response      INT DEFAULT 0,

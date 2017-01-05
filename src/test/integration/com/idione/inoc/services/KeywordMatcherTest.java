@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import com.idione.inoc.models.Client;
 import com.idione.inoc.models.Filter;
 import com.idione.inoc.models.FilterKeyword;
+import com.idione.inoc.models.MailingGroup;
 import com.idione.inoc.test.AbstractIntegrationTest;
 
 import mockit.integration.junit4.JMockit;
@@ -20,6 +21,7 @@ public class KeywordMatcherTest extends AbstractIntegrationTest {
 
     KeywordMatcher keywordMatcher;
     Client client;
+    MailingGroup mailingGroup;
     String emailText = "The quick brown fox jumps over the lazy dog";
     Filter filter1;
     FilterKeyword filter1Keyword1;
@@ -28,7 +30,8 @@ public class KeywordMatcherTest extends AbstractIntegrationTest {
     @Before
     public void createFilter() {
         client = Client.createIt("name", "Mickey Mouse Club House");
-        filter1 = Filter.createIt("name", "Fun Filter", "client_id", client.getInteger("id"), "time_interval", 5, "retries", 1, "mailing_group_id", 1);
+        mailingGroup = MailingGroup.createIt("client_id", client.getInteger("id"), "name", "A Mailing Group");
+        filter1 = Filter.createIt("name", "Fun Filter", "client_id", client.getInteger("id"), "time_interval", 5, "retries", 1, "mailing_group_id", mailingGroup.getInteger("id"));
         filter1Keyword1 = FilterKeyword.createIt("filter_id", filter1.getInteger("id"), "keyword", "goofy");
         filter1Keyword2 = FilterKeyword.createIt("filter_id", filter1.getInteger("id"), "keyword", "lazy");
     }
@@ -60,7 +63,7 @@ public class KeywordMatcherTest extends AbstractIntegrationTest {
     public void itReturnsTheNextFilterThatMatchesTheEmailForAClient() throws Exception {
         keywordMatcher = new KeywordMatcher();
         filter1Keyword2.set("keyword", "pluto").saveIt();
-        Filter filter2 = Filter.createIt("name", "Fun Filter", "client_id", client.getInteger("id"), "time_interval", 5, "retries", 1, "mailing_group_id", 1);
+        Filter filter2 = Filter.createIt("name", "Fun Filter", "client_id", client.getInteger("id"), "time_interval", 5, "retries", 1, "mailing_group_id", mailingGroup.getInteger("id"));
         FilterKeyword.createIt("filter_id", filter2.getInteger("id"), "keyword", "dog");
         
         Filter machingFilter = keywordMatcher.emailMatchesFilter(emailText, client.getInteger("id"));

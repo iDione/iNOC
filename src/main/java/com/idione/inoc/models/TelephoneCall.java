@@ -22,13 +22,17 @@ public class TelephoneCall extends Model {
                     telephoneCall.set("issue_poc_user_id", issuePocUserId);
                 }
             } else {
-                if (telephoneCall.getInteger("issue_poc_user_id") == 0) {
+                if (telephoneCall.getInteger("issue_poc_user_id") == null) {
                     telephoneCall.set("issue_poc_user_id", issuePocUserId);
                 }
             }
             telephoneCall.saveIt();
         } else {
-            telephoneCall = TelephoneCall.createIt("issue_poc_user_id", issuePocUserId, "external_call_id", externalCallId, "call_status", callStatus);
+            Integer cleanedUpIssuePocUserId = null;
+            if(issuePocUserId > 0){
+                cleanedUpIssuePocUserId = new Integer(issuePocUserId);
+            }
+            telephoneCall = TelephoneCall.createIt("issue_poc_user_id", cleanedUpIssuePocUserId, "external_call_id", externalCallId, "call_status", callStatus);
         }
         return telephoneCall;
     }
