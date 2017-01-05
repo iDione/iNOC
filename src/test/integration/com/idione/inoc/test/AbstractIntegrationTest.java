@@ -15,6 +15,8 @@ public abstract class AbstractIntegrationTest extends AbstractTransactionalJUnit
 
     @After
     public void closeConnection() {
+        //TODO figure out why data is not deleting
+        Base.exec("delete from telephone_calls; delete from issue_poc_users; delete from issues; delete from filter_poc_users; delete from filter_keywords; delete from filters; delete from poc_users; delete from mailing_group_poc_users; delete from mailing_groups; delete from clients; delete from emails;");
         Base.close();
     }
 }
