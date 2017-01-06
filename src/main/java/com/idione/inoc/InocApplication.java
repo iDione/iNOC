@@ -24,13 +24,4 @@ public class InocApplication {
         return "ok";
     }
 
-    @RequestMapping(value = "/receiveTwilioResponse", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
-    public String callTwilioCustom(@RequestParam final String Digits, @RequestParam final String CallSid) {
-        TelephoneCall telephoneCall = TelephoneCall.findFirst("external_call_id = ?", CallSid);
-        telephoneCall.set("user_response", Integer.parseInt(Digits));
-        telephoneCall.saveIt();
-        // update issue poc user
-        return "ok";
-    }
 }

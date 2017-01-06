@@ -36,4 +36,8 @@ public class TelephoneCall extends Model {
         }
         return telephoneCall;
     }
+
+    public IssuePocUser getIssuePocUser(){
+        return this.parent(IssuePocUser.class);
+    }
 }
