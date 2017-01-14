@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create POC User</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+  <body>
+    <div th:include="common/header::header"></div>
+    <p>Add POC User:</p>
+    <form action="#" th:action="@{/pocUsers/save}" th:object="${pocUserForm}" method="post">
+      <div th:include="pocUsers/form::form"></div>
+      <input type="submit" value="Create POC User"/>
+    </form>
+    <div th:include="common/footer::footer"></div>
+  </body>
+</html>

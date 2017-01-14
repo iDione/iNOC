@@ -1,9 +1,5 @@
 package com.idione.inoc.controllers;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +9,7 @@ import org.springframework.ui.Model;
 
 import com.idione.inoc.forms.ClientForm;
 import com.idione.inoc.models.Client;
-import com.idione.inoc.models.TelephoneCall;
 import com.idione.inoc.services.ClientService;
-import com.idione.inoc.services.IssueResponseService;
-import com.idione.inoc.services.TelephoneService;
 import com.idione.inoc.test.AbstractIntegrationTest;
 
 import mockit.Expectations;

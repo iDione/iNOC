@@ -19,7 +19,7 @@ import com.idione.inoc.services.ClientService;
 
 @RequestMapping(value = "/clients")
 @Controller
-public class ClientsController {
+public class ClientsController extends ApplicationController {
 
     private ClientService clientService;
 

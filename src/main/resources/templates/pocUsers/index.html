@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Users</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<div th:include="common/header::header"></div>
+	<a th:href="@{pocUsers/new.html}">Add User</a>
+	<div th:if="${not #lists.isEmpty(pocUsers)}">
+		<p>User List</p>
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Edit</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email Address</th>
+					<th>Phone Number</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="pocUser: ${pocUsers}">
+					<td><a th:href="@{'/pocUsers/edit/' + ${pocUser.id}}">Edit</a></td>
+					<td th:text="${{pocUser.get('first_name')}}" />
+					<td th:text="${{pocUser.get('last_name')}}" />
+					<td th:text="${{pocUser.get('email_address')}}" />
+					<td th:text="${{pocUser.get('phone_number')}}" />
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div th:include="common/footer::footer"></div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+<div th:fragment="form">
+<fieldset>
+  <input th:hidden="true" th:field="*{clientId}" />
+  First Name: <input type="text" th:field="*{firstName}" />
+  Last Name: <input type="text" th:field="*{lastName}" />
+  Email: <input type="text" th:field="*{emailAddress}" />
+  Phone: <input type="text" th:field="*{phoneNumber}" />
+</fieldset>
+</div>

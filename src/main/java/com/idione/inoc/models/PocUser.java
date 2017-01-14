@@ -10,4 +10,8 @@ import org.javalite.activejdbc.annotations.Table;
 @Table("poc_users")
 public class PocUser extends Model {
 
+    public int getClientId() {
+        return getInteger("client_id");
+    }
+
 }

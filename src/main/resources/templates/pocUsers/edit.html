@@ -1,16 +1,16 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Edit Client</title>
+    <title>Edit Poc User</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
   <body>
     <div th:include="common/header::header"></div>
-    <p>Edit Client:</p>
-    <form action="#" th:action="@{/clients/save}" th:object="${clientForm}" method="post">
+    <p>Edit POC User:</p>
+    <form action="#" th:action="@{/pocUsers/save}" th:object="${pocUserForm}" method="post">
       <input th:hidden="true" th:field="*{id}" />
-      <div th:include="clients/form::form"></div>
-      <input type="submit" value="Update Client"/>
+      <div th:include="pocUsers/form::form"></div>
+      <input type="submit" value="Update POC User"/>
     </form>
     <div th:include="common/footer::footer"></div>
   </body>
