@@ -14,4 +14,8 @@ public class PocUser extends Model {
         return getInteger("client_id");
     }
 
+    public String getFullName() {
+        return getString("first_name") + " " + getString("last_name");
+    }
+
 }

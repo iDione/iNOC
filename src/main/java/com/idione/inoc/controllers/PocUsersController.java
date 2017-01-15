@@ -37,7 +37,7 @@ public class PocUsersController extends ApplicationController {
     
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public String newClient(Model model) {
+    public String newPocUser(Model model) {
         model.addAttribute("pocUserForm", new PocUserForm(currentClientId()));
         return "pocUsers/new";
     }

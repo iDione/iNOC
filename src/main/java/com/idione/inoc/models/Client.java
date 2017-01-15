@@ -6,4 +6,7 @@ import org.javalite.activejdbc.annotations.Table;
 @Table("clients")
 public class Client extends Model {
 
+    public int getClientId() {
+        return getInteger("id");
+    }
 }

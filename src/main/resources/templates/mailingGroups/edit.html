@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Mailing Group</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+  <body>
+    <div th:include="common/header::header"></div>
+    <p>Edit Mailing Group:</p>
+    <form action="#" th:action="@{/mailingGroups/save}" th:object="${mailingGroupForm}" method="post">
+      <input th:hidden="true" th:field="*{id}" />
+      <div th:include="mailingGroups/form::form"></div>
+      <input type="submit" value="Update Mailing Group"/>
+    </form>
+    <div th:include="common/footer::footer"></div>
+  </body>
+</html>

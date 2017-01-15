@@ -6,7 +6,7 @@
 </head>
 <body>
 	<div th:include="common/header::header"></div>
-	<a th:href="@{pocUsers/new.html}">Add User</a>
+	<a th:href="@{/pocUsers/new.html}">Add User</a>
 	<div th:if="${not #lists.isEmpty(pocUsers)}">
 		<p>User List</p>
 		<table border="1">

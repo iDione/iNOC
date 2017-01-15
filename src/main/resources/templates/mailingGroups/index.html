@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Users</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<div th:include="common/header::header"></div>
+	<a th:href="@{/mailingGroups/new.html}">Add Mailing Group</a>
+	<div th:if="${not #lists.isEmpty(mailingGroups)}">
+		<p>Mailing Groups</p>
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Edit</th>
+					<th>Name</th>
+					<th>No. Of Users</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="mailingGroup: ${mailingGroups}">
+					<td><a th:href="@{'/mailingGroups/edit/' + ${mailingGroup.id}}">Edit</a></td>
+					<td th:text="${{mailingGroup.get('name')}}" />
+					<td th:text="${{mailingGroup.getUsers().size()}}" />
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div th:include="common/footer::footer"></div>
+</body>
+</html>

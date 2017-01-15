@@ -1,0 +1,13 @@
+<div th:fragment="form">
+<fieldset>
+  <input th:hidden="true" th:field="*{clientId}" />
+  Name: <input type="text" th:field="*{name}" />
+  Poc Users: <select id="pocUserIds" th:name="pocUserIds" size="5" multiple="multiple">
+			    <option th:each="pocUser : ${allPocUsers}"
+						th:value="${{pocUser.getInteger('id')}}"
+						th:text="${pocUser.fullName}"
+						th:selected="${mailingGroupForm.pocUserIds.contains(pocUser.getInteger('id'))}">
+			    </option>
+			</select>
+</fieldset>
+</div>

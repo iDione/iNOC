@@ -50,7 +50,7 @@ public class PocUserServiceTest extends AbstractIntegrationTest {
     
     @Test
     public void saveCreatesANewPocUser() {
-        PocUserForm pocUserForm = new PocUserForm(pocUser1);
+        PocUserForm pocUserForm = new PocUserForm(client1.getClientId());
         pocUserForm.setFirstName("Steven");
         pocUserForm.setLastName("Rogers");
         pocUserForm.setEmailAddress("captainamerica@marvel.tst");
@@ -62,6 +62,7 @@ public class PocUserServiceTest extends AbstractIntegrationTest {
         assertThat(savedForm.getLastName(), is(equalTo(pocUserForm.getLastName())));
         assertThat(savedForm.getEmailAddress(), is(equalTo(pocUserForm.getEmailAddress())));
         assertThat(savedForm.getPhoneNumber(), is(equalTo(pocUserForm.getPhoneNumber())));
+        assertThat(savedForm.getClientId(), is(equalTo(pocUserForm.getClientId())));
     }
     
     @Test
