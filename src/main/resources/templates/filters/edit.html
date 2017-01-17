@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Filter</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+  <body>
+    <div th:include="common/header::header"></div>
+    <p>Edit Filter:</p>
+    <form action="#" th:action="@{/filters/save}" th:object="${filterForm}" method="post">
+      <input th:hidden="true" th:field="*{id}" />
+      <div th:include="filters/form::form"></div>
+      <input type="submit" value="Update Filter"/>
+    </form>
+    <div th:include="common/footer::footer"></div>
+  </body>
+</html>

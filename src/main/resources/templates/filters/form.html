@@ -1,0 +1,22 @@
+<div th:fragment="form">
+<fieldset>
+  <input th:hidden="true" th:field="*{clientId}" />
+  Name: <input type="text" th:field="*{name}" />
+  Retries: <input type="text" th:field="*{retries}" />
+  Time Interval: <input type="text" th:field="*{timeInterval}" />
+  Mailing Group: <select id="mailingGroupId" th:name="mailingGroupId" size="1">
+			    <option th:each="mailingGroup : ${allMailingGroups}"
+						th:value="${{mailingGroup.getInteger('id')}}"
+						th:text="${mailingGroup.getString('name')}"
+						th:selected="${filterForm.mailingGroupId == mailingGroup.getInteger('id')}">
+			    </option>
+			</select>
+  Poc Users: <select id="pocUserIds" th:name="pocUserIds" size="5" multiple="multiple">
+			    <option th:each="pocUser : ${allPocUsers}"
+						th:value="${{pocUser.getInteger('id')}}"
+						th:text="${pocUser.fullName}"
+						th:selected="${filterForm.pocUserIds.contains(pocUser.getInteger('id'))}">
+			    </option>
+			</select>
+</fieldset>
+</div>

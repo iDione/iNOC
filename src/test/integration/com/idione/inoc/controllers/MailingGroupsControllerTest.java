@@ -12,6 +12,7 @@ import com.idione.inoc.forms.MailingGroupForm;
 import com.idione.inoc.models.MailingGroup;
 import com.idione.inoc.models.PocUser;
 import com.idione.inoc.services.MailingGroupService;
+import com.idione.inoc.services.PocUserService;
 import com.idione.inoc.test.AbstractIntegrationTest;
 
 import mockit.Expectations;
@@ -20,7 +21,7 @@ import mockit.Verifications;
 import mockit.integration.junit4.JMockit;
 
 @RunWith(JMockit.class)
-public class MailingGroupControllerTest extends AbstractIntegrationTest {
+public class MailingGroupsControllerTest extends AbstractIntegrationTest {
 
     MailingGroupsController controller;
     final List<MailingGroup> mailingGroups = new ArrayList<MailingGroup>();
@@ -62,14 +63,17 @@ public class MailingGroupControllerTest extends AbstractIntegrationTest {
     }
     
     @Test
-    public void editMailingGroupCallsTheMailingGroupServiceForMailingGroup(@Mocked Model model, @Mocked MailingGroupService mailingGroupService) {
+    public void editMailingGroupCallsTheMailingGroupServiceForMailingGroup(@Mocked Model model, @Mocked MailingGroupService mailingGroupService, @Mocked PocUserService pocUserService) {
         controller.setMailingGroupService(mailingGroupService);
+        controller.setPocUserService(pocUserService);
         MailingGroupForm mailingGroupForm = new MailingGroupForm();
         
         new Expectations() {
             {
                 mailingGroupService.getMailingGroup(mailingGroupId);
                 result = mailingGroupForm;
+                pocUserService.getPocUsers(currentPosUser.getClientId());
+                result = new ArrayList<PocUser>();
             }
         };
         

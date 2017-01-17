@@ -19,7 +19,7 @@ public class IssueAssignmentService {
     }
 
     public boolean assignIssueToPOCUser(Issue issue) {
-        List<PocUser> pocUsers = issue.filter().getAssignableUsers();
+        List<PocUser> pocUsers = issue.filter().getUsers();
         for (PocUser pocUser : pocUsers) {
             IssuePocUser issuePocUser = IssuePocUser.createIt("issue_id", issue.getId(), "poc_user_id", pocUser.getId());
             String userResponse = telephoneService.makeIssueAcceptanceCall(issuePocUser.getInteger("id"), pocUser.getString("phone_number"), issue.filter().getInteger("retries"));

@@ -12,8 +12,12 @@ import org.javalite.activejdbc.annotations.Table;
 
 @Table("filters")
 public class Filter extends Model {
-    public List<PocUser> getAssignableUsers() {
+    public List<PocUser> getUsers() {
         return PocUser.findBySQL("SELECT pu.* FROM filter_poc_users fpu INNER JOIN poc_users pu ON fpu.poc_user_id = pu.id WHERE fpu.filter_id = ? ORDER BY pu.id ASC", getId());
+    }
+
+    public List<FilterKeyword> getKeywords() {
+        return getAll(FilterKeyword.class);
     }
 
     public MailingGroup getMailingGroup() {

@@ -33,7 +33,7 @@ public class MailingGroupService {
             return mailingGroup;
         } else {
             MailingGroup mailingGroup = MailingGroup.createIt("client_id", mailingGroupForm.getClientId(), "name", mailingGroupForm.getName());
-            createPocUsers(mailingGroupForm.getId(), mailingGroupForm.getPocUserIds());
+            createPocUsers(mailingGroup.getInteger("id"), mailingGroupForm.getPocUserIds());
             return mailingGroup;
         }
     }

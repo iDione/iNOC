@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Filters</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<div th:include="common/header::header"></div>
+	<a th:href="@{/filters/new.html}">Add Filter</a>
+	<div th:if="${not #lists.isEmpty(filters)}">
+		<p>Filters</p>
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Edit</th>
+					<th>Name</th>
+					<th>Retries</th>
+					<th>Time Interval</th>
+					<th>No. Of Users</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="filter: ${filters}">
+					<td><a th:href="@{'/filters/edit/' + ${filter.id}}">Edit</a></td>
+					<td th:text="${{filter.get('name')}}" />
+					<td th:text="${{filter.get('retries')}}" />
+					<td th:text="${{filter.get('time_interval')}}" />
+					<td th:text="${{filter.getUsers().size()}}" />
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div th:include="common/footer::footer"></div>
+</body>
+</html>
