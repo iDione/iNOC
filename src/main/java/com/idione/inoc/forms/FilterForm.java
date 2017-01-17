@@ -102,5 +102,4 @@ public class FilterForm {
     public void setKeywords(List<String> keywords) {
         this.keywords = keywords;
     }
-
 }

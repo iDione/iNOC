@@ -13,9 +13,6 @@ import com.idione.inoc.models.Email;
 import com.idione.inoc.models.Filter;
 import com.idione.inoc.models.Issue;
 import com.idione.inoc.models.MailingGroup;
-import com.idione.inoc.services.FilterMatchingService;
-import com.idione.inoc.services.IssueAssignmentService;
-import com.idione.inoc.services.KeywordMatcher;
 import com.idione.inoc.test.AbstractIntegrationTest;
 
 import mockit.Expectations;

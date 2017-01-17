@@ -9,14 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.idione.inoc.models.Client;
-import com.idione.inoc.models.Email;
-import com.idione.inoc.models.Filter;
-import com.idione.inoc.models.Issue;
-import com.idione.inoc.models.IssuePocUser;
-import com.idione.inoc.models.MailingGroup;
-import com.idione.inoc.models.PocUser;
-import com.idione.inoc.models.TelephoneCall;
 import com.idione.inoc.services.TelephoneService;
 import com.idione.inoc.test.AbstractIntegrationTest;
 

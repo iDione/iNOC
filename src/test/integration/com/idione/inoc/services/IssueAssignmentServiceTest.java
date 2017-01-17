@@ -16,8 +16,6 @@ import com.idione.inoc.models.Issue;
 import com.idione.inoc.models.IssuePocUser;
 import com.idione.inoc.models.MailingGroup;
 import com.idione.inoc.models.PocUser;
-import com.idione.inoc.services.IssueAssignmentService;
-import com.idione.inoc.services.TelephoneService;
 import com.idione.inoc.test.AbstractIntegrationTest;
 
 import mockit.Expectations;

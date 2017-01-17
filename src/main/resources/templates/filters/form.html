@@ -16,7 +16,14 @@
 						th:value="${{pocUser.getInteger('id')}}"
 						th:text="${pocUser.fullName}"
 						th:selected="${filterForm.pocUserIds.contains(pocUser.getInteger('id'))}">
-			    </option>
+			    </option>   
+			</select>
+  Keywords: <input id = "keyword" type="text" name="keyword" /> <input id="addKeyword" type="button" value="Add" /> <input id="removeKeyword" type="button" value="remove" />
+            <select id="keywords" th:name="keywords" size="5" multiple="multiple">
+			    <option th:each="keyword : ${filterForm.keywords}"
+						th:value="${{keyword}}"
+						th:text="${keyword}">
+			    </option>   
 			</select>
 </fieldset>
 </div>
