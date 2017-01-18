@@ -11,19 +11,22 @@
 						th:selected="${filterForm.mailingGroupId == mailingGroup.getInteger('id')}">
 			    </option>
 			</select>
-  Poc Users: <select id="pocUserIds" th:name="pocUserIds" size="5" multiple="multiple">
+  Keywords: <input id = "keyword" type="text" name="keyword" /> <input id="addKeyword" type="button" value="Add" /> <input id="removeKeyword" type="button" value="Remove" />
+            <select id="keywords" th:name="keywords" size="5" multiple="multiple">
+			    <option th:each="keyword : ${filterForm.keywords}"
+						th:value="${{keyword}}"
+						th:text="${keyword}">
+			    </option>
+			</select>
+  Poc Users: <select id="allPocUserIds" name="allPocUserIds" size="5" multiple="multiple">
 			    <option th:each="pocUser : ${allPocUsers}"
 						th:value="${{pocUser.getInteger('id')}}"
 						th:text="${pocUser.fullName}"
 						th:selected="${filterForm.pocUserIds.contains(pocUser.getInteger('id'))}">
 			    </option>   
 			</select>
-  Keywords: <input id = "keyword" type="text" name="keyword" /> <input id="addKeyword" type="button" value="Add" /> <input id="removeKeyword" type="button" value="remove" />
-            <select id="keywords" th:name="keywords" size="5" multiple="multiple">
-			    <option th:each="keyword : ${filterForm.keywords}"
-						th:value="${{keyword}}"
-						th:text="${keyword}">
-			    </option>   
+			<input id="addUser" type="button" value="Add" /> <input id="removeUser" type="button" value="Remove" />
+			<select id="pocUserIds" th:name="pocUserIds" size="5" multiple="multiple">
 			</select>
 </fieldset>
 </div>
