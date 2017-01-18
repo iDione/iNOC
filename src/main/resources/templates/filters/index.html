@@ -6,7 +6,6 @@
 </head>
 <body>
 	<div th:include="common/header::header"></div>
-	<a th:href="@{/filters/new.html}">Add Filter</a>
 	<div th:if="${not #lists.isEmpty(filters)}">
 		<p>Filters</p>
 		<table border="1">

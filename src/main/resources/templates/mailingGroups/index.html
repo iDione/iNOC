@@ -6,7 +6,6 @@
 </head>
 <body>
 	<div th:include="common/header::header"></div>
-	<a th:href="@{/mailingGroups/new.html}">Add Mailing Group</a>
 	<div th:if="${not #lists.isEmpty(mailingGroups)}">
 		<p>Mailing Groups</p>
 		<table border="1">
