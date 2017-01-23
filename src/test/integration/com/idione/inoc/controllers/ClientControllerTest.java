@@ -28,16 +28,16 @@ public class ClientControllerTest extends AbstractIntegrationTest {
     public void getClientsCallsTheClientServiceForClients(@Mocked Model model, @Mocked ClientService clientService) {
         ClientsController controller = new ClientsController();
         controller.setClientService(clientService);
-        
+
         new Expectations() {
             {
                 clientService.getClients(name);
                 result = clients;
             }
         };
-        
+
         controller.getClients(name, model);
-        
+
         new Verifications() {
             {
                 clientService.getClients(name);
@@ -47,22 +47,22 @@ public class ClientControllerTest extends AbstractIntegrationTest {
             }
         };
     }
-    
+
     @Test
     public void editClientCallsTheClientServiceForClient(@Mocked Model model, @Mocked ClientService clientService) {
         ClientsController controller = new ClientsController();
         controller.setClientService(clientService);
         ClientForm clientForm = new ClientForm();
-        
+
         new Expectations() {
             {
                 clientService.getClient(id);
                 result = clientForm;
             }
         };
-        
+
         controller.editClient(id, model);
-        
+
         new Verifications() {
             {
                 clientService.getClient(id);
@@ -72,15 +72,15 @@ public class ClientControllerTest extends AbstractIntegrationTest {
             }
         };
     }
-    
+
     @Test
     public void saveClientCallsTheClientServiceForSave(@Mocked Model model, @Mocked ClientService clientService) {
         ClientsController controller = new ClientsController();
         controller.setClientService(clientService);
         ClientForm clientForm = new ClientForm();
-        
+
         controller.saveClient(clientForm);
-        
+
         new Verifications() {
             {
                 clientService.saveClient(clientForm);

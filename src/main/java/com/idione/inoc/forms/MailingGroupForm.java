@@ -7,23 +7,24 @@ import com.idione.inoc.models.MailingGroup;
 import com.idione.inoc.models.PocUser;
 
 public class MailingGroupForm {
-    
+
     private String name;
     private int id;
     private int clientId;
     private List<Integer> pocUserIds = new ArrayList<Integer>();
 
-    public MailingGroupForm() {}
-    
+    public MailingGroupForm() {
+    }
+
     public MailingGroupForm(int clientId) {
         this.clientId = clientId;
     }
-    
-    public MailingGroupForm(MailingGroup  mailingGroup) {
+
+    public MailingGroupForm(MailingGroup mailingGroup) {
         this.id = mailingGroup.getInteger("id");
         this.clientId = mailingGroup.getInteger("client_id");
         this.name = mailingGroup.getString("name");
-        for(PocUser pocUser : mailingGroup.getUsers()) {
+        for (PocUser pocUser : mailingGroup.getUsers()) {
             pocUserIds.add(pocUser.getInteger("id"));
         }
     }

@@ -16,12 +16,11 @@ public class FilterMatchingService {
         this.issueAssignmentService = issueAssignmentService;
     }
 
-    public boolean matchFiltersForEmail(int emailId, int clientId, String emailText) {
+    public void matchFiltersForEmail(int emailId, int clientId, String emailText) {
         Filter matchingFilter = keywordMatcher.emailMatchesFilter(emailText, clientId);
         if (matchingFilter != null) {
             Issue issue = Issue.createIt("email_id", emailId, "filter_id", matchingFilter.getInteger("id"));
-            return issueAssignmentService.assignIssueToPOCUser(issue);
+            issueAssignmentService.assignIssueToPOCUser(issue);
         }
-        return false;
     }
 }

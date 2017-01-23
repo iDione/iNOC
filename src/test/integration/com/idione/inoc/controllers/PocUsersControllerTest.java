@@ -25,13 +25,13 @@ public class PocUsersControllerTest extends AbstractIntegrationTest {
     final List<PocUser> pocUsers = new ArrayList<PocUser>();
     PocUser currentPocUser;
     int pocUserId = 1;
-    
+
     @Before
     public void setup() {
         currentPocUser = new PocUser();
         currentPocUser.set("id", pocUserId);
         currentPocUser.set("client_id", 1);
-        
+
         controller = new PocUsersController();
         controller.setCurrentUser(currentPocUser);
     }
@@ -39,16 +39,16 @@ public class PocUsersControllerTest extends AbstractIntegrationTest {
     @Test
     public void getPocUsersCallsThePocUserServiceForPocUsers(@Mocked Model model, @Mocked PocUserService pocUserService) {
         controller.setPocUserService(pocUserService);
-        
+
         new Expectations() {
             {
                 pocUserService.getPocUsers(currentPocUser.getClientId());
                 result = pocUsers;
             }
         };
-        
+
         controller.getPocUsers(model);
-        
+
         new Verifications() {
             {
                 pocUserService.getPocUsers(currentPocUser.getClientId());
@@ -58,21 +58,21 @@ public class PocUsersControllerTest extends AbstractIntegrationTest {
             }
         };
     }
-    
+
     @Test
     public void editPocUserCallsThePocUserServiceForPocUser(@Mocked Model model, @Mocked PocUserService pocUserService) {
         controller.setPocUserService(pocUserService);
         PocUserForm pocUserForm = new PocUserForm();
-        
+
         new Expectations() {
             {
                 pocUserService.getPocUser(pocUserId);
                 result = pocUserForm;
             }
         };
-        
+
         controller.editPocUser(pocUserId, model);
-        
+
         new Verifications() {
             {
                 pocUserService.getPocUser(pocUserId);
@@ -82,14 +82,14 @@ public class PocUsersControllerTest extends AbstractIntegrationTest {
             }
         };
     }
-    
+
     @Test
     public void savePocUserCallsThePocUserServiceForSave(@Mocked Model model, @Mocked PocUserService pocUserService) {
         controller.setPocUserService(pocUserService);
         PocUserForm pocUserForm = new PocUserForm();
-        
+
         controller.savePocUser(pocUserForm, model);
-        
+
         new Verifications() {
             {
                 pocUserService.savePocUser(pocUserForm);

@@ -38,7 +38,7 @@ public class PocUserServiceTest extends AbstractIntegrationTest {
         assertThat(pocUsers.size(), is(equalTo(1)));
         assertThat(pocUsers.get(0).getString("email_address"), is(equalTo("ironman@marvell.tst")));
     }
-    
+
     @Test
     public void getPocUserReturnsAPocUserForm() {
         PocUserForm pocUserForm = pocUserService.getPocUser(pocUser1.getInteger("id"));
@@ -47,7 +47,7 @@ public class PocUserServiceTest extends AbstractIntegrationTest {
         assertThat(pocUser1.getString("email_address"), is(equalTo(pocUserForm.getEmailAddress())));
         assertThat(pocUser1.getInteger("id"), is(equalTo(pocUserForm.getId())));
     }
-    
+
     @Test
     public void saveCreatesANewPocUser() {
         PocUserForm pocUserForm = new PocUserForm(client1.getClientId());
@@ -55,16 +55,16 @@ public class PocUserServiceTest extends AbstractIntegrationTest {
         pocUserForm.setLastName("Rogers");
         pocUserForm.setEmailAddress("captainamerica@marvel.tst");
         PocUser pocUser = pocUserService.savePocUser(pocUserForm);
-        
+
         PocUserForm savedForm = pocUserService.getPocUser(pocUser.getInteger("id"));
-        
+
         assertThat(savedForm.getFirstName(), is(equalTo(pocUserForm.getFirstName())));
         assertThat(savedForm.getLastName(), is(equalTo(pocUserForm.getLastName())));
         assertThat(savedForm.getEmailAddress(), is(equalTo(pocUserForm.getEmailAddress())));
         assertThat(savedForm.getPhoneNumber(), is(equalTo(pocUserForm.getPhoneNumber())));
         assertThat(savedForm.getClientId(), is(equalTo(pocUserForm.getClientId())));
     }
-    
+
     @Test
     public void saveUpdatesAPocUser() {
         PocUserForm pocUserForm = new PocUserForm(pocUser1);

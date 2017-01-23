@@ -3,7 +3,7 @@ package com.idione.inoc.forms;
 import com.idione.inoc.models.PocUser;
 
 public class PocUserForm {
-    
+
     private String firstName;
     private String lastName;
     private String emailAddress;
@@ -11,13 +11,14 @@ public class PocUserForm {
     private int id;
     private int clientId;
 
-    public PocUserForm() {}
-    
+    public PocUserForm() {
+    }
+
     public PocUserForm(int clientId) {
         this.clientId = clientId;
     }
-    
-    public PocUserForm(PocUser  pocUser) {
+
+    public PocUserForm(PocUser pocUser) {
         this.id = pocUser.getInteger("id");
         this.clientId = pocUser.getInteger("client_id");
         this.firstName = pocUser.getString("first_name");
@@ -25,7 +26,7 @@ public class PocUserForm {
         this.emailAddress = pocUser.getString("email_address");
         this.phoneNumber = pocUser.getString("phone_number");
     }
-    
+
     public int getId() {
         return id;
     }

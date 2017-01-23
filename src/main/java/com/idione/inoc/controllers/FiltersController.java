@@ -27,17 +27,17 @@ public class FiltersController extends ApplicationController {
     private FilterService filterService;
     private PocUserService pocUserService;
     private MailingGroupService mailingGroupService;
-    
+
     @Autowired
     public void setPocUserService(PocUserService pocUserService) {
         this.pocUserService = pocUserService;
     }
-    
+
     @Autowired
     public void setMailingGroupService(MailingGroupService mailingGroupService) {
         this.mailingGroupService = mailingGroupService;
     }
-    
+
     @Autowired
     public void setFilterService(FilterService filterService) {
         this.filterService = filterService;
@@ -50,7 +50,7 @@ public class FiltersController extends ApplicationController {
         model.addAttribute("filters", filters);
         return "filters/index";
     }
-    
+
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public String newFilter(Model model) {
@@ -58,7 +58,7 @@ public class FiltersController extends ApplicationController {
         setupForm(model);
         return "filters/new";
     }
-    
+
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public String editFilter(@PathVariable int id, Model model) {
@@ -76,7 +76,7 @@ public class FiltersController extends ApplicationController {
         model.addAttribute("filters", filters);
         return "filters/index";
     }
-    
+
     private void setupForm(Model model) {
         List<PocUser> pocUsers = pocUserService.getPocUsers(currentClientId());
         model.addAttribute("allPocUsers", pocUsers);

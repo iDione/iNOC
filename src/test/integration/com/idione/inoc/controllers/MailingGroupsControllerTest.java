@@ -28,13 +28,13 @@ public class MailingGroupsControllerTest extends AbstractIntegrationTest {
     PocUser currentPosUser;
     int pocUserId = 1;
     int mailingGroupId = 101;
-    
+
     @Before
     public void setup() {
         currentPosUser = new PocUser();
         currentPosUser.set("id", pocUserId);
         currentPosUser.set("client_id", 1);
-        
+
         controller = new MailingGroupsController();
         controller.setCurrentUser(currentPosUser);
     }
@@ -42,16 +42,16 @@ public class MailingGroupsControllerTest extends AbstractIntegrationTest {
     @Test
     public void getMailingGroupsCallsTheMailingGroupServiceForMailingGroups(@Mocked Model model, @Mocked MailingGroupService mailingGroupService) {
         controller.setMailingGroupService(mailingGroupService);
-        
+
         new Expectations() {
             {
                 mailingGroupService.getMailingGroups(currentPosUser.getClientId());
                 result = mailingGroups;
             }
         };
-        
+
         controller.getMailingGroups(model);
-        
+
         new Verifications() {
             {
                 mailingGroupService.getMailingGroups(currentPosUser.getClientId());
@@ -61,13 +61,13 @@ public class MailingGroupsControllerTest extends AbstractIntegrationTest {
             }
         };
     }
-    
+
     @Test
     public void editMailingGroupCallsTheMailingGroupServiceForMailingGroup(@Mocked Model model, @Mocked MailingGroupService mailingGroupService, @Mocked PocUserService pocUserService) {
         controller.setMailingGroupService(mailingGroupService);
         controller.setPocUserService(pocUserService);
         MailingGroupForm mailingGroupForm = new MailingGroupForm();
-        
+
         new Expectations() {
             {
                 mailingGroupService.getMailingGroup(mailingGroupId);
@@ -76,9 +76,9 @@ public class MailingGroupsControllerTest extends AbstractIntegrationTest {
                 result = new ArrayList<PocUser>();
             }
         };
-        
+
         controller.editMailingGroup(mailingGroupId, model);
-        
+
         new Verifications() {
             {
                 mailingGroupService.getMailingGroup(mailingGroupId);
@@ -88,14 +88,14 @@ public class MailingGroupsControllerTest extends AbstractIntegrationTest {
             }
         };
     }
-    
+
     @Test
     public void saveMailingGroupCallsTheMailingGroupServiceForSave(@Mocked Model model, @Mocked MailingGroupService mailingGroupService) {
         controller.setMailingGroupService(mailingGroupService);
         MailingGroupForm mailingGroupForm = new MailingGroupForm();
-        
+
         controller.saveMailingGroup(mailingGroupForm, model);
-        
+
         new Verifications() {
             {
                 mailingGroupService.saveMailingGroup(mailingGroupForm);

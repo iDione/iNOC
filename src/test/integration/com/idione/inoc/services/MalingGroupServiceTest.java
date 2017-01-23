@@ -43,26 +43,26 @@ public class MalingGroupServiceTest extends AbstractIntegrationTest {
         assertThat(mailingGroups.size(), is(equalTo(1)));
         assertThat(mailingGroups.get(0).getString("name"), is(equalTo("Iron Man List")));
     }
-    
+
     @Test
     public void getMailingGroupReturnsAMailingGroupForm() {
         MailingGroupForm mailingGroupForm = mailingGroupService.getMailingGroup(mailingGroup1.getInteger("id"));
         assertThat(mailingGroup1.getString("name"), is(equalTo(mailingGroupForm.getName())));
         assertThat(mailingGroup1.getInteger("id"), is(equalTo(mailingGroupForm.getId())));
     }
-    
+
     @Test
     public void saveCreatesANewMailingGroup() {
         MailingGroupForm mailingGroupForm = new MailingGroupForm(client1.getClientId());
         mailingGroupForm.setName("DC Group");
         MailingGroup mailingGroup = mailingGroupService.saveMailingGroup(mailingGroupForm);
-        
+
         MailingGroupForm savedForm = mailingGroupService.getMailingGroup(mailingGroup.getInteger("id"));
-        
+
         assertThat(savedForm.getName(), is(equalTo(mailingGroupForm.getName())));
         assertThat(savedForm.getName(), is(equalTo(mailingGroupForm.getName())));
     }
-    
+
     @Test
     public void saveUpdatesTheAMailingGroup() {
         MailingGroupForm mailingGroupForm = new MailingGroupForm(mailingGroup1);
@@ -72,7 +72,7 @@ public class MalingGroupServiceTest extends AbstractIntegrationTest {
         assertThat(mailingGroup1.getString("name"), is(equalTo("Captain America Group")));
         assertThat(mailingGroup1.getInteger("id"), is(equalTo(mailingGroup.getId())));
     }
-    
+
     @Test
     public void saveUpdatesTheMailingGroupUsers() {
         MailingGroupForm mailingGroupForm = new MailingGroupForm(mailingGroup1);
@@ -81,7 +81,7 @@ public class MalingGroupServiceTest extends AbstractIntegrationTest {
         mailingGroup1.refresh();
         assertThat(mailingGroup1.getUsers().size(), is(equalTo(1)));
         assertThat(mailingGroup1.getUsers().get(0).getInteger("id"), is(equalTo(pocUser1.getInteger("id"))));
-        
+
         mailingGroupForm = new MailingGroupForm(mailingGroup1);
         mailingGroupForm.getPocUserIds().clear();
         mailingGroupForm.getPocUserIds().add(pocUser2.getInteger("id"));

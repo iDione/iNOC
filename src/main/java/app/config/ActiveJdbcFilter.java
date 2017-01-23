@@ -1,8 +1,7 @@
 package app.config;
 
-
-
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -37,40 +36,42 @@ public class ActiveJdbcFilter implements Filter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ActiveJdbcFilter.class);
 
-//    private String jndiName;
+    // private String jndiName;
 
     @Override
     public void init(FilterConfig config) throws ServletException {
-//        jndiName = config.getInitParameter("jndiName");
-//        if(jndiName == null)
-//            throw new IllegalArgumentException("must provide jndiName parameter for this filter");
+        // jndiName = config.getInitParameter("jndiName");
+        // if(jndiName == null)
+        // throw new IllegalArgumentException("must provide jndiName parameter
+        // for this filter");
     }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
         long before = System.currentTimeMillis();
-        try{
-//            Base.open(jndiName);
+        try {
+            // Base.open(jndiName);
             Base.open();
-            Base.openTransaction();
+            Base.connection().setAutoCommit(true);
+            // Base.openTransaction();
             chain.doFilter(req, resp);
-            Base.commitTransaction();
-        }
-        catch (IOException e){
-            Base.rollbackTransaction();
+            // Base.commitTransaction();
+        } catch (IOException e) {
+            // Base.rollbackTransaction();
             throw e;
-        }
-        catch (ServletException e){
-            Base.rollbackTransaction();
+        } catch (ServletException e) {
+            // Base.rollbackTransaction();
             throw e;
-        }
-        finally{
-
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
             Base.close();
         }
         LOGGER.info("Processing took: {} milliseconds", System.currentTimeMillis() - before);
     }
 
     @Override
-    public void destroy() {}
+    public void destroy() {
+    }
 }

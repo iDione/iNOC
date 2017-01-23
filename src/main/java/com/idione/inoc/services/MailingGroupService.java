@@ -37,13 +37,13 @@ public class MailingGroupService {
             return mailingGroup;
         }
     }
-    
+
     private void deletePocUsers(int mailingGroupId) {
         MailingGroupPocUser.delete("mailing_group_id = ?", mailingGroupId);
     }
-    
+
     private void createPocUsers(int mailingGroupId, List<Integer> pocUserIds) {
-        for(Integer pocUserId : pocUserIds) {
+        for (Integer pocUserId : pocUserIds) {
             MailingGroupPocUser.createIt("mailing_group_id", mailingGroupId, "poc_user_id", pocUserId);
         }
     }

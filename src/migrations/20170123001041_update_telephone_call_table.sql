@@ -1,0 +1,1 @@
+ALTER TABLE telephone_calls ALTER COLUMN external_call_id TYPE varchar(50);

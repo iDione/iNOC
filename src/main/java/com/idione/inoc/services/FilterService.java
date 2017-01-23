@@ -28,28 +28,21 @@ public class FilterService {
     public Filter saveFilter(FilterForm filterForm) {
         if (filterForm.getId() > 0) {
             Filter filter = Filter.findFirst("id = ?", filterForm.getId());
-            filter.set("name", filterForm.getName(),
-                       "retries", filterForm.getRetries(),
-                       "time_interval", filterForm.getTimeInterval(),
-                       "mailing_group_id", filterForm.getMailingGroupId()).saveIt();
+            filter.set("name", filterForm.getName(), "retries", filterForm.getRetries(), "time_interval", filterForm.getTimeInterval(), "mailing_group_id", filterForm.getMailingGroupId()).saveIt();
             deletePocUsers(filterForm.getId());
             createPocUsers(filterForm.getId(), filterForm.getPocUserIds());
             deleteKeywords(filterForm.getId());
             createKeywords(filterForm.getId(), filterForm.getKeywords());
-            
+
             return filter;
         } else {
-            Filter filter = Filter.createIt("name", filterForm.getName(),
-                                            "client_id", filterForm.getClientId(),
-                                            "retries", filterForm.getRetries(),
-                                            "time_interval", filterForm.getTimeInterval(),
-                                            "mailing_group_id", filterForm.getMailingGroupId());
+            Filter filter = Filter.createIt("name", filterForm.getName(), "client_id", filterForm.getClientId(), "retries", filterForm.getRetries(), "time_interval", filterForm.getTimeInterval(), "mailing_group_id", filterForm.getMailingGroupId());
             createPocUsers(filter.getInteger("id"), filterForm.getPocUserIds());
             createKeywords(filter.getInteger("id"), filterForm.getKeywords());
             return filter;
         }
     }
-    
+
     private void deletePocUsers(int filterId) {
         FilterPocUser.delete("filter_id = ?", filterId);
     }
@@ -57,15 +50,15 @@ public class FilterService {
     private void deleteKeywords(int filterId) {
         FilterKeyword.delete("filter_id = ?", filterId);
     }
-    
+
     private void createPocUsers(int filterId, List<Integer> pocUserIds) {
-        for(Integer pocUserId : pocUserIds) {
+        for (Integer pocUserId : pocUserIds) {
             FilterPocUser.createIt("filter_id", filterId, "poc_user_id", pocUserId);
         }
     }
-    
+
     private void createKeywords(int filterId, List<String> keywords) {
-        for(String keyword : keywords) {
+        for (String keyword : keywords) {
             FilterKeyword.createIt("filter_id", filterId, "keyword", keyword);
         }
     }

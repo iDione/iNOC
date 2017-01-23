@@ -33,14 +33,14 @@ public class ClientServiceTest extends AbstractIntegrationTest {
         List<Client> clients = clientService.getClients("");
         assertThat(clients.size(), is(equalTo(2)));
     }
-    
+
     @Test
     public void getClientsReturnsClientsByName() {
         List<Client> clients = clientService.getClients("Club");
         assertThat(clients.size(), is(equalTo(1)));
         assertThat(clients.get(0).getString("name"), is(equalTo("Mickey Mouse Club House")));
     }
-    
+
     @Test
     public void getClientReturnsAClientForm() {
         ClientForm clientForm = clientService.getClient(client1.getInteger("id"));
@@ -48,20 +48,20 @@ public class ClientServiceTest extends AbstractIntegrationTest {
         assertThat(client1.getString("email"), is(equalTo(clientForm.getEmail())));
         assertThat(client1.getInteger("id"), is(equalTo(clientForm.getId())));
     }
-    
+
     @Test
     public void saveCreatesANewClient() {
         ClientForm clientForm = new ClientForm(client1);
         clientForm.setName("Avengers");
         clientForm.setEmail("avengers@marvel.tst");
         Client client = clientService.saveClient(clientForm);
-        
+
         ClientForm savedForm = clientService.getClient(client.getInteger("id"));
-        
+
         assertThat(savedForm.getName(), is(equalTo(clientForm.getName())));
         assertThat(savedForm.getEmail(), is(equalTo(clientForm.getEmail())));
     }
-    
+
     @Test
     public void saveUpdatesAClient() {
         ClientForm clientForm = new ClientForm();

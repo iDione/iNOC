@@ -35,24 +35,24 @@ import mockit.integration.junit4.JMockit;
 @RunWith(JMockit.class)
 public class TwilioClientTest extends AbstractIntegrationTest {
 
-     private static final String TEST_ACCOUNT_SID = "AC2e9bfe4a8333addc3732731b067cb883";
-     private static final String TEST_AUTH_TOKEN = "41b3e764ada99491781fbedcdb7c1a5a";
-     private static final String TEST_FROM_PHONE_NUMBER = "+15005550006";
-    
+    private static final String TEST_ACCOUNT_SID = "AC2e9bfe4a8333addc3732731b067cb883";
+    private static final String TEST_AUTH_TOKEN = "41b3e764ada99491781fbedcdb7c1a5a";
+    private static final String TEST_FROM_PHONE_NUMBER = "+15005550006";
+
     TwilioClient twilioClient;
-    
+
     IssuePocUser issuePocUser;
     String telephoneNumber = "1111111111";
     PhoneNumber to;
     PhoneNumber from;
     URI uri;
-    
+
     @Before
     public void createFilter() {
         to = new PhoneNumber(telephoneNumber);
         from = new PhoneNumber(TwilioClient.FROM_PHONE_NUMBER);
         uri = URI.create(TwilioClient.ISSUE_URL);
-        
+
         Client client = Client.createIt("name", "Mickey Mouse Club House");
         Email email = Email.createIt("client_id", client.getInteger("id"));
         MailingGroup mailingGroup = MailingGroup.createIt("client_id", client.getInteger("id"));
@@ -72,12 +72,16 @@ public class TwilioClientTest extends AbstractIntegrationTest {
         int beforeTelephoneCount = TelephoneCall.findAll().size();
         new Expectations() {
             {
-                new CallCreator(to, from, uri); result = callCreator;
+                new CallCreator(to, from, uri);
+                result = callCreator;
                 callCreator.setStatusCallbackEvent((List<String>) any);
                 callCreator.setStatusCallback(anyString);
-                callCreator.create((TwilioRestClient) any); result = call;
-                call.getStatus(); result = Call.Status.COMPLETED;
-                call.getSid(); result = "ac319ghnsl0";
+                callCreator.create((TwilioRestClient) any);
+                result = call;
+                call.getStatus();
+                result = Call.Status.COMPLETED;
+                call.getSid();
+                result = "ac319ghnsl0";
             }
         };
         twilioClient = new TwilioClient();
@@ -91,12 +95,16 @@ public class TwilioClientTest extends AbstractIntegrationTest {
     public void itUpdatesTelephoneCallRecordWithFinalStatus(@Mocked CallCreator callCreator, @Mocked Call call) {
         new Expectations() {
             {
-                new CallCreator(to, from, uri); result = callCreator;
+                new CallCreator(to, from, uri);
+                result = callCreator;
                 callCreator.setStatusCallbackEvent((List<String>) any);
                 callCreator.setStatusCallback(anyString);
-                callCreator.create((TwilioRestClient) any); result = call;
-                call.getStatus(); result = Call.Status.FAILED;
-                call.getSid(); result = "ac319ghnsl0";
+                callCreator.create((TwilioRestClient) any);
+                result = call;
+                call.getStatus();
+                result = Call.Status.FAILED;
+                call.getSid();
+                result = "ac319ghnsl0";
             }
         };
         twilioClient = new TwilioClient();
@@ -104,28 +112,34 @@ public class TwilioClientTest extends AbstractIntegrationTest {
         TelephoneCall telephoneCall = TelephoneCall.findFirst("external_call_id = ?", "ac319ghnsl0");
         assertThat(telephoneCall.get("call_status"), is(equalTo(Call.Status.FAILED.toString())));
     }
-    
+
     @SuppressWarnings("unchecked")
     @Test
     public void itSetStatusUpdatesForCallCompletion(@Mocked CallCreator callCreator, @Mocked Call call) {
         new Expectations() {
             {
-                new CallCreator(to, from, uri); result = callCreator;
+                new CallCreator(to, from, uri);
+                result = callCreator;
                 callCreator.setStatusCallbackEvent((List<String>) any);
                 callCreator.setStatusCallback(anyString);
-                callCreator.create((TwilioRestClient) any); result = call;
-                call.getStatus(); result = Call.Status.COMPLETED;
-                call.getSid(); result = "ac319ghnsl0";
+                callCreator.create((TwilioRestClient) any);
+                result = call;
+                call.getStatus();
+                result = Call.Status.COMPLETED;
+                call.getSid();
+                result = "ac319ghnsl0";
             }
         };
         twilioClient = new TwilioClient();
         twilioClient.makeIssueAcceptanceCall(issuePocUser.getInteger("id"), telephoneNumber);
-        
+
         new Verifications() {
             {
-                callCreator.setStatusCallbackEvent(TelephoneService.callCompletedStatuses); times = 1;
-                callCreator.setStatusCallback(TwilioClient.ISSUE_CALL_STATUS_CALLBACK_URL); times = 1;
-                
+                callCreator.setStatusCallbackEvent(TelephoneService.callCompletedStatuses);
+                times = 1;
+                callCreator.setStatusCallback(TwilioClient.ISSUE_CALL_STATUS_CALLBACK_URL);
+                times = 1;
+
             }
         };
     }

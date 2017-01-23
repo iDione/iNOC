@@ -26,17 +26,10 @@ public class PocUserService {
     public PocUser savePocUser(PocUserForm pocUserForm) {
         if (pocUserForm.getId() > 0) {
             PocUser pocUser = PocUser.findFirst("id = ?", pocUserForm.getId());
-            pocUser.set("first_name", pocUserForm.getFirstName(), 
-                        "last_name", pocUserForm.getLastName(),
-                        "email_address", pocUserForm.getEmailAddress(), 
-                        "phone_number", pocUserForm.getPhoneNumber()).saveIt();
+            pocUser.set("first_name", pocUserForm.getFirstName(), "last_name", pocUserForm.getLastName(), "email_address", pocUserForm.getEmailAddress(), "phone_number", pocUserForm.getPhoneNumber()).saveIt();
             return pocUser;
         } else {
-            return PocUser.createIt("client_id", pocUserForm.getClientId(),
-                                    "first_name", pocUserForm.getFirstName(), 
-                                    "last_name", pocUserForm.getLastName(),
-                                    "email_address", pocUserForm.getEmailAddress(), 
-                                    "phone_number", pocUserForm.getPhoneNumber());
+            return PocUser.createIt("client_id", pocUserForm.getClientId(), "first_name", pocUserForm.getFirstName(), "last_name", pocUserForm.getLastName(), "email_address", pocUserForm.getEmailAddress(), "phone_number", pocUserForm.getPhoneNumber());
         }
     }
 }

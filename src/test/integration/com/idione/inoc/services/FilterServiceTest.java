@@ -26,7 +26,7 @@ public class FilterServiceTest extends AbstractIntegrationTest {
     PocUser pocUser1;
     PocUser pocUser2;
     MailingGroup mailingGroup1;
-    
+
     @Before
     public void createFilters() {
         Filter.deleteAll();
@@ -46,7 +46,7 @@ public class FilterServiceTest extends AbstractIntegrationTest {
         assertThat(filters.size(), is(equalTo(1)));
         assertThat(filters.get(0).getString("name"), is(equalTo("Iron Man Filter")));
     }
-    
+
     @Test
     public void getFilterReturnsAFilterForm() {
         FilterForm filterForm = filterService.getFilter(filter1.getInteger("id"));
@@ -56,7 +56,7 @@ public class FilterServiceTest extends AbstractIntegrationTest {
         assertThat(filter1.getInteger("time_interval"), is(equalTo(filterForm.getTimeInterval())));
         assertThat(filter1.getInteger("mailing_group_id"), is(equalTo(filterForm.getMailingGroupId())));
     }
-    
+
     @Test
     public void saveCreatesANewFilter() {
         FilterForm filterForm = new FilterForm(client1.getClientId());
@@ -65,15 +65,15 @@ public class FilterServiceTest extends AbstractIntegrationTest {
         filterForm.setRetries(5);
         filterForm.setTimeInterval(12);
         Filter filter = filterService.saveFilter(filterForm);
-        
+
         FilterForm savedForm = filterService.getFilter(filter.getInteger("id"));
-        
+
         assertThat(savedForm.getName(), is(equalTo(filterForm.getName())));
         assertThat(savedForm.getRetries(), is(equalTo(filterForm.getRetries())));
         assertThat(savedForm.getTimeInterval(), is(equalTo(filterForm.getTimeInterval())));
         assertThat(savedForm.getMailingGroupId(), is(equalTo(filterForm.getMailingGroupId())));
     }
-    
+
     @Test
     public void saveUpdatesTheAFilter() {
         FilterForm filterForm = new FilterForm(filter1);
@@ -87,7 +87,7 @@ public class FilterServiceTest extends AbstractIntegrationTest {
         assertThat(filter1.getInteger("retries"), is(equalTo(filterForm.getRetries())));
         assertThat(filter1.getInteger("time_interval"), is(equalTo(filterForm.getTimeInterval())));
     }
-    
+
     @Test
     public void saveUpdatesTheFilterUsers() {
         FilterForm filterForm = new FilterForm(filter1);
@@ -96,7 +96,7 @@ public class FilterServiceTest extends AbstractIntegrationTest {
         filter1.refresh();
         assertThat(filter1.getUsers().size(), is(equalTo(1)));
         assertThat(filter1.getUsers().get(0).getInteger("id"), is(equalTo(pocUser1.getInteger("id"))));
-        
+
         filterForm = new FilterForm(filter1);
         filterForm.getPocUserIds().clear();
         filterForm.getPocUserIds().add(pocUser2.getInteger("id"));
@@ -105,7 +105,7 @@ public class FilterServiceTest extends AbstractIntegrationTest {
         assertThat(filter1.getUsers().size(), is(equalTo(1)));
         assertThat(filter1.getUsers().get(0).getInteger("id"), is(equalTo(pocUser2.getInteger("id"))));
     }
-    
+
     @Test
     public void saveUpdatesTheFilterKeywords() {
         FilterForm filterForm = new FilterForm(filter1);
@@ -114,7 +114,7 @@ public class FilterServiceTest extends AbstractIntegrationTest {
         filter1.refresh();
         assertThat(filter1.getKeywords().size(), is(equalTo(1)));
         assertThat(filter1.getKeywords().get(0).getString("keyword"), is(equalTo("help")));
-        
+
         filterForm = new FilterForm(filter1);
         filterForm.getKeywords().clear();
         filterForm.getKeywords().add("Tessaract");

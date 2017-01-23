@@ -29,7 +29,7 @@ public class MailingGroupsController extends ApplicationController {
     public void setPocUserService(PocUserService pocUserService) {
         this.pocUserService = pocUserService;
     }
-    
+
     @Autowired
     public void setMailingGroupService(MailingGroupService mailingGroupService) {
         this.mailingGroupService = mailingGroupService;
@@ -42,7 +42,7 @@ public class MailingGroupsController extends ApplicationController {
         model.addAttribute("mailingGroups", mailingGroups);
         return "mailingGroups/index";
     }
-    
+
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public String newMailingGroup(Model model) {
@@ -50,7 +50,7 @@ public class MailingGroupsController extends ApplicationController {
         setupForm(model);
         return "mailingGroups/new";
     }
-    
+
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public String editMailingGroup(@PathVariable int id, Model model) {

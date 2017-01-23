@@ -8,14 +8,14 @@ import com.idione.inoc.models.PocUser;
 public class ApplicationController {
 
     private PocUser currentUser;
-    
+
     public PocUser getCurrentUser() {
         PocUser pocUser = new PocUser();
         pocUser.set("id", 1);
         pocUser.set("client_id", 1);
         return pocUser;
     }
-    
+
     public int currentClientId() {
         return getCurrentUser().getClientId();
     }

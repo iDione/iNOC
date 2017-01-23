@@ -8,7 +8,7 @@ import org.javalite.activejdbc.annotations.BelongsToParents;
 import org.javalite.activejdbc.annotations.Table;
 
 @BelongsToParents({ @BelongsTo(parent = MailingGroup.class, foreignKeyName = "mailing_group_id"),
-                    @BelongsTo(parent = Client.class, foreignKeyName = "client_id") })
+        @BelongsTo(parent = Client.class, foreignKeyName = "client_id") })
 
 @Table("filters")
 public class Filter extends Model {

@@ -1,6 +1,7 @@
 CREATE TABLE clients (
   id           SERIAL PRIMARY KEY,
   name         VARCHAR(128),
+  host         VARCHAR(128),
   email        VARCHAR(128),
   password     VARCHAR(256),
   created_at   TIMESTAMP,

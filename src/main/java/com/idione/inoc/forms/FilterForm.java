@@ -8,7 +8,7 @@ import com.idione.inoc.models.FilterKeyword;
 import com.idione.inoc.models.PocUser;
 
 public class FilterForm {
-    
+
     private String name;
     private int id;
     private int clientId;
@@ -17,24 +17,25 @@ public class FilterForm {
     private int mailingGroupId;
     private List<Integer> pocUserIds = new ArrayList<Integer>();
     private List<String> keywords = new ArrayList<String>();
-    
-    public FilterForm() {}
-    
+
+    public FilterForm() {
+    }
+
     public FilterForm(int clientId) {
         this.clientId = clientId;
     }
-    
-    public FilterForm(Filter  filter) {
+
+    public FilterForm(Filter filter) {
         this.id = filter.getInteger("id");
         this.clientId = filter.getInteger("client_id");
         this.name = filter.getString("name");
         this.mailingGroupId = filter.getInteger("mailing_group_id");
         this.retries = filter.getInteger("retries");
         this.timeInterval = filter.getInteger("time_interval");
-        for(PocUser pocUser : filter.getUsers()) {
+        for (PocUser pocUser : filter.getUsers()) {
             pocUserIds.add(pocUser.getInteger("id"));
         }
-        for(FilterKeyword keyword : filter.getKeywords()) {
+        for (FilterKeyword keyword : filter.getKeywords()) {
             keywords.add(keyword.getString("keyword"));
         }
     }

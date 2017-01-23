@@ -53,7 +53,7 @@ public class IssueResponseServiceTest extends AbstractIntegrationTest {
         telephoneCall.refresh();
         assertThat(telephoneCall.getInteger("user_response"), is(equalTo(IssueResponseService.ISSUE_DECLINED_RESPONSE)));
     }
-    
+
     @Test
     public void updateIssueWithUserResponseUpdatesIssuePocUser() {
         issueResponseService = new IssueResponseService();

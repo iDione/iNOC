@@ -44,23 +44,23 @@ public class TelephoneCallTest extends AbstractIntegrationTest {
         assertThat(telephoneCalls.get(0).getString("external_call_id"), is(equalTo(externalCallId1)));
         assertThat(telephoneCalls.get(0).getInteger("issue_poc_user_id"), is(equalTo(issuePocUser.getInteger("id"))));
     }
-    
+
     @Test
     public void createOrUpdateUpdatesTheRecord() {
         TelephoneCall.createOrUpdate(0, externalCallId1, TelephoneService.RINGING_STATUS.toString(), false);
         TelephoneCall.createOrUpdate(issuePocUser.getInteger("id"), externalCallId1, TelephoneService.COMPLETED_STATUS.toString(), true);
-        
+
         LazyList<TelephoneCall> telephoneCalls = TelephoneCall.find("external_call_id = ?", externalCallId1);
         assertThat(telephoneCalls.size(), is(equalTo(1)));
         assertThat(telephoneCalls.get(0).getString("call_status"), is(equalTo(TelephoneService.COMPLETED_STATUS.toString())));
         assertThat(telephoneCalls.get(0).getInteger("issue_poc_user_id"), is(equalTo(issuePocUser.getInteger("id"))));
     }
-    
+
     @Test
     public void createOrUpdateDoesNotUpdateStatusIfFlagIsFalse() {
         TelephoneCall.createOrUpdate(0, externalCallId1, TelephoneService.RINGING_STATUS.toString(), false);
         TelephoneCall.createOrUpdate(issuePocUser.getInteger("id"), externalCallId1, TelephoneService.COMPLETED_STATUS.toString(), false);
-        
+
         LazyList<TelephoneCall> telephoneCalls = TelephoneCall.find("external_call_id = ?", externalCallId1);
         assertThat(telephoneCalls.size(), is(equalTo(1)));
         assertThat(telephoneCalls.get(0).getString("call_status"), is(equalTo(TelephoneService.RINGING_STATUS.toString())));

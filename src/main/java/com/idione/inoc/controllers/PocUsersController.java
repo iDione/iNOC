@@ -34,14 +34,14 @@ public class PocUsersController extends ApplicationController {
         model.addAttribute("pocUsers", pocUsers);
         return "pocUsers/index";
     }
-    
+
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public String newPocUser(Model model) {
         model.addAttribute("pocUserForm", new PocUserForm(currentClientId()));
         return "pocUsers/new";
     }
-    
+
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public String editPocUser(@PathVariable int id, Model model) {

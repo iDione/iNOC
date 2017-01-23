@@ -29,7 +29,7 @@ public class TelephoneCall extends Model {
             telephoneCall.saveIt();
         } else {
             Integer cleanedUpIssuePocUserId = null;
-            if(issuePocUserId > 0){
+            if (issuePocUserId > 0) {
                 cleanedUpIssuePocUserId = new Integer(issuePocUserId);
             }
             telephoneCall = TelephoneCall.createIt("issue_poc_user_id", cleanedUpIssuePocUserId, "external_call_id", externalCallId, "call_status", callStatus);
@@ -37,7 +37,7 @@ public class TelephoneCall extends Model {
         return telephoneCall;
     }
 
-    public IssuePocUser getIssuePocUser(){
+    public IssuePocUser getIssuePocUser() {
         return this.parent(IssuePocUser.class);
     }
 }

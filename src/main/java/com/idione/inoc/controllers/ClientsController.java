@@ -35,14 +35,14 @@ public class ClientsController extends ApplicationController {
         model.addAttribute("clients", clients);
         return "clients/index";
     }
-    
+
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public String newClient(Model model) {
         model.addAttribute("clientForm", new ClientForm());
         return "clients/new";
     }
-    
+
     @RequestMapping(value = "/edit/{clientId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public String editClient(@PathVariable int clientId, Model model) {
