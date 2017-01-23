@@ -30,7 +30,6 @@ public class EmailReaderServiceTest extends AbstractIntegrationTest {
         new Expectations() {
             {
                 filterMatchingService.matchFiltersForEmail(anyInt, anyInt, anyString);
-                result = true;
             }
         };
         emailReaderService = new EmailReaderService(filterMatchingService);
