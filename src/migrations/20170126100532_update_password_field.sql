@@ -1,0 +1,1 @@
+ALTER TABLE poc_users ALTER COLUMN password TYPE varchar(256);

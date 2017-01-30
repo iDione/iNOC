@@ -1,5 +1,6 @@
 package com.idione.inoc.forms;
 
+import com.idione.inoc.enums.Role;
 import com.idione.inoc.models.PocUser;
 
 public class PocUserForm {
@@ -10,6 +11,9 @@ public class PocUserForm {
     private String phoneNumber;
     private int id;
     private int clientId;
+
+    private String password;
+    private Role role = Role.ADMIN;
 
     public PocUserForm() {
     }
@@ -25,6 +29,7 @@ public class PocUserForm {
         this.lastName = pocUser.getString("last_name");
         this.emailAddress = pocUser.getString("email_address");
         this.phoneNumber = pocUser.getString("phone_number");
+        this.password = pocUser.getString("password");
     }
 
     public int getId() {
@@ -73,6 +78,22 @@ public class PocUserForm {
 
     public void setClientId(int clientId) {
         this.clientId = clientId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
 }

@@ -4,7 +4,8 @@ import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.BelongsTo;
 import org.javalite.activejdbc.annotations.BelongsToParents;
 import org.javalite.activejdbc.annotations.Table;
-import org.thymeleaf.util.StringUtils;
+import org.springframework.util.StringUtils;
+
 
 @BelongsToParents({ @BelongsTo(parent = IssuePocUser.class, foreignKeyName = "issue_poc_user_id") })
 

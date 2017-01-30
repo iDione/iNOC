@@ -1,5 +1,7 @@
 package com.idione.inoc.models;
 
+import java.util.List;
+
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.BelongsTo;
 import org.javalite.activejdbc.annotations.BelongsToParents;
@@ -18,4 +20,7 @@ public class PocUser extends Model {
         return getString("first_name") + " " + getString("last_name");
     }
 
+    public List<PocUserRole> getRoles() {
+        return getAll(PocUserRole.class);
+    }
 }
