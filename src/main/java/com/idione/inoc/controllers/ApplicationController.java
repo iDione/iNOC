@@ -1,6 +1,9 @@
 package com.idione.inoc.controllers;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.idione.inoc.models.PocUser;
 
@@ -23,4 +26,23 @@ public class ApplicationController {
     public void setCurrentUser(PocUser currentUser) {
         this.currentUser = currentUser;
     }
+    
+//    private String getPrincipal(){
+//        String userName = null;
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//
+//        if (principal instanceof UserDetails) {
+//            userName = ((UserDetails)principal).getUsername();
+//        } else {
+//            userName = principal.toString();
+//        }
+//        return userName;
+//    }
+//    
+//    
+//    
+//    @ModelAttribute("roles")
+//    public List<UserProfile> initializeProfiles() {
+//        return userProfileService.findAll();
+//    }
 }
