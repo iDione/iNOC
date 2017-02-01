@@ -4,10 +4,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import app.config.ActiveJdbcFilter;
 
 @SpringBootApplication
+@EnableScheduling
 public class InocApplication {
 
     public static void main(String[] args) {
