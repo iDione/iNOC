@@ -24,6 +24,8 @@
 		<java.version>1.8</java.version>
 		<activejdbc.version>1.4.12</activejdbc.version>
         <environments>development.test,development</environments>
+        <thymeleaf.version>3.0.2.RELEASE</thymeleaf.version>
+		<thymeleaf-layout-dialect.version>2.1.1</thymeleaf-layout-dialect.version>
 	</properties>
 
 	<dependencies>	

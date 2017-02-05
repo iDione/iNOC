@@ -40,6 +40,7 @@ public class ActiveJdbcFilter implements Filter {
 
     @Override
     public void init(FilterConfig config) throws ServletException {
+        System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
         // jndiName = config.getInitParameter("jndiName");
         // if(jndiName == null)
         // throw new IllegalArgumentException("must provide jndiName parameter

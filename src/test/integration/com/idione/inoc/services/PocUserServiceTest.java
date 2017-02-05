@@ -95,7 +95,6 @@ public class PocUserServiceTest extends AbstractIntegrationTest {
         pocUserForm.setPassword("12qwaszx");
         PocUser pocUser = pocUserService.savePocUser(pocUserForm);
 
-        PocUserForm savedForm = pocUserService.getPocUser(pocUser.getInteger("id"));
         PocUserRole pocUserRole = PocUserRole.findFirst("poc_user_id = ?", pocUser.getInteger("id"));
 
         assertThat(pocUserRole.getString("role"), is(equalTo("ADMIN")));
