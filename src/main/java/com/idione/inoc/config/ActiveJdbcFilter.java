@@ -1,4 +1,4 @@
-package app.config;
+package com.idione.inoc.config;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -34,7 +34,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ActiveJdbcFilter implements Filter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ActiveJdbcFilter.class);
+//    private static final Logger LOGGER = LoggerFactory.getLogger(ActiveJdbcFilter.class);
 
     // private String jndiName;
 
@@ -48,7 +48,6 @@ public class ActiveJdbcFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
-        long before = System.currentTimeMillis();
         try {
             // Base.open(jndiName);
             Base.open();
@@ -68,7 +67,6 @@ public class ActiveJdbcFilter implements Filter {
         } finally {
             Base.close();
         }
-        LOGGER.info("Processing took: {} milliseconds", System.currentTimeMillis() - before);
     }
 
     @Override

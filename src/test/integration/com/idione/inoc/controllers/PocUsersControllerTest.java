@@ -23,17 +23,11 @@ public class PocUsersControllerTest extends AbstractIntegrationTest {
 
     PocUsersController controller;
     final List<PocUser> pocUsers = new ArrayList<PocUser>();
-    PocUser currentPocUser;
     int pocUserId = 1;
 
     @Before
     public void setup() {
-        currentPocUser = new PocUser();
-        currentPocUser.set("id", pocUserId);
-        currentPocUser.set("client_id", 1);
-
         controller = new PocUsersController();
-        controller.setCurrentUser(currentPocUser);
     }
 
     @Test
@@ -42,7 +36,7 @@ public class PocUsersControllerTest extends AbstractIntegrationTest {
 
         new Expectations() {
             {
-                pocUserService.getPocUsers(currentPocUser.getClientId());
+                pocUserService.getPocUsers(controller.currentClientId());
                 result = pocUsers;
             }
         };
@@ -51,7 +45,7 @@ public class PocUsersControllerTest extends AbstractIntegrationTest {
 
         new Verifications() {
             {
-                pocUserService.getPocUsers(currentPocUser.getClientId());
+                pocUserService.getPocUsers(controller.currentClientId());
                 times = 1;
                 model.addAttribute("pocUsers", pocUsers);
                 times = 1;

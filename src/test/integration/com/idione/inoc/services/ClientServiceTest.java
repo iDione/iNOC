@@ -22,7 +22,6 @@ public class ClientServiceTest extends AbstractIntegrationTest {
 
     @Before
     public void createClients() {
-        Client.deleteAll();
         client1 = Client.createIt("name", "Mickey Mouse Club House", "email", "mickey@clubhouse.tst");
         client2 = Client.createIt("name", "Tinker Bell Pixie Hollow");
         clientService = new ClientService();
@@ -31,7 +30,7 @@ public class ClientServiceTest extends AbstractIntegrationTest {
     @Test
     public void getClientsReturnsAllClients() {
         List<Client> clients = clientService.getClients("");
-        assertThat(clients.size(), is(equalTo(2)));
+        assertThat(clients.size(), is(equalTo(3))); //extra one is the demo account this is created by initial seed
     }
 
     @Test

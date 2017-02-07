@@ -1,5 +1,7 @@
 package com.idione.inoc.controllers;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 
 import com.idione.inoc.models.PocUser;
@@ -7,20 +9,13 @@ import com.idione.inoc.models.PocUser;
 @Controller
 public class ApplicationController {
 
-    private PocUser currentUser;
-
     public PocUser getCurrentUser() {
-        PocUser pocUser = new PocUser();
-        pocUser.set("id", 1);
-        pocUser.set("client_id", 1);
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        PocUser pocUser = PocUser.findFirst("email_address = ?", user.getUsername());
         return pocUser;
     }
 
     public int currentClientId() {
         return getCurrentUser().getClientId();
-    }
-
-    public void setCurrentUser(PocUser currentUser) {
-        this.currentUser = currentUser;
     }
 }

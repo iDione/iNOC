@@ -26,17 +26,11 @@ public class MailingGroupsControllerTest extends AbstractIntegrationTest {
     MailingGroupsController controller;
     final List<MailingGroup> mailingGroups = new ArrayList<MailingGroup>();
     PocUser currentPosUser;
-    int pocUserId = 1;
     int mailingGroupId = 101;
 
     @Before
     public void setup() {
-        currentPosUser = new PocUser();
-        currentPosUser.set("id", pocUserId);
-        currentPosUser.set("client_id", 1);
-
         controller = new MailingGroupsController();
-        controller.setCurrentUser(currentPosUser);
     }
 
     @Test
@@ -45,7 +39,7 @@ public class MailingGroupsControllerTest extends AbstractIntegrationTest {
 
         new Expectations() {
             {
-                mailingGroupService.getMailingGroups(currentPosUser.getClientId());
+                mailingGroupService.getMailingGroups(controller.currentClientId());
                 result = mailingGroups;
             }
         };
@@ -54,7 +48,7 @@ public class MailingGroupsControllerTest extends AbstractIntegrationTest {
 
         new Verifications() {
             {
-                mailingGroupService.getMailingGroups(currentPosUser.getClientId());
+                mailingGroupService.getMailingGroups(controller.currentClientId());
                 times = 1;
                 model.addAttribute("mailingGroups", mailingGroups);
                 times = 1;
@@ -72,7 +66,7 @@ public class MailingGroupsControllerTest extends AbstractIntegrationTest {
             {
                 mailingGroupService.getMailingGroup(mailingGroupId);
                 result = mailingGroupForm;
-                pocUserService.getPocUsers(currentPosUser.getClientId());
+                pocUserService.getPocUsers(controller.currentClientId());
                 result = new ArrayList<PocUser>();
             }
         };

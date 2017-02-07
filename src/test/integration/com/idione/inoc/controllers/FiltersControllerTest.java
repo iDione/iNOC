@@ -27,19 +27,11 @@ public class FiltersControllerTest extends AbstractIntegrationTest {
 
     FiltersController controller;
     final List<Filter> filters = new ArrayList<Filter>();
-    PocUser currentPosUser;
-    int pocUserId = 1011;
-    int filterId = 101;
-    int clientId = 1;
+    static int filterId = 101;
 
     @Before
     public void setup() {
-        currentPosUser = new PocUser();
-        currentPosUser.set("id", pocUserId);
-        currentPosUser.set("client_id", clientId);
-
         controller = new FiltersController();
-        controller.setCurrentUser(currentPosUser);
     }
 
     @Test
@@ -48,7 +40,7 @@ public class FiltersControllerTest extends AbstractIntegrationTest {
 
         new Expectations() {
             {
-                filterService.getFilters(currentPosUser.getClientId());
+                filterService.getFilters(controller.currentClientId());
                 result = filters;
             }
         };
@@ -57,7 +49,7 @@ public class FiltersControllerTest extends AbstractIntegrationTest {
 
         new Verifications() {
             {
-                filterService.getFilters(currentPosUser.getClientId());
+                filterService.getFilters(controller.currentClientId());
                 times = 1;
                 model.addAttribute("filters", filters);
                 times = 1;
