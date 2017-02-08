@@ -43,7 +43,7 @@ public class EmailReader {
     public List<EmailForm> processInbox() throws MessagingException, IOException {
         List<EmailForm> newEmails = new ArrayList<EmailForm>();
         inbox = store.getFolder("Inbox");
-        inbox.open(Folder.READ_ONLY);
+        inbox.open(Folder.READ_WRITE);
         if (inbox.getUnreadMessageCount() > 0) {
             Message[] messages = getMessages();
             newEmails = process(messages);

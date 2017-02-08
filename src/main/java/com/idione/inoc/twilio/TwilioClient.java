@@ -19,7 +19,7 @@ public class TwilioClient {
     public static final String AUTH_TOKEN = "a0db3f876d4530added4b1933e952013";
     public static final String ISSUE_URL = "https://handler.twilio.com/twiml/EH74f53755776b341e126a03a58d9ca849";
     public static final String FROM_PHONE_NUMBER = "(312) 273-5098";
-    public static final String ISSUE_CALL_STATUS_CALLBACK_URL = "http://adarsh.hopto.org:8080/receiveTwilioStatus";
+    public static final String ISSUE_CALL_STATUS_CALLBACK_URL = "http://adarsh.hopto.org:8080/twilio/callStatus";
 
     public TelephoneCall makeIssueAcceptanceCall(int issuePocUserId, String phoneNumber) {
         TwilioRestClient client = new TwilioRestClient.Builder(ACCOUNT_SID, AUTH_TOKEN).build();
