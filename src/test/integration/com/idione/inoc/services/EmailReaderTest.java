@@ -17,7 +17,7 @@ public class EmailReaderTest extends AbstractIntegrationTest {
     EmailReader emailReader;
     private String HOST = "imap.gmail.com";
     private String USERNAME = "inocdemo@gmail.com";
-    private String PASSWORD = "canyouhearmenow";
+    private String PASSWORD = "Canyouhearmenow.";
 
     @Before
     public void createFilter() {

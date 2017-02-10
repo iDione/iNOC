@@ -1,1 +1,1 @@
-insert into clients (name, host, email, password, created_at) values ('INOC Demo', 'imap.gmail.com', 'inocdemo@gmail.com', 'canyouhearmenow', CURRENT_TIMESTAMP)
+insert into clients (name, host, email, password, created_at) values ('INOC Demo', 'imap.gmail.com', 'inocdemo@gmail.com', 'Canyouhearmenow.', CURRENT_TIMESTAMP)
