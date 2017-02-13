@@ -35,8 +35,12 @@ public class FilterServiceTest extends AbstractIntegrationTest {
         pocUser1 = PocUser.createIt("client_id", client1.getInteger("id"), "first_name", "Tony", "last_name", "Stark", "phone_number", "1111111111");
         pocUser2 = PocUser.createIt("client_id", client1.getInteger("id"), "first_name", "Peter", "last_name", "Parker", "phone_number", "2222222222");
         mailingGroup1 = MailingGroup.createIt("client_id", client1.getInteger("id"), "name", "Iron Man List");
-        filter1 = Filter.createIt("client_id", client1.getInteger("id"), "name", "Iron Man Filter", "retries", 2, "time_interval", 10, "mailing_group_id", mailingGroup1.getInteger("id"));
-        filter2 = Filter.createIt("client_id", client2.getInteger("id"), "name", "Spider Man Filter", "retries", 2, "time_interval", 10, "mailing_group_id", mailingGroup1.getInteger("id"));
+        filter1 = Filter.createIt("client_id", client1.getInteger("id"), "name", "Iron Man Filter", "retries", 2, "time_interval", 10, 
+                                  "assigned_mailing_group_id", mailingGroup1.getInteger("id"),
+                                  "unassigned_mailing_group_id", mailingGroup1.getInteger("id"),
+                                  "assigned_email_template", "Assigned Email",
+                                  "assigned_email_template", "Un-Assigned Email");
+        filter2 = Filter.createIt("client_id", client2.getInteger("id"), "name", "Spider Man Filter", "retries", 2, "time_interval", 10, "assigned_mailing_group_id", mailingGroup1.getInteger("id"));
         filterService = new FilterService();
     }
 
@@ -54,14 +58,20 @@ public class FilterServiceTest extends AbstractIntegrationTest {
         assertThat(filter1.getInteger("id"), is(equalTo(filterForm.getId())));
         assertThat(filter1.getInteger("retries"), is(equalTo(filterForm.getRetries())));
         assertThat(filter1.getInteger("time_interval"), is(equalTo(filterForm.getTimeInterval())));
-        assertThat(filter1.getInteger("mailing_group_id"), is(equalTo(filterForm.getMailingGroupId())));
+        assertThat(filter1.getInteger("assigned_mailing_group_id"), is(equalTo(filterForm.getAssignedMailingGroupId())));
+        assertThat(filter1.getInteger("unassigned_mailing_group_id"), is(equalTo(filterForm.getUnassignedMailingGroupId())));
+        assertThat(filter1.getString("assigned_email_template"), is(equalTo(filterForm.getAssignedEmailTemplate())));
+        assertThat(filter1.getString("unassigned_email_template"), is(equalTo(filterForm.getUnassignedEmailTemplate())));
     }
 
     @Test
     public void saveCreatesANewFilter() {
         FilterForm filterForm = new FilterForm(client1.getClientId());
         filterForm.setName("Captain America Filter");
-        filterForm.setMailingGroupId(mailingGroup1.getInteger("id"));
+        filterForm.setAssignedMailingGroupId(mailingGroup1.getInteger("id"));
+        filterForm.setUnassignedMailingGroupId(mailingGroup1.getInteger("id"));
+        filterForm.setAssignedEmailTemplate("Assigned Template");
+        filterForm.setUnassignedEmailTemplate("Un-Assigned Template");
         filterForm.setRetries(5);
         filterForm.setTimeInterval(12);
         Filter filter = filterService.saveFilter(filterForm);
@@ -71,7 +81,10 @@ public class FilterServiceTest extends AbstractIntegrationTest {
         assertThat(savedForm.getName(), is(equalTo(filterForm.getName())));
         assertThat(savedForm.getRetries(), is(equalTo(filterForm.getRetries())));
         assertThat(savedForm.getTimeInterval(), is(equalTo(filterForm.getTimeInterval())));
-        assertThat(savedForm.getMailingGroupId(), is(equalTo(filterForm.getMailingGroupId())));
+        assertThat(savedForm.getAssignedMailingGroupId(), is(equalTo(filterForm.getAssignedMailingGroupId())));
+        assertThat(savedForm.getUnassignedMailingGroupId(), is(equalTo(filterForm.getUnassignedMailingGroupId())));
+        assertThat(savedForm.getAssignedEmailTemplate(), is(equalTo(filterForm.getAssignedEmailTemplate())));
+        assertThat(savedForm.getUnassignedEmailTemplate(), is(equalTo(filterForm.getUnassignedEmailTemplate())));
     }
 
     @Test

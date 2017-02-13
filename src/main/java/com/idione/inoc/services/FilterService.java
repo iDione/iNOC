@@ -26,9 +26,16 @@ public class FilterService {
     }
 
     public Filter saveFilter(FilterForm filterForm) {
-        if (filterForm.getId() > 0) {
+        if (filterForm.getId()!=null && filterForm.getId() > 0) {
             Filter filter = Filter.findFirst("id = ?", filterForm.getId());
-            filter.set("name", filterForm.getName(), "retries", filterForm.getRetries(), "time_interval", filterForm.getTimeInterval(), "mailing_group_id", filterForm.getMailingGroupId()).saveIt();
+            filter.set("name", filterForm.getName(),
+                       "retries", filterForm.getRetries(),
+                       "time_interval", filterForm.getTimeInterval(),
+                       "assigned_mailing_group_id", filterForm.getAssignedMailingGroupId(),
+                       "unassigned_mailing_group_id", filterForm.getUnassignedMailingGroupId(),
+                       "assigned_email_template", filterForm.getAssignedEmailTemplate(),
+                       "unassigned_email_template", filterForm.getUnassignedEmailTemplate()
+                       ).saveIt();
             deletePocUsers(filterForm.getId());
             createPocUsers(filterForm.getId(), filterForm.getPocUserIds());
             deleteKeywords(filterForm.getId());
@@ -36,7 +43,15 @@ public class FilterService {
 
             return filter;
         } else {
-            Filter filter = Filter.createIt("name", filterForm.getName(), "client_id", filterForm.getClientId(), "retries", filterForm.getRetries(), "time_interval", filterForm.getTimeInterval(), "mailing_group_id", filterForm.getMailingGroupId());
+            Filter filter = Filter.createIt("name", filterForm.getName(),
+                                            "client_id", filterForm.getClientId(),
+                                            "retries", filterForm.getRetries(),
+                                            "time_interval", filterForm.getTimeInterval(),
+                                            "assigned_mailing_group_id", filterForm.getAssignedMailingGroupId(),
+                                            "unassigned_mailing_group_id", filterForm.getUnassignedMailingGroupId(),
+                                            "assigned_email_template", filterForm.getAssignedEmailTemplate(),
+                                            "unassigned_email_template", filterForm.getUnassignedEmailTemplate()
+                                            );
             createPocUsers(filter.getInteger("id"), filterForm.getPocUserIds());
             createKeywords(filter.getInteger("id"), filterForm.getKeywords());
             return filter;

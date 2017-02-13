@@ -4,11 +4,18 @@
   Name: <input type="text" th:field="*{name}" />
   Retries: <input type="text" th:field="*{retries}" />
   Time Interval: <input type="text" th:field="*{timeInterval}" />
-  Mailing Group: <select id="mailingGroupId" th:name="mailingGroupId" size="1">
+  Assigned Mailing Group: <select id="assignedMailingGroupId" th:name="assignedMailingGroupId" size="1">
 			    <option th:each="mailingGroup : ${allMailingGroups}"
 						th:value="${{mailingGroup.getInteger('id')}}"
 						th:text="${mailingGroup.getString('name')}"
-						th:selected="${filterForm.mailingGroupId == mailingGroup.getInteger('id')}">
+						th:selected="${filterForm.assignedMailingGroupId == mailingGroup.getInteger('id')}">
+			    </option>
+			</select>
+  Un-Assigned Mailing Group: <select id="unassignedMailingGroupId" th:name="unassignedMailingGroupId" size="1">
+			    <option th:each="mailingGroup : ${allMailingGroups}"
+						th:value="${{mailingGroup.getInteger('id')}}"
+						th:text="${mailingGroup.getString('name')}"
+						th:selected="${filterForm.unassignedMailingGroupId == mailingGroup.getInteger('id')}">
 			    </option>
 			</select>
   Keywords: <input id = "keyword" type="text" name="keyword" /> <input id="addKeyword" type="button" value="Add" /> <input id="removeKeyword" type="button" value="Remove" />
@@ -25,8 +32,12 @@
 						th:selected="${filterForm.pocUserIds.contains(pocUser.getInteger('id'))}">
 			    </option>   
 			</select>
+
 			<input id="addUser" type="button" value="Add" /> <input id="removeUser" type="button" value="Remove" />
 			<select id="pocUserIds" th:name="pocUserIds" size="5" multiple="multiple">
 			</select>
+
+			Assigned Email Template: <textarea th:field="*{assignedEmailTemplate}" />
+			Un-Assigned Email Template: <textarea th:field="*{unassignedEmailTemplate}" />
 </fieldset>
 </div>

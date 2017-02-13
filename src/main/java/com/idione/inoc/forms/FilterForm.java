@@ -10,18 +10,21 @@ import com.idione.inoc.models.PocUser;
 public class FilterForm {
 
     private String name;
-    private int id;
-    private int clientId;
-    private int timeInterval;
-    private int retries;
-    private int mailingGroupId;
+    private Integer id;
+    private Integer clientId;
+    private Integer timeInterval;
+    private Integer retries;
+    private Integer assignedMailingGroupId;
+    private Integer unassignedMailingGroupId;
+    private String assignedEmailTemplate;
+    private String unassignedEmailTemplate;
     private List<Integer> pocUserIds = new ArrayList<Integer>();
     private List<String> keywords = new ArrayList<String>();
 
     public FilterForm() {
     }
 
-    public FilterForm(int clientId) {
+    public FilterForm(Integer clientId) {
         this.clientId = clientId;
     }
 
@@ -29,7 +32,10 @@ public class FilterForm {
         this.id = filter.getInteger("id");
         this.clientId = filter.getInteger("client_id");
         this.name = filter.getString("name");
-        this.mailingGroupId = filter.getInteger("mailing_group_id");
+        this.assignedMailingGroupId = filter.getInteger("assigned_mailing_group_id");
+        this.unassignedMailingGroupId = filter.getInteger("unassigned_mailing_group_id");
+        this.assignedEmailTemplate = filter.getString("assigned_email_template");
+        this.unassignedEmailTemplate = filter.getString("unassigned_email_template");       
         this.retries = filter.getInteger("retries");
         this.timeInterval = filter.getInteger("time_interval");
         for (PocUser pocUser : filter.getUsers()) {
@@ -48,19 +54,19 @@ public class FilterForm {
         this.name = name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getClientId() {
+    public Integer getClientId() {
         return clientId;
     }
 
-    public void setClientId(int clientId) {
+    public void setClientId(Integer clientId) {
         this.clientId = clientId;
     }
 
@@ -72,7 +78,7 @@ public class FilterForm {
         this.pocUserIds = pocUserIds;
     }
 
-    public int getTimeInterval() {
+    public Integer getTimeInterval() {
         return timeInterval;
     }
 
@@ -80,20 +86,12 @@ public class FilterForm {
         this.timeInterval = timeInterval;
     }
 
-    public int getRetries() {
+    public Integer getRetries() {
         return retries;
     }
 
-    public void setRetries(int retries) {
+    public void setRetries(Integer retries) {
         this.retries = retries;
-    }
-
-    public int getMailingGroupId() {
-        return mailingGroupId;
-    }
-
-    public void setMailingGroupId(int mailingGroupId) {
-        this.mailingGroupId = mailingGroupId;
     }
 
     public List<String> getKeywords() {
@@ -102,5 +100,37 @@ public class FilterForm {
 
     public void setKeywords(List<String> keywords) {
         this.keywords = keywords;
+    }
+
+    public Integer getAssignedMailingGroupId() {
+        return assignedMailingGroupId;
+    }
+
+    public void setAssignedMailingGroupId(Integer assignedMailingGroupId) {
+        this.assignedMailingGroupId = assignedMailingGroupId;
+    }
+
+    public Integer getUnassignedMailingGroupId() {
+        return unassignedMailingGroupId;
+    }
+
+    public void setUnassignedMailingGroupId(Integer unassignedMailingGroupId) {
+        this.unassignedMailingGroupId = unassignedMailingGroupId;
+    }
+
+    public String getAssignedEmailTemplate() {
+        return assignedEmailTemplate;
+    }
+
+    public void setAssignedEmailTemplate(String assignedEmailTemplate) {
+        this.assignedEmailTemplate = assignedEmailTemplate;
+    }
+
+    public String getUnassignedEmailTemplate() {
+        return unassignedEmailTemplate;
+    }
+
+    public void setUnassignedEmailTemplate(String unassignedEmailTemplate) {
+        this.unassignedEmailTemplate = unassignedEmailTemplate;
     }
 }

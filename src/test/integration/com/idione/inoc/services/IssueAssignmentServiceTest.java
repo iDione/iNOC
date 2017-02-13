@@ -41,7 +41,7 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
         client = Client.createIt("name", "Mickey Mouse Club House");
         Email email = Email.createIt("client_id", client.getInteger("id"));
         MailingGroup mailingGroup = MailingGroup.createIt("client_id", client.getInteger("id"));
-        filter = Filter.createIt("name", "A Filter", "client_id", client.getInteger("id"), "time_interval", 5, "retries", retries, "mailing_group_id", mailingGroup.getInteger("id"));
+        filter = Filter.createIt("name", "A Filter", "client_id", client.getInteger("id"), "time_interval", 5, "retries", retries, "assigned_mailing_group_id", mailingGroup.getInteger("id"));
         issue = Issue.createIt("email_id", email.getInteger("id"), "filter_id", filter.getInteger("id"));
         pocUser1 = PocUser.createIt("client_id", client.getInteger("id"), "first_name", "Mickey", "last_name", "Mouse", "phone_number", telephoneNumber1);
         FilterPocUser.createIt("filter_id", filter.getInteger("id"), "poc_user_id", pocUser1.getInteger("id"));

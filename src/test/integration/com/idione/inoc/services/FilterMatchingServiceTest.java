@@ -35,7 +35,7 @@ public class FilterMatchingServiceTest extends AbstractIntegrationTest {
         client = Client.createIt("name", "Mickey Mouse Club House");
         email = Email.createIt("client_id", client.getInteger("id"));
         mailingGroup = MailingGroup.createIt("client_id", client.getInteger("id"), "name", "A Mailing Group");
-        filter = Filter.createIt("name", "A Filter", "client_id", client.getInteger("id"), "time_interval", 5, "retries", 1, "mailing_group_id", mailingGroup.getInteger("id"));
+        filter = Filter.createIt("name", "A Filter", "client_id", client.getInteger("id"), "time_interval", 5, "retries", 1, "assigned_mailing_group_id", mailingGroup.getInteger("id"));
     }
 
     @Test

@@ -31,7 +31,7 @@ public class KeywordMatcherTest extends AbstractIntegrationTest {
     public void createFilter() {
         client = Client.createIt("name", "Mickey Mouse Club House");
         mailingGroup = MailingGroup.createIt("client_id", client.getInteger("id"), "name", "A Mailing Group");
-        filter1 = Filter.createIt("name", "Fun Filter", "client_id", client.getInteger("id"), "time_interval", 5, "retries", 1, "mailing_group_id", mailingGroup.getInteger("id"));
+        filter1 = Filter.createIt("name", "Fun Filter", "client_id", client.getInteger("id"), "time_interval", 5, "retries", 1, "assigned_mailing_group_id", mailingGroup.getInteger("id"));
         filter1Keyword1 = FilterKeyword.createIt("filter_id", filter1.getInteger("id"), "keyword", "goofy");
         filter1Keyword2 = FilterKeyword.createIt("filter_id", filter1.getInteger("id"), "keyword", "lazy");
     }
@@ -63,7 +63,7 @@ public class KeywordMatcherTest extends AbstractIntegrationTest {
     public void itReturnsTheNextFilterThatMatchesTheEmailForAClient() throws Exception {
         keywordMatcher = new KeywordMatcher();
         filter1Keyword2.set("keyword", "pluto").saveIt();
-        Filter filter2 = Filter.createIt("name", "Fun Filter", "client_id", client.getInteger("id"), "time_interval", 5, "retries", 1, "mailing_group_id", mailingGroup.getInteger("id"));
+        Filter filter2 = Filter.createIt("name", "Fun Filter", "client_id", client.getInteger("id"), "time_interval", 5, "retries", 1, "assigned_mailing_group_id", mailingGroup.getInteger("id"));
         FilterKeyword.createIt("filter_id", filter2.getInteger("id"), "keyword", "dog");
 
         Filter machingFilter = keywordMatcher.emailMatchesFilter(emailText, client.getInteger("id"));
