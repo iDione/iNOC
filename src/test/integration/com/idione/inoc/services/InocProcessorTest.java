@@ -9,13 +9,9 @@ import javax.mail.MessagingException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 
 import com.idione.inoc.forms.EmailForm;
 import com.idione.inoc.models.Client;
-import com.idione.inoc.models.Email;
 import com.idione.inoc.test.AbstractIntegrationTest;
 
 import mockit.Expectations;
@@ -39,15 +35,15 @@ public class InocProcessorTest extends AbstractIntegrationTest {
     public void createFilter() {
         client1 = Client.createIt("name", "Mickey Mouse Club House", "host", "host1", "email", "email1", "password", "password1");
         client2 = Client.createIt("name", "Avengers Club", "host", "host2", "email", "email2", "password", "password2");
-        emailForm1 = new EmailForm("abcdef", "a to f");
-        emailForm2 = new EmailForm("ghijk", "g to k");
-        emailForm3 = new EmailForm("lmnop", "l to p");
+        emailForm1 = new EmailForm("abcdef", "a to f", "a2f");
+        emailForm2 = new EmailForm("ghijk", "g to k", "g2k");
+        emailForm3 = new EmailForm("lmnop", "l to p", "l2p");
     }
 
     @Test
-    public void itChecksEmailsForAllTheClients(@Mocked EmailReader emailReader, @Mocked ClientService clientService, @Mocked FilterMatchingService filterMatchingService) throws MessagingException, IOException {
+    public void itProcessesAllEmailsForAllTheClients(@Mocked EmailReader emailReader, @Mocked ClientService clientService, @Mocked EmailReaderService emailReaderService) throws MessagingException, IOException {
         {
-            InocProcessor inocProcessor = new InocProcessor(clientService, filterMatchingService);
+            InocProcessor inocProcessor = new InocProcessor(clientService, emailReaderService);
             final List<Client> allClients = new ArrayList<Client>();
             allClients.add(client1);
             allClients.add(client2);
@@ -71,7 +67,7 @@ public class InocProcessorTest extends AbstractIntegrationTest {
                     result = client1Emails;
                     emailReader2.processInbox();
                     result = client2Emails;
-                    filterMatchingService.matchFiltersForEmail(anyInt, anyInt, anyString);
+                    emailReaderService.processEmail(anyInt, (EmailForm) any);
                 }
             };
 
@@ -79,41 +75,14 @@ public class InocProcessorTest extends AbstractIntegrationTest {
 
             new Verifications() {
                 {
-                    filterMatchingService.matchFiltersForEmail(anyInt, client1.getInteger("id"), "a to f");
+                    emailReaderService.processEmail(client1.getInteger("id"), emailForm1);
                     times = 1;
-                    filterMatchingService.matchFiltersForEmail(anyInt, client1.getInteger("id"), "g to k");
+                    emailReaderService.processEmail(client1.getInteger("id"), emailForm2);
                     times = 1;
-                    filterMatchingService.matchFiltersForEmail(anyInt, client2.getInteger("id"), "l to p");
+                    emailReaderService.processEmail(client2.getInteger("id"), emailForm3);
                     times = 1;
                 }
             };
-        }
-    }
-
-    @Test
-    public void itLogsTheEmail(@Mocked EmailReader emailReader, @Mocked ClientService clientService, @Mocked FilterMatchingService filterMatchingService) throws MessagingException, IOException {
-        {
-            InocProcessor inocProcessor = new InocProcessor(clientService, filterMatchingService);
-            final List<Client> allClients = new ArrayList<Client>();
-            allClients.add(client2);
-            final List<EmailForm> client2Emails = new ArrayList<EmailForm>();
-            client2Emails.add(emailForm3);
-
-            emailReader2 = new EmailReader("host2", "email2", "password2");
-            new Expectations() {
-                {
-                    clientService.getClients("");
-                    result = allClients;
-                    new EmailReader("host2", "email2", "password2");
-                    result = emailReader2;
-                    emailReader2.processInbox();
-                    result = client2Emails;
-                    filterMatchingService.matchFiltersForEmail(anyInt, anyInt, anyString);
-                }
-            };
-            int noOfEmailsProcessedBefore = Email.findAll().size();
-            inocProcessor.run();
-            assertThat(Email.findAll().size(), is(equalTo(noOfEmailsProcessedBefore + 1)));
         }
     }
 }

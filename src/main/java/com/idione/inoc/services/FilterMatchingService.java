@@ -2,6 +2,7 @@ package com.idione.inoc.services;
 
 import org.springframework.stereotype.Service;
 
+import com.idione.inoc.models.Email;
 import com.idione.inoc.models.Filter;
 import com.idione.inoc.models.Issue;
 
@@ -16,11 +17,11 @@ public class FilterMatchingService {
         this.issueAssignmentService = issueAssignmentService;
     }
 
-    public void matchFiltersForEmail(int emailId, int clientId, String emailText) {
-        Filter matchingFilter = keywordMatcher.emailMatchesFilter(emailText, clientId);
+    public void matchFiltersForEmail(int clientId, Email email) {
+        Filter matchingFilter = keywordMatcher.emailMatchesFilter(email.getEmailText(), clientId);
         if (matchingFilter != null) {
-            Issue issue = Issue.createIt("email_id", emailId, "filter_id", matchingFilter.getInteger("id"));
-            issueAssignmentService.assignIssueToPOCUser(issue);
+            Issue issue = Issue.createIt("email_id", email.getEmailId(), "filter_id", matchingFilter.getInteger("id"));
+            issueAssignmentService.assignIssueToPOCUser(issue, email);
         }
     }
 }

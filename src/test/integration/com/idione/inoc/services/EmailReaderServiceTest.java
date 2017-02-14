@@ -4,9 +4,11 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.idione.inoc.forms.EmailForm;
 import com.idione.inoc.models.Email;
 import com.idione.inoc.test.AbstractIntegrationTest;
 
@@ -22,30 +24,52 @@ public class EmailReaderServiceTest extends AbstractIntegrationTest {
 
     private int clientId = 2016;
     private String emailText = "This is an email text.";
+    private String emailSubject = "Subject for the email";
     private String emailId = "6ad7248DFG12345";
+    private EmailForm emailForm;
+
+    @Before
+    public void setupEmail(){
+        emailForm = new EmailForm();
+        emailForm.setEmailText(emailText);
+        emailForm.setEmailSubject(emailSubject);
+        emailForm.setEmailId(emailId);
+    }
 
     @Test
     public void processEmailCreatesEmailRecord(@Mocked FilterMatchingService filterMatchingService) throws Exception {
         int beforeEmailCount = Email.findAll().size();
         new Expectations() {
             {
-                filterMatchingService.matchFiltersForEmail(anyInt, anyInt, anyString);
+                filterMatchingService.matchFiltersForEmail(anyInt, (Email)any);
             }
         };
         emailReaderService = new EmailReaderService(filterMatchingService);
-        emailReaderService.processEmail(clientId, emailText, emailId);
+        emailReaderService.processEmail(clientId, emailForm);
         int afterEmailCount = Email.findAll().size();
         assertThat(afterEmailCount, is(equalTo(beforeEmailCount + 1)));
     }
 
     @Test
     public void processEmailCallsTheFilterMatchingService(@Mocked FilterMatchingService filterMatchingService) throws Exception {
+        new Expectations() {
+            {
+                filterMatchingService.matchFiltersForEmail(anyInt, (Email)any);
+            }
+        };
         emailReaderService = new EmailReaderService(filterMatchingService);
-        emailReaderService.processEmail(clientId, emailText, emailId);
-        int lastEmailId = Email.where("external_email_id = ?", emailId).orderBy("id desc").get(0).getInteger("id");
+        emailReaderService.processEmail(clientId, emailForm);
+        Email lastEmail = (Email) Email.where("external_email_id = ?", emailId).orderBy("id desc").get(0);
+        lastEmail.setEmailText(emailText);
+        lastEmail.setEmailSubject(emailSubject);
+
         new Verifications() {
             {
-                filterMatchingService.matchFiltersForEmail(lastEmailId, clientId, emailText);
+                Email receivedEmail;
+                filterMatchingService.matchFiltersForEmail(clientId, receivedEmail = withCapture());
+                assertThat(lastEmail.getEmailId(), is(equalTo(receivedEmail.getEmailId())));
+                assertThat(lastEmail.getEmailSubject(), is(equalTo(receivedEmail.getEmailSubject())));
+                assertThat(lastEmail.getEmailText(), is(equalTo(receivedEmail.getEmailText())));
             }
         };
     }

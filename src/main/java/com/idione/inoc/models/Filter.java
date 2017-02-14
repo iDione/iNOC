@@ -7,8 +7,9 @@ import org.javalite.activejdbc.annotations.BelongsTo;
 import org.javalite.activejdbc.annotations.BelongsToParents;
 import org.javalite.activejdbc.annotations.Table;
 
-@BelongsToParents({ @BelongsTo(parent = MailingGroup.class, foreignKeyName = "mailing_group_id"),
-        @BelongsTo(parent = Client.class, foreignKeyName = "client_id") })
+@BelongsToParents({ @BelongsTo(parent = MailingGroup.class, foreignKeyName = "assigned_mailing_group_id"),
+                    @BelongsTo(parent = MailingGroup.class, foreignKeyName = "unassigned_mailing_group_id"),
+                    @BelongsTo(parent = Client.class, foreignKeyName = "client_id") })
 
 @Table("filters")
 public class Filter extends Model {
@@ -20,7 +21,11 @@ public class Filter extends Model {
         return getAll(FilterKeyword.class);
     }
 
-    public MailingGroup getMailingGroup() {
-        return this.parent(MailingGroup.class);
+    public MailingGroup getAssignedMailingGroup() {
+        return MailingGroup.findFirst("id = ?", get("assigned_mailing_group_id"));
+    }
+
+    public MailingGroup getUnassignedMailingGroup() {
+        return MailingGroup.findFirst("id = ?", get("unassigned_mailing_group_id"));
     }
 }

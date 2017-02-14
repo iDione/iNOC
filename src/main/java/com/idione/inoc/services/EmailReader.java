@@ -67,7 +67,7 @@ public class EmailReader {
     public List<EmailForm> process(Message[] messages) throws MessagingException, IOException {
         List<EmailForm> newEmails = new ArrayList<EmailForm>();
         for (Message message : messages) {
-            newEmails.add(new EmailForm(message.getHeader("Message-ID")[0], getText(message)));
+            newEmails.add(new EmailForm(message.getHeader("Message-ID")[0], getText(message), message.getSubject()));
         }
         return newEmails;
     }

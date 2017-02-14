@@ -18,4 +18,15 @@ public class MailingGroup extends Model {
     public int getClientId() {
         return getInteger("client_id");
     }
+
+    public String [] emails() {
+        List<PocUser> pocUsers = getUsers();
+        String[] emails = new String[pocUsers.size()];
+        int i = 0;
+        for(PocUser mgUser : pocUsers) {
+            emails[i] = mgUser.getString("email_address");
+            i++;
+        }
+        return emails;
+    }
 }

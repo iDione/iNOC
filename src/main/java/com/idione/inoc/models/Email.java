@@ -9,5 +9,22 @@ import org.javalite.activejdbc.annotations.Table;
 
 @Table("emails")
 public class Email extends Model {
+    private String emailSubject;
+    private String emailText;
 
+    public int getEmailId() {
+        return getInteger("id");
+    }
+    public String getEmailSubject() {
+        return emailSubject;
+    }
+    public void setEmailSubject(String emailSubject) {
+        this.emailSubject = emailSubject;
+    }
+    public String getEmailText() {
+        return emailText;
+    }
+    public void setEmailText(String emailText) {
+        this.emailText = emailText;
+    }
 }

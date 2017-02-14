@@ -34,6 +34,7 @@ public class FilterMatchingServiceTest extends AbstractIntegrationTest {
     public void createFilter() {
         client = Client.createIt("name", "Mickey Mouse Club House");
         email = Email.createIt("client_id", client.getInteger("id"));
+        email.setEmailText(emailText);
         mailingGroup = MailingGroup.createIt("client_id", client.getInteger("id"), "name", "A Mailing Group");
         filter = Filter.createIt("name", "A Filter", "client_id", client.getInteger("id"), "time_interval", 5, "retries", 1, "assigned_mailing_group_id", mailingGroup.getInteger("id"));
     }
@@ -47,10 +48,10 @@ public class FilterMatchingServiceTest extends AbstractIntegrationTest {
             }
         };
         filterMatchingService = new FilterMatchingService(keywordMatcher, issueAssignmentService);
-        filterMatchingService.matchFiltersForEmail(email.getInteger("id"), client.getInteger("id"), emailText);
+        filterMatchingService.matchFiltersForEmail(client.getInteger("id"), email);
         new Verifications() {
             {
-                issueAssignmentService.assignIssueToPOCUser((Issue) any);
+                issueAssignmentService.assignIssueToPOCUser((Issue) any, (Email) any);
                 times = 0;
             }
         };
@@ -66,7 +67,7 @@ public class FilterMatchingServiceTest extends AbstractIntegrationTest {
             }
         };
         filterMatchingService = new FilterMatchingService(keywordMatcher, issueAssignmentService);
-        filterMatchingService.matchFiltersForEmail(email.getInteger("id"), client.getInteger("id"), emailText);
+        filterMatchingService.matchFiltersForEmail(client.getInteger("id"), email);
         int afterIssueCount = Issue.findAll().size();
         assertThat(afterIssueCount, is(equalTo(beforeIssueCount + 1)));
     }
@@ -80,7 +81,7 @@ public class FilterMatchingServiceTest extends AbstractIntegrationTest {
             }
         };
         filterMatchingService = new FilterMatchingService(keywordMatcher, issueAssignmentService);
-        filterMatchingService.matchFiltersForEmail(email.getInteger("id"), client.getInteger("id"), emailText);
+        filterMatchingService.matchFiltersForEmail(client.getInteger("id"), email);
         Issue issueCreated = (Issue) Issue.where("filter_id = ?", filter.getInteger("id")).get(0);
         assertThat(issueCreated.getInteger("email_id"), is(equalTo(email.getInteger("id"))));
     }
@@ -94,12 +95,12 @@ public class FilterMatchingServiceTest extends AbstractIntegrationTest {
             }
         };
         filterMatchingService = new FilterMatchingService(keywordMatcher, issueAssignmentService);
-        filterMatchingService.matchFiltersForEmail(email.getInteger("id"), client.getInteger("id"), emailText);
+        filterMatchingService.matchFiltersForEmail(client.getInteger("id"), email);
         Issue issueCreated = (Issue) Issue.where("filter_id = ? and email_id = ?", filter.getInteger("id"), email.getInteger("id")).get(0);
         // TODO do an exact match to issueCreated
         new Verifications() {
             {
-                issueAssignmentService.assignIssueToPOCUser((Issue) any);
+                issueAssignmentService.assignIssueToPOCUser((Issue) any, (Email) any);
                 times = 1;
             }
         };

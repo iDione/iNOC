@@ -4,13 +4,15 @@ public class EmailForm {
 
     private String emailId;
     private String emailText;
+    private String emailSubject;
 
     public EmailForm() {
     }
 
-    public EmailForm(String emailId, String emailText) {
+    public EmailForm(String emailId, String emailText, String emailSubject) {
         this.emailId = emailId;
         this.emailText = emailText;
+        this.emailSubject = emailSubject;
     }
 
     public String getEmailId() {
@@ -27,5 +29,13 @@ public class EmailForm {
 
     public void setEmailText(String emailText) {
         this.emailText = emailText;
+    }
+
+    public String getEmailSubject() {
+        return emailSubject;
+    }
+
+    public void setEmailSubject(String emailSubject) {
+        this.emailSubject = emailSubject;
     }
 }
