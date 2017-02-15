@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import com.idione.inoc.forms.EmailForm;
+import com.idione.inoc.integration.ImapEmailReader;
 import com.idione.inoc.models.Client;
 import com.idione.inoc.test.AbstractIntegrationTest;
 
@@ -25,8 +26,8 @@ public class InocProcessorTest extends AbstractIntegrationTest {
     InocProcessor inocProcessor;
     Client client1;
     Client client2;
-    EmailReader emailReader1;
-    EmailReader emailReader2;
+    ImapEmailReader emailReader1;
+    ImapEmailReader emailReader2;
     EmailForm emailForm1;
     EmailForm emailForm2;
     EmailForm emailForm3;
@@ -41,7 +42,7 @@ public class InocProcessorTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void itProcessesAllEmailsForAllTheClients(@Mocked EmailReader emailReader, @Mocked ClientService clientService, @Mocked EmailReaderService emailReaderService) throws MessagingException, IOException {
+    public void itProcessesAllEmailsForAllTheClients(@Mocked ImapEmailReader emailReader, @Mocked ClientService clientService, @Mocked EmailReaderService emailReaderService) throws MessagingException, IOException {
         {
             InocProcessor inocProcessor = new InocProcessor(clientService, emailReaderService);
             final List<Client> allClients = new ArrayList<Client>();
@@ -53,15 +54,15 @@ public class InocProcessorTest extends AbstractIntegrationTest {
             final List<EmailForm> client2Emails = new ArrayList<EmailForm>();
             client2Emails.add(emailForm3);
 
-            emailReader1 = new EmailReader("host1", "email1", "password1");
-            emailReader2 = new EmailReader("host2", "email2", "password2");
+            emailReader1 = new ImapEmailReader("host1", "email1", "password1");
+            emailReader2 = new ImapEmailReader("host2", "email2", "password2");
             new Expectations() {
                 {
                     clientService.getClients("");
                     result = allClients;
-                    new EmailReader("host1", "email1", "password1");
+                    new ImapEmailReader("host1", "email1", "password1");
                     result = emailReader1;
-                    new EmailReader("host2", "email2", "password2");
+                    new ImapEmailReader("host2", "email2", "password2");
                     result = emailReader2;
                     emailReader1.processInbox();
                     result = client1Emails;

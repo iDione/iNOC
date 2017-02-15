@@ -1,4 +1,4 @@
-package com.idione.inoc.services;
+package com.idione.inoc.integration;
 
 import java.io.IOException;
 
@@ -8,13 +8,13 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.idione.inoc.services.EmailReader;
+import com.idione.inoc.integration.ImapEmailReader;
 import com.idione.inoc.test.AbstractIntegrationTest;
 
 @Ignore
-public class EmailReaderTest extends AbstractIntegrationTest {
+public class ImapEmailReaderTest extends AbstractIntegrationTest {
 
-    EmailReader emailReader;
+    ImapEmailReader emailReader;
     private String HOST = "imap.gmail.com";
     private String USERNAME = "inocdemo@gmail.com";
     private String PASSWORD = "Canyouhearmenow.";
@@ -22,7 +22,7 @@ public class EmailReaderTest extends AbstractIntegrationTest {
     @Before
     public void createFilter() {
         try {
-            emailReader = new EmailReader(HOST, USERNAME, PASSWORD);
+            emailReader = new ImapEmailReader(HOST, USERNAME, PASSWORD);
         } catch (MessagingException e) {
             e.printStackTrace();
         }

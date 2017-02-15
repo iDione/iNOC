@@ -1,4 +1,4 @@
-package twilio;
+package com.idione.inoc.integration;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.idione.inoc.integration.TwilioClient;
 import com.idione.inoc.models.Client;
 import com.idione.inoc.models.Email;
 import com.idione.inoc.models.Filter;
@@ -21,7 +22,6 @@ import com.idione.inoc.models.PocUser;
 import com.idione.inoc.models.TelephoneCall;
 import com.idione.inoc.services.TelephoneService;
 import com.idione.inoc.test.AbstractIntegrationTest;
-import com.idione.inoc.twilio.TwilioClient;
 import com.twilio.http.TwilioRestClient;
 import com.twilio.rest.api.v2010.account.Call;
 import com.twilio.rest.api.v2010.account.CallCreator;

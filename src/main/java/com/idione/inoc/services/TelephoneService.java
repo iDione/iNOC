@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
+import com.idione.inoc.integration.TwilioClient;
 import com.idione.inoc.models.IssuePocUser;
 import com.idione.inoc.models.TelephoneCall;
-import com.idione.inoc.twilio.TwilioClient;
 
 @Service
 public class TelephoneService {

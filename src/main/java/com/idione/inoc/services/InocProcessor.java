@@ -8,6 +8,7 @@ import javax.mail.MessagingException;
 import org.springframework.stereotype.Service;
 
 import com.idione.inoc.forms.EmailForm;
+import com.idione.inoc.integration.ImapEmailReader;
 import com.idione.inoc.models.Client;
 
 @Service
@@ -25,7 +26,7 @@ public class InocProcessor {
         List<Client> clients = clientService.getClients("");
         for (Client client : clients) {
             try {
-                EmailReader emailReader = new EmailReader(client.getString("host"), client.getString("email"), client.getString("password"));
+                ImapEmailReader emailReader = new ImapEmailReader(client.getString("host"), client.getString("email"), client.getString("password"));
                 List<EmailForm> newEmailsForClient = emailReader.processInbox();
                 for (EmailForm emailForm : newEmailsForClient) {
                     emailReaderService.processEmail(client.getClientId(), emailForm);

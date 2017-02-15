@@ -1,4 +1,4 @@
-package com.idione.inoc.services;
+package com.idione.inoc.integration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,13 +25,13 @@ import javax.mail.Flags.Flag;
 /*
  * Code referenced from http://www.oracle.com/technetwork/java/javamail/faq/index.html#mainbody
  */
-public class EmailReader {
+public class ImapEmailReader {
 
     private String PROTOCOL = "imaps";
     private Store store;
     private Folder inbox;
 
-    public EmailReader(String host, String userName, String password) throws MessagingException {
+    public ImapEmailReader(String host, String userName, String password) throws MessagingException {
         Properties properties = System.getProperties();
         properties.setProperty("mail.store.protocol", PROTOCOL);
 

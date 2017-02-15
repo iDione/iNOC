@@ -1,4 +1,4 @@
-package com.idione.inoc.twilio;
+package com.idione.inoc.integration;
 
 import java.net.URI;
 import java.util.concurrent.TimeUnit;
