@@ -133,7 +133,7 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
 
         new Verifications() {
             {
-                emailSenderService.sendMail(EmailSenderService.INOC_EMAIL_ADDRESS, expectedTo, "Issue Not Assigned To Anyone", "un assigned email template");
+                emailSenderService.sendMailViaGmail(EmailSenderService.INOC_EMAIL_ADDRESS, expectedTo, "Issue Not Assigned To Anyone", "un assigned email template");
                 times = 1;
             }
         };
@@ -155,7 +155,7 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
 
         new Verifications() {
             {
-                emailSenderService.sendMail(EmailSenderService.INOC_EMAIL_ADDRESS, expectedTo, "Issue Assigned", "assigned email template");
+                emailSenderService.sendMailViaGmail(EmailSenderService.INOC_EMAIL_ADDRESS, expectedTo, "Issue Assigned", "assigned email template");
                 times = 1;
             }
         };

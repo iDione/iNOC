@@ -35,14 +35,14 @@ public class IssueAssignmentService {
     }
 
     private void sendIssueUnassignedEmail(Issue issue, Email email) {
-        emailSenderService.sendMail(EmailSenderService.INOC_EMAIL_ADDRESS,
+        emailSenderService.sendMailViaGmail(EmailSenderService.INOC_EMAIL_ADDRESS,
                                     issue.filter().getUnassignedMailingGroup().emails(),
                                     "Issue Not Assigned To Anyone",
                                     issue.filter().getString("unassigned_email_template"));
     }
 
     private void sendIssueAssignedEmail(Issue issue, Email email) {
-        emailSenderService.sendMail(EmailSenderService.INOC_EMAIL_ADDRESS,
+        emailSenderService.sendMailViaGmail(EmailSenderService.INOC_EMAIL_ADDRESS,
                                     issue.filter().getAssignedMailingGroup().emails(),
                                     "Issue Assigned",
                                     issue.filter().getString("assigned_email_template"));

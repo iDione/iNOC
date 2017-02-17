@@ -19,7 +19,7 @@ import mockit.Verifications;
 import mockit.integration.junit4.JMockit;
 
 @RunWith(JMockit.class)
-public class EmailSenderTest extends AbstractIntegrationTest {
+public class EmailSenderServiceMandrillTest extends AbstractIntegrationTest {
 
     private String from = "from@inoc.tst";
     private String [] tos = { "to1@inoc.tst", "to2@inoc.tst" };
@@ -29,9 +29,9 @@ public class EmailSenderTest extends AbstractIntegrationTest {
     private final String [] successReturnStatuses = {"success", "success" };
     
     @Test
-    public void itCallsTheMaindrillMailerToSendEmail(@Mocked MandrillMailer mandrillMailer) throws MandrillApiError, IOException {
-        EmailSenderService emailSenderService = new EmailSenderService(mandrillMailer);
-        
+    public void itCallsTheMandrillMailerToSendEmail(@Mocked MandrillMailer mandrillMailer) throws MandrillApiError, IOException {
+        EmailSenderService emailSenderService = new EmailSenderService();
+        emailSenderService.setMandrillMailer(mandrillMailer);
         new Expectations() {
             {
                 mandrillMailer.sendMail(from, tos, subject, messageText);
@@ -39,7 +39,7 @@ public class EmailSenderTest extends AbstractIntegrationTest {
             }
         };
 
-        emailSenderService.sendMail(from, tos, subject, messageText);
+        emailSenderService.sendMailViaMandrill(from, tos, subject, messageText);
 
         new Verifications() {
             {
@@ -51,7 +51,8 @@ public class EmailSenderTest extends AbstractIntegrationTest {
     
     @Test
     public void itReturnsFalseIfEvenOneEmailFails(@Mocked MandrillMailer mandrillMailer) throws MandrillApiError, IOException {
-        EmailSenderService emailSenderService = new EmailSenderService(mandrillMailer);
+        EmailSenderService emailSenderService = new EmailSenderService();
+        emailSenderService.setMandrillMailer(mandrillMailer);
         
         new Expectations() {
             {
@@ -60,13 +61,14 @@ public class EmailSenderTest extends AbstractIntegrationTest {
             }
         };
 
-        boolean returnStatus = emailSenderService.sendMail(from, tos, subject, messageText);
+        boolean returnStatus = emailSenderService.sendMailViaMandrill(from, tos, subject, messageText);
         assertThat(returnStatus, is(equalTo(false)));
     }
     
     @Test
     public void itReturnsTrueIfAllEmailSucceed(@Mocked MandrillMailer mandrillMailer) throws MandrillApiError, IOException {
-        EmailSenderService emailSenderService = new EmailSenderService(mandrillMailer);
+        EmailSenderService emailSenderService = new EmailSenderService();
+        emailSenderService.setMandrillMailer(mandrillMailer);
         
         new Expectations() {
             {
@@ -75,7 +77,7 @@ public class EmailSenderTest extends AbstractIntegrationTest {
             }
         };
 
-        boolean returnStatus = emailSenderService.sendMail(from, tos, subject, messageText);
+        boolean returnStatus = emailSenderService.sendMailViaMandrill(from, tos, subject, messageText);
         assertThat(returnStatus, is(equalTo(true)));
     }
 
