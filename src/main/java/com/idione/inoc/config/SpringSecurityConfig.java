@@ -53,12 +53,12 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         csrf().ignoringAntMatchers("/twilio/**").
         and().authorizeRequests().
         antMatchers("/css/**", "/login", "/js/**", "/images/**", "/twilio/**").permitAll().
-        antMatchers("/mailingGroups/**", "/filters/**", "/pocUsers/**").hasRole("ADMIN").
+        antMatchers("/mailingGroups/**", "/filters/**", "/pocUsers/**", "/dashboard").hasRole("ADMIN").
         antMatchers("/clients/**", "/admin").hasRole("SUPER").
         and().formLogin().  //login configuration
         usernameParameter("username").
         passwordParameter("password").
-        defaultSuccessUrl("/filters").
+        defaultSuccessUrl("/dashboard").
         and().exceptionHandling().accessDeniedPage("/error").
         and().logout().    //logout configuration
         logoutUrl("/logout"). 

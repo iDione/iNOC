@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div th:fragment="sidenav">
+		<nav class="navbar navbar-default" role="navigation">
+			<!-- Main Menu -->
+			<div class="side-menu-container">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="/dashboard"><span
+							class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
+					<li><a th:href="@{/filters}"><span
+							class="glyphicon glyphicon-envelope"></span> Filters</a></li>
+					<li><a th:href="@{/pocUsers}"><span
+							class="glyphicon glyphicon-user"></span> Users</a></li>
+					<li><a th:href="@{/mailingGroups}"><span
+							class="glyphicon glyphicon-envelope"></span> Mailing Groups</a></li>
+					<li><a th:href="@{/clients}"><span
+							class="glyphicon glyphicon-user"></span> Clients</a></li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+</body>
+</html>

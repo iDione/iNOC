@@ -1,17 +1,32 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/layout">
+
 <head>
-    <title>Edit Poc User</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>iNoc Edit POC User</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-  <body>
-    <div th:include="common/header::header"></div>
-    <p>Edit POC User:</p>
-    <form action="#" th:action="@{/pocUsers/save}" th:object="${pocUserForm}" method="post">
-      <input th:hidden="true" th:field="*{id}" />
-      <div th:include="pocUsers/form::form"></div>
-      <input type="submit" value="Update POC User"/>
-    </form>
-    <div th:include="common/footer::footer"></div>
-  </body>
+
+<body>
+	<div layout:fragment="content">
+		<div class="panel-heading">Edit POC User</div>
+		<div class="panel-body">
+			<div class="container">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-12">
+							<form action="#" th:action="@{/pocUsers/save}"
+								th:object="${pocUserForm}" method="post">
+								<input th:hidden="true" th:field="*{id}" />
+								<div th:include="pocUsers/form::form"></div>
+								<input type="submit" value="Update POC User" />
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
 </html>

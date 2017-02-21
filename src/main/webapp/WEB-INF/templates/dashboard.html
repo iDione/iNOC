@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/layout">
+
+<head>
+<title>iNoc dashboard</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="panel-heading">Dashboard</div>
+		<div class="panel-body">
+			<div class="container">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-12">
+							<h3>System Status</h3>
+							<p>Last successful run, number of active filters, email processed etc etc</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

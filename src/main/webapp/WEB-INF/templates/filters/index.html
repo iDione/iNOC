@@ -1,34 +1,49 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/layout">
+
 <head>
-<title>Filters</title>
+<title>iNoc search filter</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
+
 <body>
-	<div th:include="common/header::header"></div>
-	<div th:if="${not #lists.isEmpty(filters)}">
-		<p>Filters</p>
-		<table border="1">
-			<thead>
-				<tr>
-					<th>Edit</th>
-					<th>Name</th>
-					<th>Retries</th>
-					<th>Time Interval</th>
-					<th>No. Of Users</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="filter: ${filters}">
-					<td><a th:href="@{'/filters/edit/' + ${filter.id}}">Edit</a></td>
-					<td th:text="${{filter.get('name')}}" />
-					<td th:text="${{filter.get('retries')}}" />
-					<td th:text="${{filter.get('time_interval')}}" />
-					<td th:text="${{filter.getUsers().size()}}" />
-				</tr>
-			</tbody>
-		</table>
+	<div layout:fragment="content">
+		<div class="panel-heading">Search Filters    <a th:href="@{/filters/new.html}">Add Filter</a></div>
+		<div class="panel-body">
+			<div class="container">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-12">
+							<div th:if="${not #lists.isEmpty(filters)}">
+								<p>Filters</p>
+								<table border="1">
+									<thead>
+										<tr>
+											<th>Edit</th>
+											<th>Name</th>
+											<th>Retries</th>
+											<th>Time Interval</th>
+											<th>No. Of Users</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="filter: ${filters}">
+											<td><a th:href="@{'/filters/edit/' + ${filter.id}}">Edit</a></td>
+											<td th:text="${{filter.get('name')}}" />
+											<td th:text="${{filter.get('retries')}}" />
+											<td th:text="${{filter.get('time_interval')}}" />
+											<td th:text="${{filter.getUsers().size()}}" />
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div th:include="common/footer::footer"></div>
 </body>
 </html>

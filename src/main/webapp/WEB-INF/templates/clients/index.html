@@ -1,12 +1,21 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/layout">
+
 <head>
-<title>Search Clients</title>
+<title>iNoc Search CLient</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
+
 <body>
-	<div th:include="common/header::header"></div>
-	<p>Search Client:</p>
+	<div layout:fragment="content">
+		<div class="panel-heading">Search Client <a th:href="@{/clients/new.html}">Add Client</a></div>
+		<div class="panel-body">
+			<div class="container">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-12">
 	<form action="#" th:action="@{/clients}" method="get">
 		<fieldset>
 			Name: <input type="text" name="name" /> <input type="submit"
@@ -33,6 +42,11 @@
 			</tbody>
 		</table>
 	</div>
-	<div th:include="common/footer::footer"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

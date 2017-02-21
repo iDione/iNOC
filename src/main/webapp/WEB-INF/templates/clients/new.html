@@ -1,16 +1,31 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/layout">
+
 <head>
-    <title>Create Client</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>iNoc Add Client</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-  <body>
-    <div th:include="common/header::header"></div>
-    <p>Add New Client:</p>
-    <form action="#" th:action="@{/clients/save}" th:object="${clientForm}" method="post">
-      <div th:include="clients/form::form"></div>
-      <input type="submit" value="Create Client"/>
-    </form>
-    <div th:include="common/footer::footer"></div>
-  </body>
+
+<body>
+	<div layout:fragment="content">
+		<div class="panel-heading">Add Client</div>
+		<div class="panel-body">
+			<div class="container">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-12">
+							<form action="#" th:action="@{/clients/save}"
+								th:object="${clientForm}" method="post">
+								<div th:include="clients/form::form"></div>
+								<input type="submit" value="Create Client" />
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
 </html>

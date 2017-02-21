@@ -12,7 +12,12 @@ public class LoginController {
 
     @GetMapping("/")
     public String home(Map<String, Object> model) {
-        return "home";
+        return "/dashboard";
+    }
+
+    @GetMapping("/dashboard")
+    public String dashboard(Map<String, Object> model) {
+        return "/dashboard";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

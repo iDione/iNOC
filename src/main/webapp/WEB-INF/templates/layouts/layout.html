@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+
+<head>
+<title>Mantis</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- Bootstrap core CSS -->
+<div th:include="fragments/jquery::jquery"></div>
+
+<!-- Custom styles for this template -->
+<link href="../css/mantis/dashboard.css"
+	th:href="@{/css/mantis/dashboard.css}" rel="stylesheet" media="screen" />
+
+</head>
+
+<body>
+	<div th:include="fragments/header::header"></div>
+
+	<div class="container">
+		<div class="container-fluid main-container">
+			<div class="col-md-2 sidebar">
+				<div class="row">
+					<!-- uncomment code for absolute positioning tweek see top comment in css -->
+					<div class="absolute-wrapper"></div>
+					<div class="side-menu">
+						<div th:include="fragments/sidenav::sidenav"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-10 content">
+				<div class="panel panel-default">
+				<div layout:fragment="content">
+                    <h1>Static content for prototyping purposes only</h1>
+                </div>
+				</div>
+			</div>
+
+		</div>
+
+		<hr></hr>
+
+		<div th:include="fragments/footer::footer"></div>
+
+	</div>
+</body>
+</html>

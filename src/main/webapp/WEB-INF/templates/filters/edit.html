@@ -1,19 +1,37 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/layout">
+
 <head>
-    <title>Edit Filter</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script src="/js/filter.js"></script>
+<title>iNoc Edit Filter</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"
+	integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+	crossorigin="anonymous"></script>
+<script src="/js/filter.js"></script>
+
 </head>
-  <body>
-    <div th:include="common/header::header"></div>
-    <p>Edit Filter:</p>
-    <form action="#" th:action="@{/filters/save}" th:object="${filterForm}" method="post">
-      <input th:hidden="true" th:field="*{id}" />
-      <div th:include="filters/form::form"></div>
-      <input id="updateFilter" type="submit" value="Update Filter"/>
-    </form>
-    <div th:include="common/footer::footer"></div>
-  </body>
+
+<body>
+	<div layout:fragment="content">
+		<div class="panel-heading">Edit Filter</div>
+		<div class="panel-body">
+			<div class="container">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-12">
+							<form action="#" th:action="@{/filters/save}"
+								th:object="${filterForm}" method="post">
+								<input th:hidden="true" th:field="*{id}" />
+								<div th:include="filters/form::form"></div>
+								<input id="updateFilter" type="submit" value="Update Filter" />
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
 </html>

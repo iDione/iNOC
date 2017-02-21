@@ -13,6 +13,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.thymeleaf.spring4.SpringTemplateEngine;
 import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
+
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 //import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
@@ -46,7 +48,7 @@ public class ThymeleafConfig extends WebMvcConfigurerAdapter implements Applicat
         templateResolver.setTemplateMode("HTML5");
         // Template cache is true by default. Set to false if you want
         // templates to be automatically updated when modified.
-        templateResolver.setCacheable(true);
+        templateResolver.setCacheable(false);
         return templateResolver;
     }
 
@@ -54,6 +56,7 @@ public class ThymeleafConfig extends WebMvcConfigurerAdapter implements Applicat
     public SpringTemplateEngine templateEngine(){
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
+        templateEngine.addDialect(new LayoutDialect());
 //        templateEngine.addDialect(new SpringSecurityDialect());
         return templateEngine;
     }
