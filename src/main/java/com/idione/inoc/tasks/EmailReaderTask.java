@@ -19,8 +19,11 @@ public class EmailReaderTask {
     
     @Scheduled(fixedDelay = 60000)
     public void reportCurrentTime() {
-        Base.open();
-        inocProcessor.run();
-        Base.close();
+        try {
+            Base.open();
+            inocProcessor.run();
+        } finally {
+            Base.close();
+        }
     }
 }

@@ -6,7 +6,7 @@
 	<groupId>com.idione.inoc</groupId>
 	<artifactId>inoc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>inoc</name>
 	<description>Call routing based on email keywords</description>
@@ -93,6 +93,13 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				    <executions>
+                        <execution>
+                           <goals>
+                               <goal>repackage</goal>
+                           </goals>
+                        </execution>
+                    </executions>
 			</plugin>
 			<plugin>
                 <groupId>org.javalite</groupId>

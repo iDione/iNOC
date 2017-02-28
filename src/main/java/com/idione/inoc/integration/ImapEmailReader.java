@@ -35,7 +35,7 @@ public class ImapEmailReader {
         Properties properties = System.getProperties();
         properties.setProperty("mail.store.protocol", PROTOCOL);
 
-        Session session = Session.getDefaultInstance(properties, null);
+        Session session = Session.getInstance(properties, null);
         store = session.getStore("imaps");
         store.connect(host, userName, password);
     }

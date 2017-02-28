@@ -43,7 +43,7 @@ public class ThymeleafConfig extends WebMvcConfigurerAdapter implements Applicat
     public SpringResourceTemplateResolver templateResolver(){
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(this.applicationContext);
-        templateResolver.setPrefix("/WEB-INF/templates/");
+        templateResolver.setPrefix("classpath:/WEB-INF/templates/");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode("HTML5");
         // Template cache is true by default. Set to false if you want
@@ -71,9 +71,9 @@ public class ThymeleafConfig extends WebMvcConfigurerAdapter implements Applicat
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         super.addResourceHandlers(registry);
-        registry.addResourceHandler("/images/**").addResourceLocations("/images/");
-        registry.addResourceHandler("/css/**").addResourceLocations("/css/");
-        registry.addResourceHandler("/js/**").addResourceLocations("/js/");
+        registry.addResourceHandler("/images/**").addResourceLocations("classpath:/images/");
+        registry.addResourceHandler("/css/**").addResourceLocations("classpath:/css/");
+        registry.addResourceHandler("/js/**").addResourceLocations("classpath:/js/");
     }
 
 }

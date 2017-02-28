@@ -21,15 +21,18 @@ public class CustomUserDetailsService implements UserDetailsService{
     @Autowired private PocUserService pocUserService;
         
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Base.open();
-        PocUser user = pocUserService.getPocUserByEmail(username);
-        if(user == null){
-            throw new UsernameNotFoundException("Username not found"); 
+        try {
+            Base.open();
+            PocUser user = pocUserService.getPocUserByEmail(username);
+            if (user == null) {
+                throw new UsernameNotFoundException("Username not found");
+            }
+            List<GrantedAuthority> roles = getGrantedAuthorities(user);
+            UserDetails ud = new org.springframework.security.core.userdetails.User(user.getString("email_address"), user.getString("password"), roles);
+            return ud;
+        } finally {
+            Base.close();
         }
-        List<GrantedAuthority> roles = getGrantedAuthorities(user);
-        UserDetails ud =  new org.springframework.security.core.userdetails.User(user.getString("email_address"), user.getString("password"), roles);
-        Base.close();
-        return ud;
     }
 
     
