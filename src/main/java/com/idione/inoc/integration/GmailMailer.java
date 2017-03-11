@@ -34,7 +34,7 @@ public class GmailMailer {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
         }
         message.setSubject(subject);
-        message.setText(messageText);
+        message.setContent(messageText, "text/html");
         Transport.send(message);
     }
 }

@@ -11,21 +11,30 @@
             th:src="@{/webjars/jquery/2.2.1/jquery.min.js}"></script>
 </head>
 <body>
-<div th:fragment="header">
-<nav class="navbar navbar-fixed-top navbar-inverse">
-		<div class="container">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="/dashboard">iNoc</a>
+	<div th:fragment="header">
+		<nav class="navbar navbar-fixed-top navbar-inverse">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/dashboard">iNoc</a>
+				</div>
+				<div id="navbar" class="collapse navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li><a href="/dashboard">Home</a></li>
+						<li><a href="#about">About</a></li>
+						<li><a href="contact.html">Contact</a></li>
+					</ul>
+				</div>
 			</div>
-			<div id="navbar" class="collapse navbar-collapse">
-				<ul class="nav navbar-nav">
-					<li><a href="/dashboard">Home</a></li>
-					<li><a href="#about">About</a></li>
-					<li><a href="contact.html">Contact</a></li>
-				</ul>
+		</nav>
+	</div>
+		<div th:fragment="emailHeader">
+		<nav class="navbar navbar-fixed-top navbar-inverse">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="http://138.197.119.122:8080/login">iNoc</a>
+				</div>
 			</div>
-		</div>
-	</nav>
+		</nav>
 	</div>
 </body>
 </html>

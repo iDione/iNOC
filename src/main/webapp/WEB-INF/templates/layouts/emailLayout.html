@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/emailLayout}">
+
+<head>
+<title>iNoc Email</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<!-- Custom styles for this template -->
+<link href="http://138.197.119.122:8080/css/mantis/dashboard.css" rel="stylesheet" media="screen" />
+
+</head>
+
+<body>
+	<div th:include="fragments/header::emailHeader"></div>
+
+	<div class="container">
+		<div class="container-fluid main-container">
+			<div class="col-md-10 content">
+				<div class="panel panel-default">
+				<div layout:fragment="content">
+                    <h1>Static content for prototyping purposes only</h1>
+                </div>
+				</div>
+			</div>
+
+		</div>
+		<hr></hr>
+		<div th:include="fragments/footer::footer"></div>
+	</div>
+</body>
+</html>
