@@ -32,12 +32,32 @@ $(document).ready(function () {
     $("#updateFilter").click(function (e) {
     	$('#keywords option').prop('selected', true);
     	$('#pocUserIds option').prop('selected', true);
+    	$('#assignedEmailTemplate').val($('#assignedEmailTemplateEditor').html());
+    	$('#unassignedEmailTemplate').val($('#unassignedEmailTemplateEditor').html());
     });
 
     $("#createFilter").click(function (e) {
     	$('#keywords option').prop('selected', true);
     	$('#pocUserIds option').prop('selected', true);
+    	$('#assignedEmailTemplate').val($('#assignedEmailTemplateEditor').html());
+    	$('#unassignedEmailTemplate').val($('#unassignedEmailTemplateEditor').html());
     });
 
     $("#addUser").click();
+
+	$('#assignedEmailTemplateEditor').wysiwyg({
+			'text-field': 'assignedEmailTemplate',
+			toolbarSelector: '[data-role=editor1-toolbar]',
+			'seperate-binary': false
+	});
+
+	$('#unassignedEmailTemplateEditor').wysiwyg({
+			'text-field': 'unassignedEmailTemplate',
+			toolbarSelector: '[data-role=editor2-toolbar]',
+			'seperate-binary': false
+	});
+
+	$(".dropdown-menu > input").click(function (e) {
+        e.stopPropagation();
+	});
 });
