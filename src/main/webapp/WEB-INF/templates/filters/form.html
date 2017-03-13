@@ -57,7 +57,7 @@
 			</select>
   </div>
   <br/>
-  <div class="row">Assigned Email Template</div>
+  <div class="row">Assigned Email Template (ISSUE_ASSIGNED_USER_NAME)</div>
   <div th:include="filters/wysiwygIncludes::toolbar_includes('assignedEmailTemplateToolbar', 'editor1-toolbar')"></div>
   <input type='hidden' name='assignedEmailTemplate' id='assignedEmailTemplate'/>
   <div id="assignedEmailTemplateEditor" th:utext="${filterForm.assignedEmailTemplate}"></div>
