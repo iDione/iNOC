@@ -1,8 +1,20 @@
 <div th:fragment="form">
 <fieldset>
-  Name: <input type="text" th:field="*{name}" />
-  Email: <input type="text" th:field="*{email}" />
-  Host: <input type="text" th:field="*{host}" />
-  Password: <input type="text" th:field="*{password}" />
+  <div class="row">
+    Name: <input type="text" th:field="*{name}" />
+  </div>
+  <br/>
+  <div class="row">
+    Email: <input type="text" th:field="*{email}" />
+  </div>
+  <br/>
+  <div class="row">
+    Host: <input type="text" th:field="*{host}" />
+  </div>
+  <br/>
+  <div class="row">
+    Password: <input type="text" th:field="*{password}" />
+  </div>
+  <br/>
 </fieldset>
 </div>

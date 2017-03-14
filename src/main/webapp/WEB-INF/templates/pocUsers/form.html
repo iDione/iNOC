@@ -1,10 +1,25 @@
 <div th:fragment="form">
 <fieldset>
   <input th:hidden="true" th:field="*{clientId}" />
+  <div class="row">
   First Name: <input type="text" th:field="*{firstName}" />
+  </div>
+  <br/>
+  <div class="row">
   Last Name: <input type="text" th:field="*{lastName}" />
+  </div>
+  <br/>
+  <div class="row">
   Email: <input type="text" th:field="*{emailAddress}" />
+  </div>
+  <br/>
+  <div class="row">
   Phone: <input type="text" th:field="*{phoneNumber}" />
+  </div>
+  <br/>
+  <div class="row">
   Password: <input type="text" th:field="*{password}" />
+  </div>
+  <br/>
 </fieldset>
 </div>

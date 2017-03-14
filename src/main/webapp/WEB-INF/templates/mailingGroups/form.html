@@ -1,7 +1,11 @@
 <div th:fragment="form">
 <fieldset>
   <input th:hidden="true" th:field="*{clientId}" />
+  <div class="row">
   Name: <input type="text" th:field="*{name}" />
+  </div>
+  <br/>
+  <div class="row">
   Poc Users: <select id="pocUserIds" th:name="pocUserIds" size="5" multiple="multiple">
 			    <option th:each="pocUser : ${allPocUsers}"
 						th:value="${{pocUser.getInteger('id')}}"
@@ -9,5 +13,7 @@
 						th:selected="${mailingGroupForm.pocUserIds.contains(pocUser.getInteger('id'))}">
 			    </option>
 			</select>
+  </div>
+  <br/>
 </fieldset>
 </div>
