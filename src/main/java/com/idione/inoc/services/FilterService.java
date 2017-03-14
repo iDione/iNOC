@@ -34,7 +34,8 @@ public class FilterService {
                        "assigned_mailing_group_id", filterForm.getAssignedMailingGroupId(),
                        "unassigned_mailing_group_id", filterForm.getUnassignedMailingGroupId(),
                        "assigned_email_template", filterForm.getAssignedEmailTemplate(),
-                       "unassigned_email_template", filterForm.getUnassignedEmailTemplate()
+                       "unassigned_email_template", filterForm.getUnassignedEmailTemplate(),
+                       "hold_issue_creations_for", filterForm.getHoldIssueCreationsFor()
                        ).saveIt();
             deletePocUsers(filterForm.getId());
             createPocUsers(filterForm.getId(), filterForm.getPocUserIds());
@@ -50,7 +51,8 @@ public class FilterService {
                                             "assigned_mailing_group_id", filterForm.getAssignedMailingGroupId(),
                                             "unassigned_mailing_group_id", filterForm.getUnassignedMailingGroupId(),
                                             "assigned_email_template", filterForm.getAssignedEmailTemplate(),
-                                            "unassigned_email_template", filterForm.getUnassignedEmailTemplate()
+                                            "unassigned_email_template", filterForm.getUnassignedEmailTemplate(),
+                                            "hold_issue_creations_for", filterForm.getHoldIssueCreationsFor()
                                             );
             createPocUsers(filter.getInteger("id"), filterForm.getPocUserIds());
             createKeywords(filter.getInteger("id"), filterForm.getKeywords());

@@ -20,7 +20,8 @@ public class FilterForm {
     private String unassignedEmailTemplate;
     private List<Integer> pocUserIds = new ArrayList<Integer>();
     private List<String> keywords = new ArrayList<String>();
-
+    private Integer holdIssueCreationsFor;
+    
     public FilterForm() {
     }
 
@@ -38,6 +39,7 @@ public class FilterForm {
         this.unassignedEmailTemplate = filter.getString("unassigned_email_template");       
         this.retries = filter.getInteger("retries");
         this.timeInterval = filter.getInteger("time_interval");
+        this.holdIssueCreationsFor = filter.getInteger("hold_issue_creations_for");
         for (PocUser pocUser : filter.getUsers()) {
             pocUserIds.add(pocUser.getInteger("id"));
         }
@@ -132,5 +134,13 @@ public class FilterForm {
 
     public void setUnassignedEmailTemplate(String unassignedEmailTemplate) {
         this.unassignedEmailTemplate = unassignedEmailTemplate;
+    }
+
+    public Integer getHoldIssueCreationsFor() {
+        return holdIssueCreationsFor;
+    }
+
+    public void setHoldIssueCreationsFor(Integer holdIssueCreationsFor) {
+        this.holdIssueCreationsFor = holdIssueCreationsFor;
     }
 }

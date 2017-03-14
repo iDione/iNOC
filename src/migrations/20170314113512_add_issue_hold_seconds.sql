@@ -1,0 +1,1 @@
+ALTER TABLE filters ADD COLUMN hold_issue_creations_for INT DEFAULT 0;
