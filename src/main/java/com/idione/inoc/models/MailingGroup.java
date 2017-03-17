@@ -1,11 +1,13 @@
 package com.idione.inoc.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.BelongsTo;
 import org.javalite.activejdbc.annotations.BelongsToParents;
 import org.javalite.activejdbc.annotations.Table;
+import org.springframework.util.StringUtils;
 
 @BelongsToParents({ @BelongsTo(parent = Client.class, foreignKeyName = "client_id") })
 
@@ -20,13 +22,19 @@ public class MailingGroup extends Model {
     }
 
     public String [] emails() {
+        List<String> emails = new ArrayList<String>();
+
         List<PocUser> pocUsers = getUsers();
-        String[] emails = new String[pocUsers.size()];
-        int i = 0;
         for(PocUser mgUser : pocUsers) {
-            emails[i] = mgUser.getString("email_address");
-            i++;
+            emails.add(mgUser.getString("email_address"));
         }
-        return emails;
+
+        if(!StringUtils.isEmpty(getString("include_email_addresses"))){
+            String [] otherEmails = getString("include_email_addresses").split(",");
+            for(String otherEmail : otherEmails){
+                emails.add(otherEmail.trim());
+            }
+        }
+        return emails.toArray(new String[emails.size()]);
     }
 }

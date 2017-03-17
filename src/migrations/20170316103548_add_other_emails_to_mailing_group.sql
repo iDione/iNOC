@@ -1,0 +1,1 @@
+ALTER TABLE mailing_groups ADD COLUMN include_email_addresses varchar(250);

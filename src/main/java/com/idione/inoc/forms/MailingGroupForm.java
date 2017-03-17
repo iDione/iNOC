@@ -12,6 +12,7 @@ public class MailingGroupForm {
     private int id;
     private int clientId;
     private List<Integer> pocUserIds = new ArrayList<Integer>();
+    private String includeEmailAddresses;
 
     public MailingGroupForm() {
     }
@@ -24,6 +25,7 @@ public class MailingGroupForm {
         this.id = mailingGroup.getInteger("id");
         this.clientId = mailingGroup.getInteger("client_id");
         this.name = mailingGroup.getString("name");
+        this.includeEmailAddresses = mailingGroup.getString("include_email_addresses");
         for (PocUser pocUser : mailingGroup.getUsers()) {
             pocUserIds.add(pocUser.getInteger("id"));
         }
@@ -59,6 +61,14 @@ public class MailingGroupForm {
 
     public void setPocUserIds(List<Integer> pocUserIds) {
         this.pocUserIds = pocUserIds;
+    }
+
+    public String getIncludeEmailAddresses() {
+        return includeEmailAddresses;
+    }
+
+    public void setIncludeEmailAddresses(String includeEmailAddresses) {
+        this.includeEmailAddresses = includeEmailAddresses;
     }
 
 }

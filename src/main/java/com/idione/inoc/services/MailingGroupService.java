@@ -27,12 +27,12 @@ public class MailingGroupService {
     public MailingGroup saveMailingGroup(MailingGroupForm mailingGroupForm) {
         if (mailingGroupForm.getId() > 0) {
             MailingGroup mailingGroup = MailingGroup.findFirst("id = ?", mailingGroupForm.getId());
-            mailingGroup.set("name", mailingGroupForm.getName()).saveIt();
+            mailingGroup.set("name", mailingGroupForm.getName(), "include_email_addresses", mailingGroupForm.getIncludeEmailAddresses()).saveIt();
             deletePocUsers(mailingGroupForm.getId());
             createPocUsers(mailingGroupForm.getId(), mailingGroupForm.getPocUserIds());
             return mailingGroup;
         } else {
-            MailingGroup mailingGroup = MailingGroup.createIt("client_id", mailingGroupForm.getClientId(), "name", mailingGroupForm.getName());
+            MailingGroup mailingGroup = MailingGroup.createIt("client_id", mailingGroupForm.getClientId(), "name", mailingGroupForm.getName(), "include_email_addresses", mailingGroupForm.getIncludeEmailAddresses());
             createPocUsers(mailingGroup.getInteger("id"), mailingGroupForm.getPocUserIds());
             return mailingGroup;
         }
