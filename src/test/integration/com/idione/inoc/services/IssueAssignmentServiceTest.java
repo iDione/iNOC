@@ -7,6 +7,8 @@ import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.IContext;
 
 import com.idione.inoc.models.Client;
 import com.idione.inoc.models.Email;
@@ -54,15 +56,17 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void itCallsAnUserForTheFilter(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService) {
+    public void itCallsAnUserForTheFilter(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService, @Mocked TemplateEngine emailTemplateEngine) {
         new Expectations() {
             {
                 telephoneService.makeIssueAcceptanceCall(anyInt, telephoneNumber1, retries);
                 result = "accepted";
+                emailTemplateEngine.process(anyString, (IContext) any);
+                result = "Lets do the hot dog dance";
             }
         };
 
-        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService);
+        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService, emailTemplateEngine);
         issueAssignmentService.assignIssueToPOCUser(issue, email);
         IssuePocUser issuePocUser = IssuePocUser.findFirst("issue_id = ? and poc_user_id = ?", issue.getInteger("id"), pocUser1.getInteger("id"));
         new Verifications() {
@@ -74,15 +78,17 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void itCreatesAnIssuePocUserWithTheRightInformation(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService) {
+    public void itCreatesAnIssuePocUserWithTheRightInformation(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService, @Mocked TemplateEngine emailTemplateEngine) {
         new Expectations() {
             {
                 telephoneService.makeIssueAcceptanceCall(anyInt, telephoneNumber1, retries);
                 result = "accepted";
+                emailTemplateEngine.process(anyString, (IContext) any);
+                result = "Lets do the hot dog dance";
             }
         };
 
-        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService);
+        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService, emailTemplateEngine);
         issueAssignmentService.assignIssueToPOCUser(issue, email);
 
         IssuePocUser issuePocUser = (IssuePocUser) IssuePocUser.where("issue_id = ?", issue.getInteger("id")).get(0);
@@ -90,7 +96,7 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void itCallsSecondUserForTheFilterIfFirstUserDeclines(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService) {
+    public void itCallsSecondUserForTheFilterIfFirstUserDeclines(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService, @Mocked TemplateEngine emailTemplateEngine) {
         pocUser2 = PocUser.createIt("client_id", client.getInteger("id"), "first_name", "Donald", "last_name", "Duck", "phone_number", "2222222222");
         FilterPocUser.createIt("filter_id", filter.getInteger("id"), "poc_user_id", pocUser2.getInteger("id"));
 
@@ -100,10 +106,12 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
                 result = "declined";
                 telephoneService.makeIssueAcceptanceCall(anyInt, telephoneNumber2, retries);
                 result = "accepted";
+                emailTemplateEngine.process(anyString, (IContext) any);
+                result = "Lets do the hot dog dance";
             }
         };
 
-        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService);
+        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService, emailTemplateEngine);
         issueAssignmentService.assignIssueToPOCUser(issue, email);
         IssuePocUser issuePocUser1 = IssuePocUser.findFirst("issue_id = ? and poc_user_id = ?", issue.getInteger("id"), pocUser1.getInteger("id"));
         IssuePocUser issuePocUser2 = IssuePocUser.findFirst("issue_id = ? and poc_user_id = ?", issue.getInteger("id"), pocUser2.getInteger("id"));
@@ -118,44 +126,48 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void itSendsAUnassignedEmailIfAllUsersDecline(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService) {
+    public void itSendsAUnassignedEmailIfAllUsersDecline(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService, @Mocked TemplateEngine emailTemplateEngine) {
         MailingGroupPocUser.createIt("mailing_group_id", mailingGroup.getInteger("id"), "poc_user_id", pocUser1.getInteger("id"));
         final String[] expectedTo = { pocUser1.getString("email_address") };
         new Expectations() {
             {
                 telephoneService.makeIssueAcceptanceCall(anyInt, anyString, anyInt);
                 result = "declined";
+                emailTemplateEngine.process(anyString, (IContext) any);
+                result = "Lets do the hot dog dance";
             }
         };
 
-        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService);
+        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService, emailTemplateEngine);
         issueAssignmentService.assignIssueToPOCUser(issue, email);
 
         new Verifications() {
             {
-                emailSenderService.sendMailViaGmail(EmailSenderService.INOC_EMAIL_ADDRESS, expectedTo, "Issue Not Assigned To Anyone", "un assigned email template");
+                emailSenderService.sendMailViaGmail(EmailSenderService.INOC_EMAIL_ADDRESS, expectedTo, "Issue Not Assigned To Anyone", "Lets do the hot dog dance");
                 times = 1;
             }
         };
     }
 
     @Test
-    public void itSendsAAssignedEmailIfAnUsersAccepts(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService) {
+    public void itSendsAAssignedEmailIfAnUsersAccepts(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService, @Mocked TemplateEngine emailTemplateEngine) {
         MailingGroupPocUser.createIt("mailing_group_id", mailingGroup.getInteger("id"), "poc_user_id", pocUser1.getInteger("id"));
         final String[] expectedTo = { pocUser1.getString("email_address") };
         new Expectations() {
             {
                 telephoneService.makeIssueAcceptanceCall(anyInt, telephoneNumber1, retries);
                 result = "accepted";
+                emailTemplateEngine.process(anyString, (IContext) any);
+                result = "Lets do the hot dog dance";
             }
         };
 
-        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService);
+        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService, emailTemplateEngine);
         issueAssignmentService.assignIssueToPOCUser(issue, email);
 
         new Verifications() {
             {
-                emailSenderService.sendMailViaGmail(EmailSenderService.INOC_EMAIL_ADDRESS, expectedTo, "Issue Assigned", "assigned email template");
+                emailSenderService.sendMailViaGmail(EmailSenderService.INOC_EMAIL_ADDRESS, expectedTo, "Issue Assigned", "Lets do the hot dog dance");
                 times = 1;
             }
         };

@@ -87,7 +87,7 @@ public class PocUserServiceTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void saveWithPasswordCreatesAAdminUserRole() {
+    public void saveWithPasswordCreatesAUserUserRole() {
         PocUserForm pocUserForm = new PocUserForm(client1.getClientId());
         pocUserForm.setFirstName("Steven");
         pocUserForm.setLastName("Rogers");
@@ -98,7 +98,7 @@ public class PocUserServiceTest extends AbstractIntegrationTest {
         PocUserForm savedForm = pocUserService.getPocUser(pocUser.getInteger("id"));
         PocUserRole pocUserRole = PocUserRole.findFirst("poc_user_id = ?", pocUser.getInteger("id"));
 
-        assertThat(pocUserRole.getString("role"), is(equalTo("ADMIN")));
+        assertThat(pocUserRole.getString("role"), is(equalTo("USER")));
     }
 
     @Test
