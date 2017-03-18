@@ -16,8 +16,18 @@
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-sm-12">
-							<form action="#" th:action="@{/pocUsers/save}"
-								th:object="${pocUserForm}" method="post">
+							<form action="#" th:action="@{/pocUsers/save}" th:object="${pocUserForm}" method="post">
+							  <div class="row" th:if="${#authorization.expression('hasRole(''ROLE_SUPER'')')}">
+							    <select th:field="*{clientId}">
+								    <option th:each="client : ${allClients}"
+											th:value="${{client.getInteger('id')}}"
+											th:text="${client.getString('name')}">
+									</option>
+								</select>
+							   </div>
+							    <div th:unless="${#authorization.expression('hasRole(''ROLE_SUPER'')')}">
+							      <input th:hidden="true" th:field="*{clientId}" />
+							    </div>
 								<div th:include="pocUsers/form::form"></div>
 								<input type="submit" value="Create POC User" />
 							</form>

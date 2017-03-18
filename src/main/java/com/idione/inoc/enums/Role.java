@@ -1,5 +1,5 @@
 package com.idione.inoc.enums;
 
 public enum Role {
-    ADMIN, SUPER
+    USER, ADMIN, SUPER
 }

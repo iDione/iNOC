@@ -19,7 +19,11 @@ public class PocUserService {
         return new BCryptPasswordEncoder();
     }
     public List<PocUser> getPocUsers(int clientId) {
-        return PocUser.find("client_id = ?", clientId);
+        if(clientId > 0) {
+            return PocUser.find("client_id = ?", clientId);
+        } else {
+            return PocUser.findAll();
+        }
     }
 
     public PocUserForm getPocUser(int id) {
@@ -40,12 +44,24 @@ public class PocUserService {
         if (pocUserForm.getId() > 0) {
             PocUser pocUser = PocUser.findFirst("id = ?", pocUserForm.getId());
             pocUser.set("first_name", pocUserForm.getFirstName(), "last_name", pocUserForm.getLastName(), "email_address", pocUserForm.getEmailAddress(), "phone_number", pocUserForm.getPhoneNumber()).saveIt();
+            if(pocUserForm.getRoles().size() > 0){
+                PocUserRole.delete("poc_user_id = ?", pocUserForm.getId());
+                for(String role : pocUserForm.getRoles()){
+                    PocUserRole.createIt("poc_user_id", pocUserForm.getId(), "role", role);
+                }
+            }
             return pocUser;
         } else {
             PocUser pocUser = PocUser.createIt("client_id", pocUserForm.getClientId(), "first_name", pocUserForm.getFirstName(), "last_name", pocUserForm.getLastName(), "email_address", pocUserForm.getEmailAddress(), "phone_number", pocUserForm.getPhoneNumber());
             if(!StringUtils.isEmpty(pocUserForm.getPassword())){
                 pocUser.set("password", passwordEncoder().encode(pocUserForm.getPassword())).saveIt();
-                PocUserRole.createIt("poc_user_id", pocUser.getInteger("id"), "role", Role.ADMIN.toString());
+            }
+            if(pocUserForm.getRoles().size() > 0){
+                for(String role : pocUserForm.getRoles()){
+                    PocUserRole.createIt("poc_user_id", pocUser.getId(), "role", role);
+                }
+            } else {
+                PocUserRole.createIt("poc_user_id", pocUser.getInteger("id"), "role", Role.USER.toString());
             }
             return pocUser;
         }

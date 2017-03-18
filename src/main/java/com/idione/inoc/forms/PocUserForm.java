@@ -1,7 +1,10 @@
 package com.idione.inoc.forms;
 
-import com.idione.inoc.enums.Role;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.idione.inoc.models.PocUser;
+import com.idione.inoc.models.PocUserRole;
 
 public class PocUserForm {
 
@@ -13,7 +16,7 @@ public class PocUserForm {
     private int clientId;
 
     private String password;
-    private Role role = Role.ADMIN;
+    private List<String> roles = new ArrayList<String>();
 
     public PocUserForm() {
     }
@@ -30,6 +33,10 @@ public class PocUserForm {
         this.emailAddress = pocUser.getString("email_address");
         this.phoneNumber = pocUser.getString("phone_number");
         this.password = pocUser.getString("password");
+
+        for(PocUserRole pocUserRole: pocUser.getRoles()){
+            this.roles.add(pocUserRole.getString("role"));
+        }
     }
 
     public int getId() {
@@ -88,12 +95,11 @@ public class PocUserForm {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
+    public List<String> getRoles() {
+        return roles;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
     }
-
 }

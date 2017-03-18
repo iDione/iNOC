@@ -8,14 +8,16 @@
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="/dashboard"><span
 							class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
-					<li><a th:href="@{/filters}"><span
+					<li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/filters}"><span
 							class="glyphicon glyphicon-envelope"></span> Filters</a></li>
-					<li><a th:href="@{/pocUsers}"><span
+					<li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/pocUsers}"><span
 							class="glyphicon glyphicon-user"></span> Users</a></li>
-					<li><a th:href="@{/mailingGroups}"><span
+					<li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/mailingGroups}"><span
 							class="glyphicon glyphicon-envelope"></span> Mailing Groups</a></li>
-					<li><a th:href="@{/clients}"><span
+					<li sec:authorize="hasRole('ROLE_SUPER')"><a th:href="@{/clients}"><span
 							class="glyphicon glyphicon-user"></span> Clients</a></li>
+					<li sec:authorize="hasRole('ROLE_USER')"><a th:href="@{/pocUsers/edit}"><span
+							class="glyphicon glyphicon-user"></span> Update My Profile</a></li>
 				</ul>
 			</div>
 		</nav>

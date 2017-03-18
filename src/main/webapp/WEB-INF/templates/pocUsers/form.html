@@ -1,6 +1,5 @@
 <div th:fragment="form">
 <fieldset>
-  <input th:hidden="true" th:field="*{clientId}" />
   <div class="row">
   First Name: <input type="text" th:field="*{firstName}" />
   </div>
@@ -17,8 +16,17 @@
   Phone: <input type="text" th:field="*{phoneNumber}" />
   </div>
   <br/>
-  <div class="row">
+  <div class="row" th:if="${pocUserForm.id}==0">
   Password: <input type="text" th:field="*{password}" />
+  </div>
+  <div class = "row" sec:authorize="hasRole('ROLE_SUPER')">
+    <select id="roles" th:name="roles" size="3" multiple="multiple">
+			    <option th:each="role : ${allRoles}"
+						th:value="${{role}}"
+						th:text="${role}"
+						th:selected="${pocUserForm.roles.contains(role.toString())}">
+			    </option>
+			</select>
   </div>
   <br/>
 </fieldset>

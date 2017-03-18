@@ -19,6 +19,7 @@
 							<form action="#" th:action="@{/pocUsers/save}"
 								th:object="${pocUserForm}" method="post">
 								<input th:hidden="true" th:field="*{id}" />
+								<input th:hidden="true" th:field="*{clientId}" />
 								<div th:include="pocUsers/form::form"></div>
 								<input type="submit" value="Update POC User" />
 							</form>

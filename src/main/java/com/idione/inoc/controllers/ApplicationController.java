@@ -1,5 +1,6 @@
 package com.idione.inoc.controllers;
 
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -17,5 +18,13 @@ public class ApplicationController {
 
     public int currentClientId() {
         return getCurrentUser().getClientId();
+    }
+
+    public int currentPocUserId() {
+        return getCurrentUser().getInteger("id");
+    }
+
+    public boolean isSuperAdmin() {
+        return SecurityContextHolder.getContext().getAuthentication().getAuthorities().contains(new SimpleGrantedAuthority("ROLE_SUPER"));
     }
 }
