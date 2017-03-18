@@ -1,6 +1,7 @@
 package com.idione.inoc.services;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Service;
 
@@ -49,12 +50,18 @@ public class TelephoneService {
         this.twilioClient = twilioClient;
     }
 
-    public String makeIssueAcceptanceCall(int issuePocUserId, String phoneNumber, int retriesLimit) {
+    public String makeIssueAcceptanceCall(int issuePocUserId, String phoneNumber, int retriesLimit, int intervalBetweenCalls) {
         int retries = 1;
         TelephoneCall telephoneCall = twilioClient.makeIssueAcceptanceCall(issuePocUserId, phoneNumber);
         IssuePocUser issuePocUser = IssuePocUser.findById(issuePocUserId);
-        while ((retries < retriesLimit && callFailedStatuses.contains(telephoneCall.getString("call_status")))
-                && issuePocUser.getString("user_response").compareTo("none") == 0) {
+        while ((retries < retriesLimit && callFailedStatuses.contains(telephoneCall.getString("call_status"))) && issuePocUser.getString("user_response").compareTo("none") == 0) {
+            if(retries!=1){
+                try {
+                    TimeUnit.SECONDS.sleep(intervalBetweenCalls);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             telephoneCall = twilioClient.makeIssueAcceptanceCall(issuePocUserId, phoneNumber);
             issuePocUser = IssuePocUser.findById(issuePocUserId);
             retries++;

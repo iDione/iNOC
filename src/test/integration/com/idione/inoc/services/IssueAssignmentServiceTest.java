@@ -40,6 +40,7 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
     String telephoneNumber1 = "1111111111";
     String telephoneNumber2 = "2222222222";
     int retries = 2;
+    int intervalBetweenCalls = 2;
     String emailSubject = "Fun Times";
     String emailText = "Lets do the hot dog dance";
     @Before
@@ -50,7 +51,7 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
         email.setEmailSubject(emailSubject);
         email.setEmailText(emailText);
         mailingGroup = MailingGroup.createIt("client_id", client.getInteger("id")); 
-        filter = Filter.createIt("name", "A Filter", "client_id", client.getInteger("id"), "time_interval", 5, "retries", retries, "assigned_mailing_group_id", mailingGroup.getInteger("id"), "unassigned_mailing_group_id", mailingGroup.getInteger("id"), "unassigned_email_template", "un assigned email template", "assigned_email_template", "assigned email template");
+        filter = Filter.createIt("name", "A Filter", "client_id", client.getInteger("id"), "time_interval", 2, "retries", retries, "assigned_mailing_group_id", mailingGroup.getInteger("id"), "unassigned_mailing_group_id", mailingGroup.getInteger("id"), "unassigned_email_template", "un assigned email template", "assigned_email_template", "assigned email template");
         issue = Issue.createIt("email_id", email.getInteger("id"), "filter_id", filter.getInteger("id"));
         FilterPocUser.createIt("filter_id", filter.getInteger("id"), "poc_user_id", pocUser1.getInteger("id"));
     }
@@ -59,7 +60,7 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
     public void itCallsAnUserForTheFilter(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService, @Mocked TemplateEngine emailTemplateEngine) {
         new Expectations() {
             {
-                telephoneService.makeIssueAcceptanceCall(anyInt, telephoneNumber1, retries);
+                telephoneService.makeIssueAcceptanceCall(anyInt, telephoneNumber1, retries, intervalBetweenCalls);
                 result = "accepted";
                 emailTemplateEngine.process(anyString, (IContext) any);
                 result = "Lets do the hot dog dance";
@@ -71,7 +72,7 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
         IssuePocUser issuePocUser = IssuePocUser.findFirst("issue_id = ? and poc_user_id = ?", issue.getInteger("id"), pocUser1.getInteger("id"));
         new Verifications() {
             {
-                telephoneService.makeIssueAcceptanceCall(issuePocUser.getInteger("id"), telephoneNumber1, retries);
+                telephoneService.makeIssueAcceptanceCall(issuePocUser.getInteger("id"), telephoneNumber1, retries, intervalBetweenCalls);
                 times = 1;
             }
         };
@@ -81,7 +82,7 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
     public void itCreatesAnIssuePocUserWithTheRightInformation(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService, @Mocked TemplateEngine emailTemplateEngine) {
         new Expectations() {
             {
-                telephoneService.makeIssueAcceptanceCall(anyInt, telephoneNumber1, retries);
+                telephoneService.makeIssueAcceptanceCall(anyInt, telephoneNumber1, retries, intervalBetweenCalls);
                 result = "accepted";
                 emailTemplateEngine.process(anyString, (IContext) any);
                 result = "Lets do the hot dog dance";
@@ -102,9 +103,9 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
 
         new Expectations() {
             {
-                telephoneService.makeIssueAcceptanceCall(anyInt, telephoneNumber1, retries);
+                telephoneService.makeIssueAcceptanceCall(anyInt, telephoneNumber1, retries, intervalBetweenCalls);
                 result = "declined";
-                telephoneService.makeIssueAcceptanceCall(anyInt, telephoneNumber2, retries);
+                telephoneService.makeIssueAcceptanceCall(anyInt, telephoneNumber2, retries, intervalBetweenCalls);
                 result = "accepted";
                 emailTemplateEngine.process(anyString, (IContext) any);
                 result = "Lets do the hot dog dance";
@@ -117,9 +118,9 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
         IssuePocUser issuePocUser2 = IssuePocUser.findFirst("issue_id = ? and poc_user_id = ?", issue.getInteger("id"), pocUser2.getInteger("id"));
         new Verifications() {
             {
-                telephoneService.makeIssueAcceptanceCall(issuePocUser1.getInteger("id"), telephoneNumber1, retries);
+                telephoneService.makeIssueAcceptanceCall(issuePocUser1.getInteger("id"), telephoneNumber1, retries, intervalBetweenCalls);
                 times = 1;
-                telephoneService.makeIssueAcceptanceCall(issuePocUser2.getInteger("id"), telephoneNumber2, retries);
+                telephoneService.makeIssueAcceptanceCall(issuePocUser2.getInteger("id"), telephoneNumber2, retries, intervalBetweenCalls);
                 times = 1;
             }
         };
@@ -131,7 +132,7 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
         final String[] expectedTo = { pocUser1.getString("email_address") };
         new Expectations() {
             {
-                telephoneService.makeIssueAcceptanceCall(anyInt, anyString, anyInt);
+                telephoneService.makeIssueAcceptanceCall(anyInt, anyString, anyInt, anyInt);
                 result = "declined";
                 emailTemplateEngine.process(anyString, (IContext) any);
                 result = "Lets do the hot dog dance";
@@ -155,7 +156,7 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
         final String[] expectedTo = { pocUser1.getString("email_address") };
         new Expectations() {
             {
-                telephoneService.makeIssueAcceptanceCall(anyInt, telephoneNumber1, retries);
+                telephoneService.makeIssueAcceptanceCall(anyInt, telephoneNumber1, retries, intervalBetweenCalls);
                 result = "accepted";
                 emailTemplateEngine.process(anyString, (IContext) any);
                 result = "Lets do the hot dog dance";

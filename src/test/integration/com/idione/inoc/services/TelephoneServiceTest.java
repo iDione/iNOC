@@ -1,6 +1,7 @@
 package com.idione.inoc.services;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -32,7 +33,8 @@ public class TelephoneServiceTest extends AbstractIntegrationTest {
     IssuePocUser issuePocUser;
     String telephoneNumber = "1111111111";
     int retries = 3;
-
+    int intervalBetweenCalls = 2;
+    
     @Before
     public void createFilter() {
         Client client = Client.createIt("name", "Mickey Mouse Club House");
@@ -61,7 +63,7 @@ public class TelephoneServiceTest extends AbstractIntegrationTest {
         };
 
         telephoneService = new TelephoneService(twilioClient);
-        telephoneService.makeIssueAcceptanceCall(issuePocUser.getInteger("id"), telephoneNumber, retries);
+        telephoneService.makeIssueAcceptanceCall(issuePocUser.getInteger("id"), telephoneNumber, retries, intervalBetweenCalls);
 
         new Verifications() {
             {
@@ -84,7 +86,7 @@ public class TelephoneServiceTest extends AbstractIntegrationTest {
         };
 
         telephoneService = new TelephoneService(twilioClient);
-        telephoneService.makeIssueAcceptanceCall(issuePocUser.getInteger("id"), telephoneNumber, retries);
+        telephoneService.makeIssueAcceptanceCall(issuePocUser.getInteger("id"), telephoneNumber, retries, intervalBetweenCalls);
 
         new Verifications() {
             {
@@ -92,6 +94,25 @@ public class TelephoneServiceTest extends AbstractIntegrationTest {
                 times = 3;
             }
         };
+    }
+    
+    @Test
+    public void itCallsTheUserUntilWithTimeDelay(@Mocked TwilioClient twilioClient) {
+        TelephoneCall telephoneCall = new TelephoneCall();
+        telephoneCall.set("call_status", TelephoneService.FAILED_STATUS, "issue_poc_user_id", issuePocUser.getInteger("id"));
+        telephoneCall.saveIt();
+        new Expectations() {
+            {
+                twilioClient.makeIssueAcceptanceCall(anyInt, anyString);
+                result = telephoneCall;
+            }
+        };
+
+        telephoneService = new TelephoneService(twilioClient);
+        long startTime = System.currentTimeMillis();
+        telephoneService.makeIssueAcceptanceCall(issuePocUser.getInteger("id"), telephoneNumber, retries, intervalBetweenCalls);
+        long endTime = System.currentTimeMillis();
+        assertThat((((int)endTime - (int)startTime) * 1000), is(greaterThan(retries * intervalBetweenCalls)));
     }
 
     @Test
@@ -109,7 +130,7 @@ public class TelephoneServiceTest extends AbstractIntegrationTest {
         telephoneService = new TelephoneService(twilioClient);
         issuePocUser.set("user_response", "accepted");
         issuePocUser.saveIt();
-        telephoneService.makeIssueAcceptanceCall(issuePocUser.getInteger("id"), telephoneNumber, retries);
+        telephoneService.makeIssueAcceptanceCall(issuePocUser.getInteger("id"), telephoneNumber, retries, intervalBetweenCalls);
 
         new Verifications() {
             {
@@ -134,7 +155,7 @@ public class TelephoneServiceTest extends AbstractIntegrationTest {
         telephoneService = new TelephoneService(twilioClient);
         issuePocUser.set("user_response", "accepted");
         issuePocUser.saveIt();
-        String userResponse = telephoneService.makeIssueAcceptanceCall(issuePocUser.getInteger("id"), telephoneNumber, retries);
+        String userResponse = telephoneService.makeIssueAcceptanceCall(issuePocUser.getInteger("id"), telephoneNumber, retries, intervalBetweenCalls);
 
         assertThat(userResponse, is(equalTo("accepted")));
     }

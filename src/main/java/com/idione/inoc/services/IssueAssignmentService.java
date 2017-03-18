@@ -31,7 +31,7 @@ public class IssueAssignmentService {
         List<PocUser> pocUsers = issue.filter().getUsers();
         for (PocUser pocUser : pocUsers) {
             IssuePocUser issuePocUser = IssuePocUser.createIt("issue_id", issue.getId(), "poc_user_id", pocUser.getId());
-            String userResponse = telephoneService.makeIssueAcceptanceCall(issuePocUser.getInteger("id"), pocUser.getString("phone_number"), issue.filter().getInteger("retries"));
+            String userResponse = telephoneService.makeIssueAcceptanceCall(issuePocUser.getInteger("id"), pocUser.getString("phone_number"), issue.filter().getInteger("retries"), issue.filter().getInteger("time_interval"));
             if (userResponse.compareTo("accepted") == 0) {
                 sendIssueAssignedEmail(issue, email, pocUser);
                 return true;
