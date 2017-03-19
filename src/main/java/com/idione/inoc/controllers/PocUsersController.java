@@ -2,10 +2,13 @@ package com.idione.inoc.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,10 +71,17 @@ public class PocUsersController extends ApplicationController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public String savePocUser(@ModelAttribute PocUserForm pocUserForm, Model model) {
+    public String savePocUser(@Valid @ModelAttribute PocUserForm pocUserForm, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("allRoles", Role.values());
+            model.addAttribute("allClients", Client.findAll());
+            if(pocUserForm.getId() > 0){
+                return "pocUsers/edit";
+            } else {
+                return "pocUsers/new";
+            }
+        }
         pocUserService.savePocUser(pocUserForm);
-        List<PocUser> pocUsers = pocUserService.getPocUsers(currentClientId());
-        model.addAttribute("pocUsers", pocUsers);
-        return "dashboard";
+        return "/dashboard";
     }
 }

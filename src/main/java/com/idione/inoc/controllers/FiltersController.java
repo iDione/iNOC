@@ -2,10 +2,13 @@ package com.idione.inoc.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,11 +73,18 @@ public class FiltersController extends ApplicationController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public String saveFilter(@ModelAttribute FilterForm filterForm, Model model) {
+    public String saveFilter(@Valid @ModelAttribute FilterForm filterForm, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            setupForm(model);
+            model.addAttribute("filterForm", filterForm);
+            if(filterForm.getId() > 0){
+                return "filters/edit";
+            } else {
+                return "filters/new";
+            }
+        }
         filterService.saveFilter(filterForm);
-        List<Filter> filters = filterService.getFilters(currentClientId());
-        model.addAttribute("filters", filters);
-        return "filters/index";
+        return "/dashboard";
     }
 
     private void setupForm(Model model) {

@@ -2,18 +2,22 @@
 <fieldset>
   <div class="row">
     Name: <input type="text" th:field="*{name}" />
+    <p class = "text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
   </div>
   <br/>
   <div class="row">
     Email: <input type="text" th:field="*{email}" />
+    <p class = "text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</p>
   </div>
   <br/>
   <div class="row">
     Host: <input type="text" th:field="*{host}" />
+    <p class = "text-danger" th:if="${#fields.hasErrors('host')}" th:errors="*{host}">Name Error</p>
   </div>
   <br/>
   <div class="row">
     Password: <input type="text" th:field="*{password}" />
+    <p class = "text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</p>
   </div>
   <br/>
 </fieldset>

@@ -3,24 +3,26 @@ package com.idione.inoc.forms;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.idione.inoc.models.Filter;
 import com.idione.inoc.models.FilterKeyword;
 import com.idione.inoc.models.PocUser;
 
 public class FilterForm {
 
-    private String name;
+    @NotEmpty private String name;
     private Integer id;
     private Integer clientId;
-    private Integer timeInterval;
-    private Integer retries;
+    private Integer timeInterval = 0;
+    private Integer retries = 0;
     private Integer assignedMailingGroupId;
     private Integer unassignedMailingGroupId;
-    private String assignedEmailTemplate;
-    private String unassignedEmailTemplate;
-    private List<Integer> pocUserIds = new ArrayList<Integer>();
-    private List<String> keywords = new ArrayList<String>();
-    private Integer holdIssueCreationsFor;
+    @NotEmpty private String assignedEmailTemplate;
+    @NotEmpty private String unassignedEmailTemplate;
+    @NotEmpty private List<Integer> pocUserIds = new ArrayList<Integer>();
+    @NotEmpty private List<String> keywords = new ArrayList<String>();
+    private Integer holdIssueCreationsFor = 0;
     
     public FilterForm() {
     }

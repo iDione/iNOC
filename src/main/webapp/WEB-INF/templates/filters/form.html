@@ -3,18 +3,22 @@
   <input th:hidden="true" th:field="*{clientId}" />
   <div class="row">
   Name: <input type="text" th:field="*{name}" />
+  <p class = "text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
   </div>
   <br/>
   <div class="row">
   Hold Issue Creations For: <input type="text" th:field="*{holdIssueCreationsFor}" /> (seconds)
+  <p class = "text-danger" th:if="${#fields.hasErrors('holdIssueCreationsFor')}" th:errors="*{holdIssueCreationsFor}">Name Error</p>
   </div>
   <br/>
   <div class="row">
   Retries: <input type="text" th:field="*{retries}" />
+  <p class = "text-danger" th:if="${#fields.hasErrors('retries')}" th:errors="*{retries}">Name Error</p>
   </div>
   <br/>
   <div class="row">
   Time Interval between calls: <input type="text" th:field="*{timeInterval}" /> (seconds)
+  <p class = "text-danger" th:if="${#fields.hasErrors('timeInterval')}" th:errors="*{timeInterval}">Name Error</p>
   </div>
   <br/>
   <div class="row">
@@ -25,6 +29,7 @@
 						th:selected="${filterForm.assignedMailingGroupId == mailingGroup.getInteger('id')}">
 			    </option>
 			</select>
+			<p class = "text-danger" th:if="${#fields.hasErrors('assignedMailingGroupId')}" th:errors="*{assignedMailingGroupId}">Name Error</p>
   </div>
   <br/>
   <div class="row">
@@ -35,6 +40,7 @@
 						th:selected="${filterForm.unassignedMailingGroupId == mailingGroup.getInteger('id')}">
 			    </option>
 			</select>
+			<p class = "text-danger" th:if="${#fields.hasErrors('unassignedMailingGroupId')}" th:errors="*{unassignedMailingGroupId}">Name Error</p>
   </div>
   <br/>
   <div class="row">
@@ -45,6 +51,7 @@
 						th:text="${keyword}">
 			    </option>
 			</select>
+			<p class = "text-danger" th:if="${#fields.hasErrors('keywords')}" th:errors="*{keywords}">Name Error</p>
   </div>
   <br/>
   <div class="row">
@@ -59,14 +66,19 @@
 			<input id="addUser" type="button" value="Add" /> <input id="removeUser" type="button" value="Remove" />
 			<select id="pocUserIds" th:name="pocUserIds" size="5" multiple="multiple">
 			</select>
+			<p class = "text-danger" th:if="${#fields.hasErrors('pocUserIds')}" th:errors="*{pocUserIds}">Name Error</p>
   </div>
   <br/>
-  <div class="row">Assigned Email Template (ISSUE_ASSIGNED_USER_NAME)</div>
+  <div class="row">Assigned Email Template (ISSUE_ASSIGNED_USER_NAME)
+  <p class = "text-danger" th:if="${#fields.hasErrors('assignedEmailTemplate')}" th:errors="*{assignedEmailTemplate}">Name Error</p>
+  </div>
   <div th:include="filters/wysiwygIncludes::toolbar_includes('assignedEmailTemplateToolbar', 'editor1-toolbar')"></div>
   <input type='hidden' name='assignedEmailTemplate' id='assignedEmailTemplate'/>
   <div id="assignedEmailTemplateEditor" th:utext="${filterForm.assignedEmailTemplate}"></div>
   <br/>
-  <div class="row">Un Assigned Email Template</div>
+  <div class="row">Un Assigned Email Template
+  <p class = "text-danger" th:if="${#fields.hasErrors('unassignedEmailTemplate')}" th:errors="*{unassignedEmailTemplate}">Name Error</p>
+  </div>
   <div th:include="filters/wysiwygIncludes::toolbar_includes('unassignedEmailTemplateToolbar', 'editor2-toolbar')"></div>
   <input type='hidden' name='unassignedEmailTemplate' id='unassignedEmailTemplate'/>
   <div id="unassignedEmailTemplateEditor" th:utext="${filterForm.unassignedEmailTemplate}"></div>

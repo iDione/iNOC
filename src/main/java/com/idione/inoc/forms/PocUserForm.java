@@ -3,15 +3,18 @@ package com.idione.inoc.forms;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.idione.inoc.models.PocUser;
 import com.idione.inoc.models.PocUserRole;
 
 public class PocUserForm {
 
-    private String firstName;
-    private String lastName;
-    private String emailAddress;
-    private String phoneNumber;
+    @NotEmpty private String firstName;
+    @NotEmpty private String lastName;
+    @NotEmpty @Email private String emailAddress;
+    @NotEmpty private String phoneNumber;
     private int id;
     private int clientId;
 

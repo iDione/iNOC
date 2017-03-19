@@ -3,6 +3,7 @@
   <input th:hidden="true" th:field="*{clientId}" />
   <div class="row">
   Name: <input type="text" th:field="*{name}" />
+  <p class = "text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
   </div>
   <br/>
   <div class="row">
@@ -15,7 +16,8 @@
 			</select>
   </div>
   <div class="row">
-  Include Other Email Addresses: <input type="text" th:field="*{includeEmailAddresses}" /> (include multiple addressed comma separated)
+  Include Other Email Addresses: <input type="text" th:field="*{includeEmailAddresses}" /> (include multiple addresses comma separated)
+  <p class = "text-danger" th:if="${#fields.hasErrors('includeEmailAddresses')}" th:errors="*{includeEmailAddresses}">No Email Error</p>
   </div>
   <br/>
 </fieldset>

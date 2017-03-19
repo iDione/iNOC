@@ -2,10 +2,14 @@ package com.idione.inoc.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +21,7 @@ import com.idione.inoc.models.MailingGroup;
 import com.idione.inoc.models.PocUser;
 import com.idione.inoc.services.MailingGroupService;
 import com.idione.inoc.services.PocUserService;
+import com.idione.inoc.validators.MailingGroupValidator;
 
 @RequestMapping(value = "/mailingGroups")
 @Controller
@@ -62,11 +67,18 @@ public class MailingGroupsController extends ApplicationController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public String saveMailingGroup(@ModelAttribute MailingGroupForm mailingGroupForm, Model model) {
+    public String saveMailingGroup(@Valid @ModelAttribute MailingGroupForm mailingGroupForm, BindingResult bindingResult, Model model) {
+        MailingGroupValidator.validate(mailingGroupForm, bindingResult);
+        if (bindingResult.hasErrors()) {
+            setupForm(model);
+            if(mailingGroupForm.getId() > 0){
+                return "mailingGroups/edit";
+            } else {
+                return "mailingGroups/new";
+            }
+        }
         mailingGroupService.saveMailingGroup(mailingGroupForm);
-        List<MailingGroup> mailingGroups = mailingGroupService.getMailingGroups(currentClientId());
-        model.addAttribute("mailingGroups", mailingGroups);
-        return "mailingGroups/index";
+        return "/dashboard";
     }
 
     private void setupForm(Model model) {

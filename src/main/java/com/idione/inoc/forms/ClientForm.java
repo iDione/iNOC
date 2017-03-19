@@ -1,13 +1,16 @@
 package com.idione.inoc.forms;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.idione.inoc.models.Client;
 
 public class ClientForm {
 
-    private String name;
-    private String host;
-    private String email;
-    private String password;
+    @NotEmpty private String name;
+    @NotEmpty private String host;
+    @NotEmpty @Email private String email;
+    @NotEmpty private String password;
     private int id;
 
     public ClientForm() {

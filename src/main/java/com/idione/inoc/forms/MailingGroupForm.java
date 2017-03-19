@@ -3,12 +3,14 @@ package com.idione.inoc.forms;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.idione.inoc.models.MailingGroup;
 import com.idione.inoc.models.PocUser;
 
 public class MailingGroupForm {
 
-    private String name;
+    @NotEmpty private String name;
     private int id;
     private int clientId;
     private List<Integer> pocUserIds = new ArrayList<Integer>();
