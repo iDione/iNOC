@@ -32,10 +32,10 @@ public class ClientService {
     public Client saveClient(ClientForm clientForm) {
         if (clientForm.getId() > 0) {
             Client client = Client.findFirst("id = ?", clientForm.getId());
-            client.set("name", clientForm.getName(), "email", clientForm.getEmail(), "host", clientForm.getHost(), "password", clientForm.getPassword()).saveIt();
+            client.set("name", clientForm.getName(), "email", clientForm.getEmail(), "issue_status_email", clientForm.getIssueStatusEmail(), "host", clientForm.getHost(), "password", clientForm.getPassword(), "issue_status_email_password", clientForm.getIssueStatusEmailPassword()).saveIt();
             return client;
         } else {
-            return Client.createIt("name", clientForm.getName(), "email", clientForm.getEmail(), "host", clientForm.getHost(), "password", clientForm.getPassword());
+            return Client.createIt("name", clientForm.getName(), "email", clientForm.getEmail(), "issue_status_email", clientForm.getIssueStatusEmail(), "issue_status_email_password", clientForm.getIssueStatusEmailPassword(), "host", clientForm.getHost(), "password", clientForm.getPassword());
         }
     }
 }

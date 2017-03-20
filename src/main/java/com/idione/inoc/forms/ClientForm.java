@@ -11,6 +11,9 @@ public class ClientForm {
     @NotEmpty private String host;
     @NotEmpty @Email private String email;
     @NotEmpty private String password;
+    @NotEmpty @Email private String issueStatusEmail;
+    @NotEmpty private String issueStatusEmailPassword;
+
     private int id;
 
     public ClientForm() {
@@ -20,8 +23,10 @@ public class ClientForm {
         this.id = client.getInteger("id");
         this.name = client.getString("name");
         this.email = client.getString("email");
+        this.issueStatusEmail = client.getString("issue_status_email");
         this.host = client.getString("host");
         this.password = client.getString("password");
+        this.issueStatusEmailPassword = client.getString("issue_status_email_password");
     }
 
     public String getName() {
@@ -62,6 +67,22 @@ public class ClientForm {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getIssueStatusEmail() {
+        return issueStatusEmail;
+    }
+
+    public void setIssueStatusEmail(String issueStatusEmail) {
+        this.issueStatusEmail = issueStatusEmail;
+    }
+
+    public String getIssueStatusEmailPassword() {
+        return issueStatusEmailPassword;
+    }
+
+    public void setIssueStatusEmailPassword(String issueStatusEmailPassword) {
+        this.issueStatusEmailPassword = issueStatusEmailPassword;
     }
 
 }

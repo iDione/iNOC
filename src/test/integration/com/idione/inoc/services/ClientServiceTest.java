@@ -22,7 +22,7 @@ public class ClientServiceTest extends AbstractIntegrationTest {
 
     @Before
     public void createClients() {
-        client1 = Client.createIt("name", "Mickey Mouse Club House", "email", "mickey@clubhouse.tst");
+        client1 = Client.createIt("name", "Mickey Mouse Club House", "email", "mickey@clubhouse.tst", "issue_status_email", "minnie@clubhouse.net");
         client2 = Client.createIt("name", "Tinker Bell Pixie Hollow");
         clientService = new ClientService();
     }
@@ -45,6 +45,7 @@ public class ClientServiceTest extends AbstractIntegrationTest {
         ClientForm clientForm = clientService.getClient(client1.getInteger("id"));
         assertThat(client1.getString("name"), is(equalTo(clientForm.getName())));
         assertThat(client1.getString("email"), is(equalTo(clientForm.getEmail())));
+        assertThat(client1.getString("issue_status_email"), is(equalTo(clientForm.getIssueStatusEmail())));
         assertThat(client1.getInteger("id"), is(equalTo(clientForm.getId())));
     }
 
@@ -53,12 +54,14 @@ public class ClientServiceTest extends AbstractIntegrationTest {
         ClientForm clientForm = new ClientForm(client1);
         clientForm.setName("Avengers");
         clientForm.setEmail("avengers@marvel.tst");
+        clientForm.setIssueStatusEmail("revenger@marvel.tst");
         Client client = clientService.saveClient(clientForm);
 
         ClientForm savedForm = clientService.getClient(client.getInteger("id"));
 
         assertThat(savedForm.getName(), is(equalTo(clientForm.getName())));
         assertThat(savedForm.getEmail(), is(equalTo(clientForm.getEmail())));
+        assertThat(savedForm.getIssueStatusEmail(), is(equalTo(clientForm.getIssueStatusEmail())));
     }
 
     @Test

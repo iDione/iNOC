@@ -6,19 +6,30 @@
   </div>
   <br/>
   <div class="row">
-    Email: <input type="text" th:field="*{email}" />
+    Email (to trigger issues): <input type="text" th:field="*{email}" />
     <p class = "text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</p>
+  </div>
+    <br/>
+  <div class="row">
+    Email Password: <input type="text" th:field="*{password}" />
+    <p class = "text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</p>
+  </div>
+  <br/>
+  <div class="row">
+    Email (for issue updates): <input type="text" th:field="*{issueStatusEmail}" />
+    <p class = "text-danger" th:if="${#fields.hasErrors('issueStatusEmail')}" th:errors="*{issueStatusEmail}">Name Error</p>
+  </div>
+    <br/>
+  <div class="row">
+    Updates Email Password: <input type="text" th:field="*{issueStatusEmailPassword}" />
+    <p class = "text-danger" th:if="${#fields.hasErrors('issueStatusEmailPassword')}" th:errors="*{issueStatusEmailPassword}">Name Error</p>
   </div>
   <br/>
   <div class="row">
     Host: <input type="text" th:field="*{host}" />
     <p class = "text-danger" th:if="${#fields.hasErrors('host')}" th:errors="*{host}">Name Error</p>
   </div>
-  <br/>
-  <div class="row">
-    Password: <input type="text" th:field="*{password}" />
-    <p class = "text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</p>
-  </div>
+
   <br/>
 </fieldset>
 </div>
