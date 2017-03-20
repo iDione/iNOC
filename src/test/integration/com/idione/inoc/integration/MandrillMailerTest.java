@@ -29,7 +29,7 @@ public class MandrillMailerTest extends AbstractIntegrationTest {
         String[] emailStatuses;
         String[] tos = {"adarshadarsh@gmail.com", "simpleboy007@yahoo.com"};
         try {
-            emailStatuses = mandrillMailer.sendMail("inocdemo@gmail.com", tos, "Test Mandrill Email", "Test email to check if mails are going out from our account");
+            emailStatuses = mandrillMailer.sendMail("inocissues@gmail.com", tos, "Test Mandrill Email", "Test email to check if mails are going out from our account");
             for(String emailStatus : emailStatuses){
                 if(EmailSenderService.failureEmailStatuses.contains(emailStatus)) {
                     assertThat(true, is(equalTo(false)));
