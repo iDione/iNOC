@@ -67,6 +67,6 @@ public class ClientsController extends ApplicationController {
             }
         }
         clientService.saveClient(clientForm);
-        return "/dashboard";
+        return "dashboard";
     }
 }

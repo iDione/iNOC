@@ -84,7 +84,7 @@ public class FiltersController extends ApplicationController {
             }
         }
         filterService.saveFilter(filterForm);
-        return "/dashboard";
+        return "dashboard";
     }
 
     private void setupForm(Model model) {

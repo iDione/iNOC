@@ -78,7 +78,7 @@ public class MailingGroupsController extends ApplicationController {
             }
         }
         mailingGroupService.saveMailingGroup(mailingGroupForm);
-        return "/dashboard";
+        return "dashboard";
     }
 
     private void setupForm(Model model) {

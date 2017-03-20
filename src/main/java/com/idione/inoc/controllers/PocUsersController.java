@@ -82,6 +82,6 @@ public class PocUsersController extends ApplicationController {
             }
         }
         pocUserService.savePocUser(pocUserForm);
-        return "/dashboard";
+        return "dashboard";
     }
 }
