@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class GmailMailer {
     private Properties properties;
     private Session session;
-    private final String from = "inocdemo@gmail.com";
+    private final String from = "inocissues@gmail.com";
     private final String password = "Canyouhearmenow.";
 
     public GmailMailer() {
