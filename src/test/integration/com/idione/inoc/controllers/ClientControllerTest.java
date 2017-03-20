@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 import com.idione.inoc.forms.ClientForm;
 import com.idione.inoc.models.Client;
@@ -74,12 +75,12 @@ public class ClientControllerTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void saveClientCallsTheClientServiceForSave(@Mocked Model model, @Mocked ClientService clientService) {
+    public void saveClientCallsTheClientServiceForSave(@Mocked Model model, @Mocked ClientService clientService, @Mocked BindingResult bindingResult) {
         ClientsController controller = new ClientsController();
         controller.setClientService(clientService);
         ClientForm clientForm = new ClientForm();
 
-        controller.saveClient(clientForm);
+        controller.saveClient(clientForm, bindingResult);
 
         new Verifications() {
             {

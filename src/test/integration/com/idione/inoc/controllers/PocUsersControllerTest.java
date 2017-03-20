@@ -8,6 +8,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 import com.idione.inoc.forms.PocUserForm;
 import com.idione.inoc.models.PocUser;
@@ -81,11 +82,11 @@ public class PocUsersControllerTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void savePocUserCallsThePocUserServiceForSave(@Mocked Model model, @Mocked PocUserService pocUserService) {
+    public void savePocUserCallsThePocUserServiceForSave(@Mocked Model model, @Mocked PocUserService pocUserService, @Mocked BindingResult bindingResult) {
         controller.setPocUserService(pocUserService);
         PocUserForm pocUserForm = new PocUserForm();
 
-        controller.savePocUser(pocUserForm, model);
+        controller.savePocUser(pocUserForm, bindingResult, model);
 
         new Verifications() {
             {

@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 import com.idione.inoc.forms.MailingGroupForm;
 import com.idione.inoc.models.MailingGroup;
@@ -14,6 +15,7 @@ import com.idione.inoc.models.PocUser;
 import com.idione.inoc.services.MailingGroupService;
 import com.idione.inoc.services.PocUserService;
 import com.idione.inoc.test.AbstractIntegrationTest;
+import com.idione.inoc.validators.MailingGroupValidator;
 
 import mockit.Expectations;
 import mockit.Mocked;
@@ -84,14 +86,16 @@ public class MailingGroupsControllerTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void saveMailingGroupCallsTheMailingGroupServiceForSave(@Mocked Model model, @Mocked MailingGroupService mailingGroupService) {
+    public void saveMailingGroupCallsTheMailingGroupServiceForSave(@Mocked Model model, @Mocked MailingGroupService mailingGroupService, @Mocked BindingResult bindingResult, @Mocked MailingGroupValidator mailingGroupValidator) {
         controller.setMailingGroupService(mailingGroupService);
         MailingGroupForm mailingGroupForm = new MailingGroupForm();
 
-        controller.saveMailingGroup(mailingGroupForm, model);
+        controller.saveMailingGroup(mailingGroupForm, bindingResult, model);
 
         new Verifications() {
             {
+                MailingGroupValidator.validate(mailingGroupForm, bindingResult);
+                times = 1;
                 mailingGroupService.saveMailingGroup(mailingGroupForm);
                 times = 1;
             }

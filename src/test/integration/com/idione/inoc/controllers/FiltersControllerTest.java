@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 import com.idione.inoc.forms.FilterForm;
 import com.idione.inoc.models.Filter;
@@ -88,11 +89,11 @@ public class FiltersControllerTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void saveFilterCallsTheFilterServiceForSave(@Mocked Model model, @Mocked FilterService filterService) {
+    public void saveFilterCallsTheFilterServiceForSave(@Mocked Model model, @Mocked FilterService filterService, @Mocked BindingResult bindingResult) {
         controller.setFilterService(filterService);
         FilterForm filterForm = new FilterForm();
 
-        controller.saveFilter(filterForm, model);
+        controller.saveFilter(filterForm, bindingResult, model);
 
         new Verifications() {
             {
