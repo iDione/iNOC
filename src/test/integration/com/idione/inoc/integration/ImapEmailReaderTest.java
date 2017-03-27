@@ -8,7 +8,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.idione.inoc.integration.ImapEmailReader;
 import com.idione.inoc.test.AbstractIntegrationTest;
 
 @Ignore

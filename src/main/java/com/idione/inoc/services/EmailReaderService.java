@@ -14,7 +14,7 @@ public class EmailReaderService {
         this.filterMatchingService = filterMatchingService;
     }
 
-    public void processEmail(int clientId, EmailForm emailForm) {
+    public void processIssueCreationEmail(int clientId, EmailForm emailForm) {
         Email email = Email.createIt("client_id", clientId, "external_email_id", emailForm.getEmailId());
         email.setEmailSubject(emailForm.getEmailSubject());
         email.setEmailText(emailForm.getEmailText());

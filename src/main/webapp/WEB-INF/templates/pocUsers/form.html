@@ -1,37 +1,45 @@
 <div th:fragment="form">
 <fieldset>
   <div class="row">
-  First Name: <input type="text" th:field="*{firstName}" />
+  <label class="col-lg-2 control-label"> First Name:</label>
+  <div class="col-lg-3"><input type="text" th:field="*{firstName}" class="form-control"/></div>
   <p class = "text-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">Name Error</p>
   </div>
   <br/>
   <div class="row">
-  Last Name: <input type="text" th:field="*{lastName}" />
+  <label class="col-lg-2 control-label"> Last Name:</label>
+  <div class="col-lg-3"><input type="text" th:field="*{lastName}" class="form-control"/></div>
   <p class = "text-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Name Error</p>
   </div>
   <br/>
   <div class="row">
-  Email: <input type="text" th:field="*{emailAddress}" />
+  <label class="col-lg-2 control-label"> Email:</label>
+  <div class="col-lg-3"><input type="text" th:field="*{emailAddress}" class="form-control"/></div>
   <p class = "text-danger" th:if="${#fields.hasErrors('emailAddress')}" th:errors="*{emailAddress}">Name Error</p>
   </div>
   <br/>
   <div class="row">
-  Phone: <input type="text" th:field="*{phoneNumber}" />
+  <label class="col-lg-2 control-label"> Phone:</label>
+  <div class="col-lg-3"><input type="text" th:field="*{phoneNumber}" class="form-control"/></div>
   <p class = "text-danger" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Name Error</p>
   </div>
   <br/>
   <div class="row" th:if="${pocUserForm.id}==0">
-  Password: <input type="text" th:field="*{password}" />
+  <label class="col-lg-2 control-label"> Password:</label>
+  <div class="col-lg-3"><input type="text" th:field="*{password}" class="form-control"/></div>
   <p class = "text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</p>
   </div>
+  <br/>
   <div class = "row" sec:authorize="hasRole('ROLE_SUPER')">
-    <select id="roles" th:name="roles" size="3" multiple="multiple">
+  <label class="col-lg-2 control-label">Roles</label>
+  <div class="col-lg-4"><select id="roles" th:name="roles" size="3" multiple="multiple" class="form-control">
 			    <option th:each="role : ${allRoles}"
 						th:value="${{role}}"
 						th:text="${role}"
 						th:selected="${pocUserForm.roles.contains(role.toString())}">
 			    </option>
 			</select>
+			</div>
   </div>
   <br/>
 </fieldset>

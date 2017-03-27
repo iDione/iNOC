@@ -21,9 +21,9 @@ import mockit.Verifications;
 import mockit.integration.junit4.JMockit;
 
 @RunWith(JMockit.class)
-public class InocProcessorTest extends AbstractIntegrationTest {
+public class InocIssueCreatorTest extends AbstractIntegrationTest {
 
-    InocProcessor inocProcessor;
+    InocIssueCreator inocProcessor;
     Client client1;
     Client client2;
     ImapEmailReader emailReader1;
@@ -44,7 +44,7 @@ public class InocProcessorTest extends AbstractIntegrationTest {
     @Test
     public void itProcessesAllEmailsForAllTheClients(@Mocked ImapEmailReader emailReader, @Mocked ClientService clientService, @Mocked EmailReaderService emailReaderService) throws MessagingException, IOException {
         {
-            InocProcessor inocProcessor = new InocProcessor(clientService, emailReaderService);
+            InocIssueCreator inocProcessor = new InocIssueCreator(clientService, emailReaderService);
             final List<Client> allClients = new ArrayList<Client>();
             allClients.add(client1);
             allClients.add(client2);
@@ -68,7 +68,7 @@ public class InocProcessorTest extends AbstractIntegrationTest {
                     result = client1Emails;
                     emailReader2.processInbox();
                     result = client2Emails;
-                    emailReaderService.processEmail(anyInt, (EmailForm) any);
+                    emailReaderService.processIssueCreationEmail(anyInt, (EmailForm) any);
                 }
             };
 
@@ -76,11 +76,11 @@ public class InocProcessorTest extends AbstractIntegrationTest {
 
             new Verifications() {
                 {
-                    emailReaderService.processEmail(client1.getInteger("id"), emailForm1);
+                    emailReaderService.processIssueCreationEmail(client1.getInteger("id"), emailForm1);
                     times = 1;
-                    emailReaderService.processEmail(client1.getInteger("id"), emailForm2);
+                    emailReaderService.processIssueCreationEmail(client1.getInteger("id"), emailForm2);
                     times = 1;
-                    emailReaderService.processEmail(client2.getInteger("id"), emailForm3);
+                    emailReaderService.processIssueCreationEmail(client2.getInteger("id"), emailForm3);
                     times = 1;
                 }
             };

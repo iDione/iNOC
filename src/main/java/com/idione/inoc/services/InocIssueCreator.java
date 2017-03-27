@@ -12,12 +12,12 @@ import com.idione.inoc.integration.ImapEmailReader;
 import com.idione.inoc.models.Client;
 
 @Service
-public class InocProcessor {
+public class InocIssueCreator {
 
     private ClientService clientService;
     private EmailReaderService emailReaderService;
 
-    public InocProcessor(ClientService clientService, EmailReaderService emailReaderService) {
+    public InocIssueCreator(ClientService clientService, EmailReaderService emailReaderService) {
         this.clientService = clientService;
         this.emailReaderService = emailReaderService;
     }
@@ -29,7 +29,7 @@ public class InocProcessor {
                 ImapEmailReader emailReader = new ImapEmailReader(client.getString("host"), client.getString("email"), client.getString("password"));
                 List<EmailForm> newEmailsForClient = emailReader.processInbox();
                 for (EmailForm emailForm : newEmailsForClient) {
-                    emailReaderService.processEmail(client.getClientId(), emailForm);
+                    emailReaderService.processIssueCreationEmail(client.getClientId(), emailForm);
                 }
             } catch (MessagingException | IOException e) {
                 e.printStackTrace();

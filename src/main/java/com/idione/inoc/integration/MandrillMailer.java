@@ -1,16 +1,16 @@
 package com.idione.inoc.integration;
 
 
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.springframework.stereotype.Service;
+
 import com.microtripit.mandrillapp.lutung.MandrillApi;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
 import com.microtripit.mandrillapp.lutung.view.MandrillMessage;
 import com.microtripit.mandrillapp.lutung.view.MandrillMessage.Recipient;
 import com.microtripit.mandrillapp.lutung.view.MandrillMessageStatus;
-
-import java.io.IOException;
-import java.util.ArrayList;
-
-import org.springframework.stereotype.Service;
 
 /*
  * https://github.com/rschreijer/lutung

@@ -5,23 +5,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.idione.inoc.services.InocProcessor;
+import com.idione.inoc.services.InocIssueCreator;
 
 @Component
-public class EmailReaderTask {
+public class IssueCreationTask {
 
-    private InocProcessor inocProcessor;
+    private InocIssueCreator inocIssueCreator;
 
     @Autowired
-    public void setInocProcessor(InocProcessor inocProcessor) {
-        this.inocProcessor = inocProcessor;
+    public void setInocIssueCreator(InocIssueCreator inocIssueCreator) {
+        this.inocIssueCreator = inocIssueCreator;
     }
     
     @Scheduled(fixedDelay = 60000)
-    public void reportCurrentTime() {
+    public void createIssuesForClients() {
         try {
             Base.open();
-            inocProcessor.run();
+            inocIssueCreator.run();
         } finally {
             Base.close();
         }

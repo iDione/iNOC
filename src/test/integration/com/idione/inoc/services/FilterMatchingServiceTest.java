@@ -1,9 +1,5 @@
 package com.idione.inoc.services;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,67 +36,82 @@ public class FilterMatchingServiceTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void itDoesNotAssignIssueIfNoMatchingFilterFound(@Mocked KeywordMatcher keywordMatcher, @Mocked IssueAssignmentService issueAssignmentService) throws Exception {
+    public void itDoesNotAssignIssueIfNoMatchingFilterFound(@Mocked KeywordMatcher keywordMatcher, @Mocked IssueService issueService) throws Exception {
         new Expectations() {
             {
                 keywordMatcher.emailMatchesFilter(emailText, client.getInteger("id"));
                 result = null;
             }
         };
-        filterMatchingService = new FilterMatchingService(keywordMatcher, issueAssignmentService);
+        filterMatchingService = new FilterMatchingService(keywordMatcher, issueService);
         filterMatchingService.matchFiltersForEmail(client.getInteger("id"), email);
         new Verifications() {
             {
-                issueAssignmentService.assignIssueToPOCUser((Issue) any, (Email) any);
+                issueService.createIssue(anyInt, anyInt);
                 times = 0;
             }
         };
     }
 
     @Test
-    public void itCreatesAnIssueIfMatchingFilterFound(@Mocked KeywordMatcher keywordMatcher, @Mocked IssueAssignmentService issueAssignmentService) throws Exception {
-        int beforeIssueCount = Issue.findAll().size();
+    public void itCreatesAnIssueIfMatchingFilterFound(@Mocked KeywordMatcher keywordMatcher, @Mocked IssueService issueService) throws Exception {
         new Expectations() {
             {
                 keywordMatcher.emailMatchesFilter(emailText, client.getInteger("id"));
                 result = filter;
+                issueService.getOpenIssueWithSameFilter(filter.getInteger("id"));
+                result = null;
             }
         };
-        filterMatchingService = new FilterMatchingService(keywordMatcher, issueAssignmentService);
+        filterMatchingService = new FilterMatchingService(keywordMatcher, issueService);
         filterMatchingService.matchFiltersForEmail(client.getInteger("id"), email);
-        int afterIssueCount = Issue.findAll().size();
-        assertThat(afterIssueCount, is(equalTo(beforeIssueCount + 1)));
-    }
-
-    @Test
-    public void itCreatesAnIssueWithEmailIdAndFilterId(@Mocked KeywordMatcher keywordMatcher, @Mocked IssueAssignmentService issueAssignmentService) throws Exception {
-        new Expectations() {
-            {
-                keywordMatcher.emailMatchesFilter(emailText, client.getInteger("id"));
-                result = filter;
-            }
-        };
-        filterMatchingService = new FilterMatchingService(keywordMatcher, issueAssignmentService);
-        filterMatchingService.matchFiltersForEmail(client.getInteger("id"), email);
-        Issue issueCreated = (Issue) Issue.where("filter_id = ?", filter.getInteger("id")).get(0);
-        assertThat(issueCreated.getInteger("email_id"), is(equalTo(email.getInteger("id"))));
-    }
-
-    @Test
-    public void itCallsTheIssueAssignmentServiceForIssueAssignment(@Mocked KeywordMatcher keywordMatcher, @Mocked IssueAssignmentService issueAssignmentService) throws Exception {
-        new Expectations() {
-            {
-                keywordMatcher.emailMatchesFilter(emailText, client.getInteger("id"));
-                result = filter;
-            }
-        };
-        filterMatchingService = new FilterMatchingService(keywordMatcher, issueAssignmentService);
-        filterMatchingService.matchFiltersForEmail(client.getInteger("id"), email);
-        Issue issueCreated = (Issue) Issue.where("filter_id = ? and email_id = ?", filter.getInteger("id"), email.getInteger("id")).get(0);
-        // TODO do an exact match to issueCreated
         new Verifications() {
             {
-                issueAssignmentService.assignIssueToPOCUser((Issue) any, (Email) any);
+                issueService.createIssue(anyInt, anyInt);
+                times = 1;
+            }
+        };
+    }
+
+    @Test
+    public void itDoesNotCreateAnIssueIfOpenIssueExists(@Mocked KeywordMatcher keywordMatcher, @Mocked IssueService issueService) throws Exception {
+        Issue openIssue = new Issue();
+        openIssue.setString("status", Issue.ISSUE_CREATED_STATUS);
+        new Expectations() {
+            {
+                keywordMatcher.emailMatchesFilter(emailText, client.getInteger("id"));
+                result = filter;
+                issueService.getOpenIssueWithSameFilter(filter.getInteger("id"));
+                result = openIssue;
+            }
+        };
+        filterMatchingService = new FilterMatchingService(keywordMatcher, issueService);
+        filterMatchingService.matchFiltersForEmail(client.getInteger("id"), email);
+        new Verifications() {
+            {
+                issueService.createIssue(anyInt, anyInt);
+                times = 0;
+            }
+        };
+    }
+
+    @Test
+    public void itAddsTheEmailToTheIssueIfOpenIssueExists(@Mocked KeywordMatcher keywordMatcher, @Mocked IssueService issueService) throws Exception {
+        Issue openIssue = new Issue();
+        openIssue.setString("status", Issue.ISSUE_CREATED_STATUS);
+        new Expectations() {
+            {
+                keywordMatcher.emailMatchesFilter(emailText, client.getInteger("id"));
+                result = filter;
+                issueService.getOpenIssueWithSameFilter(filter.getInteger("id"));
+                result = openIssue;
+            }
+        };
+        filterMatchingService = new FilterMatchingService(keywordMatcher, issueService);
+        filterMatchingService.matchFiltersForEmail(client.getInteger("id"), email);
+        new Verifications() {
+            {
+                issueService.addIssueEmail(openIssue, email);
                 times = 1;
             }
         };

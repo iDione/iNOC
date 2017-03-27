@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.idione.inoc.integration.TwilioClient;
 import com.idione.inoc.models.Client;
 import com.idione.inoc.models.Email;
 import com.idione.inoc.models.Filter;

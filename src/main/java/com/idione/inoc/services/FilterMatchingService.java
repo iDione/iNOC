@@ -10,18 +10,22 @@ import com.idione.inoc.models.Issue;
 public class FilterMatchingService {
 
     private KeywordMatcher keywordMatcher;
-    private IssueAssignmentService issueAssignmentService;
+    private IssueService issueService;
 
-    public FilterMatchingService(KeywordMatcher keywordMatcher, IssueAssignmentService issueAssignmentService) {
+    public FilterMatchingService(KeywordMatcher keywordMatcher, IssueService issueService) {
         this.keywordMatcher = keywordMatcher;
-        this.issueAssignmentService = issueAssignmentService;
+        this.issueService = issueService;
     }
 
     public void matchFiltersForEmail(int clientId, Email email) {
         Filter matchingFilter = keywordMatcher.emailMatchesFilter(email.getEmailText(), clientId);
         if (matchingFilter != null) {
-            Issue issue = Issue.createIt("email_id", email.getEmailId(), "filter_id", matchingFilter.getInteger("id"));
-            issueAssignmentService.assignIssueToPOCUser(issue, email);
+            Issue openIssue = issueService.getOpenIssueWithSameFilter(matchingFilter.getInteger("id"));
+            if (openIssue == null) {
+                issueService.createIssue(email.getEmailId(), matchingFilter.getInteger("id"));
+            } else {
+                issueService.addIssueEmail(openIssue, email);
+            }
         }
     }
 }

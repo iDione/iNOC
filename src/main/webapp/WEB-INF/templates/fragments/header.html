@@ -19,16 +19,15 @@
 				</div>
 				<div id="navbar" class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
-						<li><a href="/dashboard">Home</a></li>
 						<li><a href="#about">About</a></li>
-						<li><a href="contact.html">Contact</a></li>
+						<li><a href="#contact">Contact</a></li>
 						<li sec:authorize="isAuthenticated()"><a href="/logout">Logout</a></li>
 					</ul>
 				</div>
 			</div>
 		</nav>
 	</div>
-		<div th:fragment="emailHeader">
+	<div th:fragment="emailHeader">
 		<nav class="navbar navbar-fixed-top navbar-inverse">
 			<div class="container">
 				<div class="navbar-header">

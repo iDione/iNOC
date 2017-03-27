@@ -6,6 +6,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
+import javax.mail.Address;
+import javax.mail.FetchProfile;
+import javax.mail.Flags;
+import javax.mail.Flags.Flag;
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -16,11 +20,6 @@ import javax.mail.Store;
 import javax.mail.search.FlagTerm;
 
 import com.idione.inoc.forms.EmailForm;
-
-import javax.mail.Address;
-import javax.mail.FetchProfile;
-import javax.mail.Flags;
-import javax.mail.Flags.Flag;
 
 /*
  * Code referenced from http://www.oracle.com/technetwork/java/javamail/faq/index.html#mainbody

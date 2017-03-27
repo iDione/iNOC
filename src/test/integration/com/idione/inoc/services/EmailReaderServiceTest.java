@@ -37,7 +37,7 @@ public class EmailReaderServiceTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void processEmailCreatesEmailRecord(@Mocked FilterMatchingService filterMatchingService) throws Exception {
+    public void processIssueCreationEmailCreatesEmailRecord(@Mocked FilterMatchingService filterMatchingService) throws Exception {
         int beforeEmailCount = Email.findAll().size();
         new Expectations() {
             {
@@ -45,20 +45,20 @@ public class EmailReaderServiceTest extends AbstractIntegrationTest {
             }
         };
         emailReaderService = new EmailReaderService(filterMatchingService);
-        emailReaderService.processEmail(clientId, emailForm);
+        emailReaderService.processIssueCreationEmail(clientId, emailForm);
         int afterEmailCount = Email.findAll().size();
         assertThat(afterEmailCount, is(equalTo(beforeEmailCount + 1)));
     }
 
     @Test
-    public void processEmailCallsTheFilterMatchingService(@Mocked FilterMatchingService filterMatchingService) throws Exception {
+    public void processIssueCreationEmailCallsTheFilterMatchingService(@Mocked FilterMatchingService filterMatchingService) throws Exception {
         new Expectations() {
             {
                 filterMatchingService.matchFiltersForEmail(anyInt, (Email)any);
             }
         };
         emailReaderService = new EmailReaderService(filterMatchingService);
-        emailReaderService.processEmail(clientId, emailForm);
+        emailReaderService.processIssueCreationEmail(clientId, emailForm);
         Email lastEmail = (Email) Email.where("external_email_id = ?", emailId).orderBy("id desc").get(0);
         lastEmail.setEmailText(emailText);
         lastEmail.setEmailSubject(emailSubject);

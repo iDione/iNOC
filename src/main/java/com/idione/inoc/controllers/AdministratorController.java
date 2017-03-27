@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.idione.inoc.models.Email;
 import com.idione.inoc.models.Issue;
 import com.idione.inoc.models.PocUser;
-import com.idione.inoc.services.InocProcessor;
+import com.idione.inoc.services.InocIssueCreator;
 import com.idione.inoc.services.IssueAssignmentService;
 
 @RequestMapping(value = "/admin")
 @Controller
 public class AdministratorController extends ApplicationController {
 
-    private InocProcessor inocProcessor;
+    private InocIssueCreator inocProcessor;
     private IssueAssignmentService issueAssignmentService;
     @Autowired
-    public void setInocProcessor(InocProcessor inocProcessor) {
+    public void setInocProcessor(InocIssueCreator inocProcessor) {
         this.inocProcessor = inocProcessor;
     }
 

@@ -2,85 +2,117 @@
 <fieldset>
   <input th:hidden="true" th:field="*{clientId}" />
   <div class="row">
-  Name: <input type="text" th:field="*{name}" />
+  <label class="col-lg-2 control-label">Escalation Name:</label>
+  <div class="col-lg-3"><input type="text" th:field="*{name}" class="form-control"/></div>
   <p class = "text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
   </div>
   <br/>
   <div class="row">
-  Hold Issue Creations For: <input type="text" th:field="*{holdIssueCreationsFor}" /> (seconds)
+  <label class="col-lg-2 control-label">Hold Issue Creations For:</label>
+  <div class="col-lg-2"><input type="text" th:field="*{holdIssueCreationsFor}" class="form-control"/> (seconds)</div>
   <p class = "text-danger" th:if="${#fields.hasErrors('holdIssueCreationsFor')}" th:errors="*{holdIssueCreationsFor}">Name Error</p>
   </div>
   <br/>
   <div class="row">
-  Retries: <input type="text" th:field="*{retries}" />
+  <label class="col-lg-2 control-label">Retries:</label>
+  <div class="col-lg-2"><input type="text" th:field="*{retries}" class="form-control"/></div>
   <p class = "text-danger" th:if="${#fields.hasErrors('retries')}" th:errors="*{retries}">Name Error</p>
   </div>
   <br/>
   <div class="row">
-  Time Interval between calls: <input type="text" th:field="*{timeInterval}" /> (seconds)
+  <label class="col-lg-2 control-label">Time Interval between calls:</label>
+  <div class="col-lg-2"><input type="text" th:field="*{timeInterval}" class="form-control"/> (seconds)</div>
   <p class = "text-danger" th:if="${#fields.hasErrors('timeInterval')}" th:errors="*{timeInterval}">Name Error</p>
   </div>
   <br/>
   <div class="row">
-  Assigned Mailing Group: <select id="assignedMailingGroupId" th:name="assignedMailingGroupId" size="1">
+  <label class="col-lg-2 control-label"> Escalation Group:</label>
+  <div class="col-lg-4"><select id="assignedMailingGroupId" th:name="assignedMailingGroupId" size="1" class="form-control">
 			    <option th:each="mailingGroup : ${allMailingGroups}"
 						th:value="${{mailingGroup.getInteger('id')}}"
 						th:text="${mailingGroup.getString('name')}"
 						th:selected="${filterForm.assignedMailingGroupId == mailingGroup.getInteger('id')}">
 			    </option>
-			</select>
+			</select></div>
 			<p class = "text-danger" th:if="${#fields.hasErrors('assignedMailingGroupId')}" th:errors="*{assignedMailingGroupId}">Name Error</p>
   </div>
   <br/>
   <div class="row">
-  Un-Assigned Mailing Group: <select id="unassignedMailingGroupId" th:name="unassignedMailingGroupId" size="1">
+  <label class="col-lg-2 control-label"> Fallback Escalation Group:</label>
+  <div class="col-lg-4"><select id="unassignedMailingGroupId" th:name="unassignedMailingGroupId" size="1" class="form-control">
 			    <option th:each="mailingGroup : ${allMailingGroups}"
 						th:value="${{mailingGroup.getInteger('id')}}"
 						th:text="${mailingGroup.getString('name')}"
 						th:selected="${filterForm.unassignedMailingGroupId == mailingGroup.getInteger('id')}">
 			    </option>
-			</select>
+			</select></div>
 			<p class = "text-danger" th:if="${#fields.hasErrors('unassignedMailingGroupId')}" th:errors="*{unassignedMailingGroupId}">Name Error</p>
   </div>
   <br/>
   <div class="row">
-  Keywords: <input id = "keyword" type="text" name="keyword" /> <input id="addKeyword" type="button" value="Add" /> <input id="removeKeyword" type="button" value="Remove" />
-            <select id="keywords" th:name="keywords" size="5" multiple="multiple">
+  <label class="col-lg-2 control-label">Add keywords: </label>
+  <div class="col-lg-4"><input id = "keyword" type="text" name="keyword" class="form-control"/></div>
+  <div class="col-lg-2"><input id="addKeyword" type="button" value="Add Keyword" class="btn btn-success"/></div>
+  </div>
+  <br/>
+  <div class="row">
+  <label class="col-lg-2 control-label">Keywords Assigned: </label>
+  <div class="col-lg-4">
+            <select id="keywords" th:name="keywords" size="5" multiple="multiple" class="form-control">
 			    <option th:each="keyword : ${filterForm.keywords}"
 						th:value="${{keyword}}"
 						th:text="${keyword}">
 			    </option>
 			</select>
+			</div>
+			<div class="col-lg-2">
+			<input id="removeKeyword" type="button" value="Remove" class="btn btn-default"/>
+			</div>
 			<p class = "text-danger" th:if="${#fields.hasErrors('keywords')}" th:errors="*{keywords}">Name Error</p>
   </div>
   <br/>
   <div class="row">
-  Poc Users: <select id="allPocUserIds" name="allPocUserIds" size="5" multiple="multiple">
+  <label class="col-lg-2 control-label">Poc Users: </label>
+  <div class="col-lg-4"><select id="allPocUserIds" name="allPocUserIds" size="5" multiple="multiple" class="form-control">
 			    <option th:each="pocUser : ${allPocUsers}"
 						th:value="${{pocUser.getInteger('id')}}"
 						th:text="${pocUser.fullName}"
 						th:selected="${filterForm.pocUserIds.contains(pocUser.getInteger('id'))}">
 			    </option>   
 			</select>
-
-			<input id="addUser" type="button" value="Add" /> <input id="removeUser" type="button" value="Remove" />
-			<select id="pocUserIds" th:name="pocUserIds" size="5" multiple="multiple">
-			</select>
-			<p class = "text-danger" th:if="${#fields.hasErrors('pocUserIds')}" th:errors="*{pocUserIds}">Name Error</p>
+  </div>
+  <div class="col-lg-2"><input id="addUser" type="button" value="Add User" class="btn btn-success"/></div>
   </div>
   <br/>
-  <div class="row">Assigned Email Template (ISSUE_ASSIGNED_USER_NAME)
+		<div class="row">
+		<label class="col-lg-2 control-label">&nbsp;</label>
+		<label class="col-lg-6 control-label"> * Escalation Matrix follows the order of addition.</label>
+		</div>
+		<br/>
+		<div class="row">
+		<label class="col-lg-2 control-label"> Selected POC Users:</label>
+		<div class="col-lg-4">
+		<select id="pocUserIds" th:name="pocUserIds" size="5" multiple="multiple" class="form-control"></select>
+		</div>
+		<div class="col-lg-2"><input id="removeUser" type="button" value="Remove" class="btn btn-default" /></div>
+		<p class = "text-danger" th:if="${#fields.hasErrors('pocUserIds')}" th:errors="*{pocUserIds}">Name Error</p>
+        </div>
+  <br/>
+  <div class="row">
+  <label class="col-lg-8 control-label"> Issue Assigned to user email template (ISSUE_ASSIGNED_USER_NAME)</label>
   <p class = "text-danger" th:if="${#fields.hasErrors('assignedEmailTemplate')}" th:errors="*{assignedEmailTemplate}">Name Error</p>
   </div>
   <div th:include="filters/wysiwygIncludes::toolbar_includes('assignedEmailTemplateToolbar', 'editor1-toolbar')"></div>
   <input type='hidden' name='assignedEmailTemplate' id='assignedEmailTemplate'/>
   <div id="assignedEmailTemplateEditor" th:utext="${filterForm.assignedEmailTemplate}"></div>
   <br/>
-  <div class="row">Un Assigned Email Template
-  <p class = "text-danger" th:if="${#fields.hasErrors('unassignedEmailTemplate')}" th:errors="*{unassignedEmailTemplate}">Name Error</p>
+  <div class="row">
+  <label class="col-lg-8 control-label"> Issue not assigned to any user email template</label>
   </div>
+  <p class = "text-danger" th:if="${#fields.hasErrors('unassignedEmailTemplate')}" th:errors="*{unassignedEmailTemplate}">Name Error</p>
   <div th:include="filters/wysiwygIncludes::toolbar_includes('unassignedEmailTemplateToolbar', 'editor2-toolbar')"></div>
   <input type='hidden' name='unassignedEmailTemplate' id='unassignedEmailTemplate'/>
   <div id="unassignedEmailTemplateEditor" th:utext="${filterForm.unassignedEmailTemplate}"></div>
+  <br/>
 </fieldset>
 </div>

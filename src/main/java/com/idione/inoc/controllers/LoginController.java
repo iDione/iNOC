@@ -28,7 +28,7 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage() {
-        return "/login";
+        return "login";
     }
     
     @RequestMapping(value = "/error", method = RequestMethod.GET)
@@ -42,6 +42,6 @@ public class LoginController {
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "/login";
+        return "login";
     }
 }

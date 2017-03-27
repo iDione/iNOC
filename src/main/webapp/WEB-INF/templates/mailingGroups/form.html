@@ -2,12 +2,14 @@
 <fieldset>
   <input th:hidden="true" th:field="*{clientId}" />
   <div class="row">
-  Name: <input type="text" th:field="*{name}" />
+  <label class="col-lg-2 control-label"> Name:</label>
+  <div class="col-lg-3"><input type="text" th:field="*{name}" class="form-control"/></div>
   <p class = "text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
   </div>
   <br/>
   <div class="row">
-  Poc Users: <select id="pocUserIds" th:name="pocUserIds" size="5" multiple="multiple">
+  <label class="col-lg-2 control-label"> Poc Users:</label>
+  <div class="col-lg-4"><select id="pocUserIds" th:name="pocUserIds" size="5" multiple="multiple" class="form-control">
 			    <option th:each="pocUser : ${allPocUsers}"
 						th:value="${{pocUser.getInteger('id')}}"
 						th:text="${pocUser.fullName}"
@@ -15,8 +17,11 @@
 			    </option>
 			</select>
   </div>
+  </div>
+  <br/>
   <div class="row">
-  Include Other Email Addresses: <input type="text" th:field="*{includeEmailAddresses}" /> (include multiple addresses comma separated)
+  <label class="col-lg-2 control-label"> Include Other Email Addresses:</label>
+  <div class="col-lg-4"><input type="text" th:field="*{includeEmailAddresses}"  class="form-control"/> (include multiple addresses comma separated)</div>
   <p class = "text-danger" th:if="${#fields.hasErrors('includeEmailAddresses')}" th:errors="*{includeEmailAddresses}">No Email Error</p>
   </div>
   <br/>

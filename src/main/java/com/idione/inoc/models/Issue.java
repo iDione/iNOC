@@ -9,6 +9,11 @@ import org.javalite.activejdbc.annotations.Table;
 
 @Table("issues")
 public class Issue extends Model {
+
+    public static final String ISSUE_CREATED_STATUS = "created";
+    public static final String ISSUE_ASSIGNED_STATUS = "assigned";
+    public static final String ISSUE_UNASSIGNED_STATUS = "unassigned";
+
     public Filter filter() {
         return this.parent(Filter.class);
     }

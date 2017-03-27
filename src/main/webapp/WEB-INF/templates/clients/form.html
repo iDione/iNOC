@@ -1,35 +1,40 @@
 <div th:fragment="form">
 <fieldset>
   <div class="row">
-    Name: <input type="text" th:field="*{name}" />
+  <label class="col-lg-2 control-label"> Name:</label>
+  <div class="col-lg-3"><input type="text" th:field="*{name}" class="form-control" /></div>
     <p class = "text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
   </div>
   <br/>
   <div class="row">
-    Email (to trigger issues): <input type="text" th:field="*{email}" />
+  <label class="col-lg-2 control-label"> Email (to trigger issues):</label>
+  <div class="col-lg-3"><input type="text" th:field="*{email}" class="form-control" /></div>
     <p class = "text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</p>
   </div>
     <br/>
   <div class="row">
-    Email Password: <input type="text" th:field="*{password}" />
+  <label class="col-lg-2 control-label"> Email Password:</label>
+  <div class="col-lg-3"><input type="text" th:field="*{password}" class="form-control"/></div>
     <p class = "text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</p>
   </div>
   <br/>
   <div class="row">
-    Email (for issue updates): <input type="text" th:field="*{issueStatusEmail}" />
+  <label class="col-lg-2 control-label"> Email (for issue updates):</label>
+  <div class="col-lg-3"><input type="text" th:field="*{issueStatusEmail}" class="form-control"/></div>
     <p class = "text-danger" th:if="${#fields.hasErrors('issueStatusEmail')}" th:errors="*{issueStatusEmail}">Name Error</p>
   </div>
     <br/>
   <div class="row">
-    Updates Email Password: <input type="text" th:field="*{issueStatusEmailPassword}" />
+  <label class="col-lg-2 control-label"> Updates Email Password:</label>
+  <div class="col-lg-3"><input type="text" th:field="*{issueStatusEmailPassword}" class="form-control"/></div>
     <p class = "text-danger" th:if="${#fields.hasErrors('issueStatusEmailPassword')}" th:errors="*{issueStatusEmailPassword}">Name Error</p>
   </div>
   <br/>
   <div class="row">
-    Host: <input type="text" th:field="*{host}" />
+  <label class="col-lg-2 control-label"> Host:</label>
+  <div class="col-lg-3"><input type="text" th:field="*{host}" class="form-control"/></div>
     <p class = "text-danger" th:if="${#fields.hasErrors('host')}" th:errors="*{host}">Name Error</p>
   </div>
-
   <br/>
 </fieldset>
 </div>

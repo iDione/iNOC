@@ -1,5 +1,9 @@
 package com.idione.inoc.enums;
 
 public enum Role {
-    USER, ADMIN, SUPER
+    ADMIN, SUPER;
+
+    public static String defaultRole(){
+       return "USER";
+    }
 }

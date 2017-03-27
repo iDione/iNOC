@@ -1,17 +1,59 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Login page</title>
-  </head>
-  <body>
-    <h1>Login page</h1>
-    <p th:if="${loginError}" class="error">Wrong user or password</p>
-    <form th:action="@{/login}" method="post">
-      <label for="username">Username</label>:
-      <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
-      <label for="password">Password</label>:
-      <input type="password" id="password" name="password" /> <br />
-      <input type="submit" value="Log in" />
-    </form>
-  </body>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="layouts/layout">
+
+<head>
+<title>iNoc dashboard</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<div class="panel-heading">Sign In</div>
+		<div class="panel-body">
+			<div class="container">
+				<div class="container-fluid">
+					<p th:if="${loginError}" class="error">Wrong user or password</p>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="pr-wrap">
+									<div class="pass-reset hidden">
+										<label> Enter the email you signed up with</label> <input
+											type="email" placeholder="Email" /> <input type="submit"
+											value="Submit"
+											class="pass-reset-submit btn btn-success btn-sm" />
+									</div>
+								</div>
+								<div class="wrap">
+									<p class="form-title">Sign In with the email you signed up with</p>
+									<form th:action="@{/login}" method="post" class="login">
+										<input type="text" id="username" name="username"
+											autofocus="autofocus" placeholder="Email Id" /> <input
+											type="password" id="password" name="password"
+											placeholder="Password" /> <input type="submit"
+											value="Sign In" class="btn btn-success btn-sm" />
+										<div class="remember-forgot">
+											<div class="row">
+												<div class="col-md-6">
+													<div class="checkbox">
+														<label> <input type="checkbox" /> Remember Me
+														</label>
+													</div>
+												</div>
+												<div class="col-md-6 forgot-pass-content">
+													<a href="javascript:void(0)" class="forgot-pass">Forgot
+														Password</a>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
 </html>
