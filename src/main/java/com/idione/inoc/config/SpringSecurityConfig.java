@@ -55,7 +55,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         antMatchers("/dashboard", "/pocUsers/edit", "/pocUsers/save").hasRole("USER").
         antMatchers("/mailingGroups/**", "/filters/**", "/pocUsers/**").hasRole("ADMIN").
         antMatchers("/clients/**", "/admin").hasRole("SUPER").
-        and().formLogin().  //login configuration
+        and().formLogin().loginPage("/login").
         usernameParameter("username").
         passwordParameter("password").
         defaultSuccessUrl("/dashboard").

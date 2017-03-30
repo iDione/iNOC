@@ -40,7 +40,7 @@ public class IssueResponseServiceTest extends AbstractIntegrationTest {
         Email email = Email.createIt("client_id", client.getInteger("id"));
         MailingGroup mailingGroup = MailingGroup.createIt("client_id", client.getInteger("id"));
         filter = Filter.createIt("name", "A Filter", "client_id", client.getInteger("id"), "time_interval", 5, "retries", retries, "assigned_mailing_group_id", mailingGroup.getInteger("id"));
-        issue = Issue.createIt("email_id", email.getInteger("id"), "filter_id", filter.getInteger("id"));
+        issue = Issue.createIt("email_id", email.getInteger("id"), "filter_id", filter.getInteger("id"), "status", Issue.ISSUE_CREATED_STATUS);
         pocUser = PocUser.createIt("client_id", client.getInteger("id"), "first_name", "Mickey", "last_name", "Mouse", "phone_number", telephoneNumber1);
         issuePocUser = IssuePocUser.createIt("issue_id", issue.getInteger("id"), "poc_user_id", pocUser.getInteger("id"));
         telephoneCall = TelephoneCall.createIt("issue_poc_user_id", issuePocUser.getInteger("id"), "external_call_id", externalCallId, "call_Status", TelephoneService.RINGING_STATUS.toString());

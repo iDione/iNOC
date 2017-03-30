@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.idione.inoc.models.Email;
 import com.idione.inoc.models.Issue;
 import com.idione.inoc.models.PocUser;
-import com.idione.inoc.services.InocIssueCreator;
+import com.idione.inoc.processors.InocIssueCreator;
 import com.idione.inoc.services.IssueAssignmentService;
 
 @RequestMapping(value = "/admin")
@@ -39,10 +39,7 @@ public class AdministratorController extends ApplicationController {
     @ResponseStatus(HttpStatus.OK)
     public void sendUnassignedEmail() {
         Issue issue = Issue.findById(19);
-        Email email = Email.findById(47);
-        email.setEmailText("this is the email text, type more if you want more heheheheh.");
-        email.setEmailSubject("this is the email subject");
-        issueAssignmentService.sendIssueUnassignedEmail(issue, email);
+        issueAssignmentService.sendIssueUnassignedEmail(issue);
     }
 
     @RequestMapping(value = "/sendAssignedEmail", method = RequestMethod.GET)
@@ -53,6 +50,6 @@ public class AdministratorController extends ApplicationController {
         PocUser pocUser = PocUser.findById(1);
         email.setEmailText("this is the email text, type more if you want more heheheheh.");
         email.setEmailSubject("this is the email subject");
-        issueAssignmentService.sendIssueAssignedEmail(issue, email, pocUser);
+        issueAssignmentService.sendIssueAssignedEmail(issue, pocUser);
     }
 }

@@ -9,7 +9,7 @@
 					<li class="active"><a href="/dashboard"><span
 							class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
 					<li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/filters}"><span
-							class="glyphicon glyphicon-cog"></span> Filters</a></li>
+							class="glyphicon glyphicon-cog"></span> Escalation Matrix</a></li>
 					<li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/pocUsers}"><span
 							class="glyphicon glyphicon-user"></span> Users</a></li>
 					<li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/mailingGroups}"><span

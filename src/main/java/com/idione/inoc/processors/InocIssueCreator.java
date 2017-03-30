@@ -1,4 +1,4 @@
-package com.idione.inoc.services;
+package com.idione.inoc.processors;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.idione.inoc.forms.EmailForm;
 import com.idione.inoc.integration.ImapEmailReader;
 import com.idione.inoc.models.Client;
+import com.idione.inoc.services.ClientService;
+import com.idione.inoc.services.EmailReaderService;
 
 @Service
 public class InocIssueCreator {

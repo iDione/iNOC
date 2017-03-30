@@ -1,5 +1,7 @@
 package com.idione.inoc.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.idione.inoc.models.Email;
@@ -15,7 +17,7 @@ public class IssueService {
     }
     
     public void updateIssueStatus(Issue issue, String status) {
-        Issue.update("status", status);
+        issue.set("status", status).saveIt();
         IssueStatusHistory.createIt("issue_id", issue.getInteger("id"), "status", status);
     }
     
@@ -28,5 +30,9 @@ public class IssueService {
     
     public void addIssueEmail(Issue issue, Email email) {
         IssueEmail.createIt("issue_id", issue.getInteger("id"), "email_id", email.getInteger("id"));
+    }
+
+    public List<Issue> getAssignableIssues() {
+        return Issue.findBySQL("select i.* from issues i, filters f where i.filter_id = f.id and i.status = ? and ((DATE_PART('hour', current_timestamp - i.created_at) * 60 + DATE_PART('minute', current_timestamp - i.created_at)) * 60 + DATE_PART('second', current_timestamp - i.created_at)) >= f.hold_issue_creations_for", Issue.ISSUE_CREATED_STATUS);
     }
 }

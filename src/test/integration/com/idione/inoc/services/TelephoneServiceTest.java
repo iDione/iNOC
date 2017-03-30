@@ -41,7 +41,7 @@ public class TelephoneServiceTest extends AbstractIntegrationTest {
         Email email = Email.createIt("client_id", client.getInteger("id"));
         MailingGroup mailingGroup = MailingGroup.createIt("client_id", client.getInteger("id"));
         Filter filter = Filter.createIt("name", "A Filter", "client_id", client.getInteger("id"), "time_interval", 5, "retries", retries, "assigned_mailing_group_id", mailingGroup.getInteger("id"));
-        Issue issue = Issue.createIt("email_id", email.getInteger("id"), "filter_id", filter.getInteger("id"));
+        Issue issue = Issue.createIt("email_id", email.getInteger("id"), "filter_id", filter.getInteger("id"), "status", Issue.ISSUE_CREATED_STATUS);
         PocUser pocUser = PocUser.createIt("client_id", client.getInteger("id"), "first_name", "Mickey", "last_name", "Mouse", "phone_number", telephoneNumber);
 
         issuePocUser = new IssuePocUser();

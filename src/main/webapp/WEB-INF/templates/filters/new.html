@@ -4,14 +4,14 @@
 	layout:decorator="layouts/layout">
 
 <head>
-<title>iNoc Add Filter</title>
+<title>iNoc Escalation Matrix</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <div th:include="filters/wysiwygIncludes::js_css_includes"></div>
 </head>
 
 <body>
 	<div layout:fragment="content">
-		<div class="panel-heading">Add Filter</div>
+		<div class="panel-heading">Add Escalation Matrix</div>
 		<div class="panel-body">
 			<div class="container">
 				<div class="container-fluid">
@@ -20,7 +20,7 @@
 							<form action="#" th:action="@{/filters/save}"
 								th:object="${filterForm}" method="post">
 								<div th:include="filters/form::form"></div>
-								<input id="createFilter" type="submit" value="Create Filter" class="btn btn-primary col-lg-4"/>
+								<input id="createFilter" type="submit" value="Create Escalation Matrix" class="btn btn-primary col-lg-4"/>
 							</form>
 						</div>
 					</div>

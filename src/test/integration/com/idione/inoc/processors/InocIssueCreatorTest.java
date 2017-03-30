@@ -1,4 +1,4 @@
-package com.idione.inoc.services;
+package com.idione.inoc.processors;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,6 +13,9 @@ import org.junit.runner.RunWith;
 import com.idione.inoc.forms.EmailForm;
 import com.idione.inoc.integration.ImapEmailReader;
 import com.idione.inoc.models.Client;
+import com.idione.inoc.processors.InocIssueCreator;
+import com.idione.inoc.services.ClientService;
+import com.idione.inoc.services.EmailReaderService;
 import com.idione.inoc.test.AbstractIntegrationTest;
 
 import mockit.Expectations;

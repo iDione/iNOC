@@ -1,5 +1,8 @@
 package com.idione.inoc.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.javalite.activejdbc.Model;
 import org.javalite.activejdbc.annotations.BelongsTo;
 import org.javalite.activejdbc.annotations.BelongsToParents;
@@ -16,5 +19,14 @@ public class Issue extends Model {
 
     public Filter filter() {
         return this.parent(Filter.class);
+    }
+
+    public List<Email> emails() {
+        List<IssueEmail> issueEmails = IssueEmail.where("issue_id = ?", getInteger("id")).orderBy("created_at asc");
+        List<Email> emails = new ArrayList<Email>();
+        for(IssueEmail issueEmail : issueEmails) {
+            emails.add(issueEmail.email());
+        }
+        return emails;
     }
 }

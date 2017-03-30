@@ -15,6 +15,7 @@ import com.idione.inoc.models.Email;
 import com.idione.inoc.models.Filter;
 import com.idione.inoc.models.FilterPocUser;
 import com.idione.inoc.models.Issue;
+import com.idione.inoc.models.IssueEmail;
 import com.idione.inoc.models.IssuePocUser;
 import com.idione.inoc.models.MailingGroup;
 import com.idione.inoc.models.MailingGroupPocUser;
@@ -52,12 +53,13 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
         email.setEmailText(emailText);
         mailingGroup = MailingGroup.createIt("client_id", client.getInteger("id")); 
         filter = Filter.createIt("name", "A Filter", "client_id", client.getInteger("id"), "time_interval", 2, "retries", retries, "assigned_mailing_group_id", mailingGroup.getInteger("id"), "unassigned_mailing_group_id", mailingGroup.getInteger("id"), "unassigned_email_template", "un assigned email template", "assigned_email_template", "assigned email template");
-        issue = Issue.createIt("email_id", email.getInteger("id"), "filter_id", filter.getInteger("id"));
+        issue = Issue.createIt("email_id", email.getInteger("id"), "filter_id", filter.getInteger("id"), "status", Issue.ISSUE_CREATED_STATUS);
+        IssueEmail.createIt("issue_id", issue.getInteger("id"), "email_id", email.getInteger("id"));
         FilterPocUser.createIt("filter_id", filter.getInteger("id"), "poc_user_id", pocUser1.getInteger("id"));
     }
 
     @Test
-    public void itCallsAnUserForTheFilter(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService, @Mocked TemplateEngine emailTemplateEngine) {
+    public void itCallsAnUserForTheFilter(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService, @Mocked TemplateEngine emailTemplateEngine, @Mocked IssueService issueService) {
         new Expectations() {
             {
                 telephoneService.makeIssueAcceptanceCall(anyInt, telephoneNumber1, retries, intervalBetweenCalls);
@@ -67,8 +69,8 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
             }
         };
 
-        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService, emailTemplateEngine);
-        issueAssignmentService.assignIssueToPOCUser(issue, email);
+        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService, emailTemplateEngine, issueService);
+        issueAssignmentService.assignIssueToPOCUser(issue);
         IssuePocUser issuePocUser = IssuePocUser.findFirst("issue_id = ? and poc_user_id = ?", issue.getInteger("id"), pocUser1.getInteger("id"));
         new Verifications() {
             {
@@ -79,7 +81,7 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void itCreatesAnIssuePocUserWithTheRightInformation(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService, @Mocked TemplateEngine emailTemplateEngine) {
+    public void itCreatesAnIssuePocUserWithTheRightInformation(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService, @Mocked TemplateEngine emailTemplateEngine, @Mocked IssueService issueService) {
         new Expectations() {
             {
                 telephoneService.makeIssueAcceptanceCall(anyInt, telephoneNumber1, retries, intervalBetweenCalls);
@@ -89,15 +91,15 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
             }
         };
 
-        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService, emailTemplateEngine);
-        issueAssignmentService.assignIssueToPOCUser(issue, email);
+        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService, emailTemplateEngine, issueService);
+        issueAssignmentService.assignIssueToPOCUser(issue);
 
         IssuePocUser issuePocUser = (IssuePocUser) IssuePocUser.where("issue_id = ?", issue.getInteger("id")).get(0);
         assertThat(issuePocUser.getInteger("poc_user_id"), is(equalTo(pocUser1.getInteger("id"))));
     }
 
     @Test
-    public void itCallsSecondUserForTheFilterIfFirstUserDeclines(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService, @Mocked TemplateEngine emailTemplateEngine) {
+    public void itCallsSecondUserForTheFilterIfFirstUserDeclines(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService, @Mocked TemplateEngine emailTemplateEngine, @Mocked IssueService issueService) {
         pocUser2 = PocUser.createIt("client_id", client.getInteger("id"), "first_name", "Donald", "last_name", "Duck", "phone_number", "2222222222");
         FilterPocUser.createIt("filter_id", filter.getInteger("id"), "poc_user_id", pocUser2.getInteger("id"));
 
@@ -112,8 +114,8 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
             }
         };
 
-        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService, emailTemplateEngine);
-        issueAssignmentService.assignIssueToPOCUser(issue, email);
+        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService, emailTemplateEngine, issueService);
+        issueAssignmentService.assignIssueToPOCUser(issue);
         IssuePocUser issuePocUser1 = IssuePocUser.findFirst("issue_id = ? and poc_user_id = ?", issue.getInteger("id"), pocUser1.getInteger("id"));
         IssuePocUser issuePocUser2 = IssuePocUser.findFirst("issue_id = ? and poc_user_id = ?", issue.getInteger("id"), pocUser2.getInteger("id"));
         new Verifications() {
@@ -127,7 +129,7 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void itSendsAUnassignedEmailIfAllUsersDecline(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService, @Mocked TemplateEngine emailTemplateEngine) {
+    public void itSendsAUnassignedEmailIfAllUsersDecline(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService, @Mocked TemplateEngine emailTemplateEngine, @Mocked IssueService issueService) {
         MailingGroupPocUser.createIt("mailing_group_id", mailingGroup.getInteger("id"), "poc_user_id", pocUser1.getInteger("id"));
         final String[] expectedTo = { pocUser1.getString("email_address") };
         new Expectations() {
@@ -139,8 +141,8 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
             }
         };
 
-        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService, emailTemplateEngine);
-        issueAssignmentService.assignIssueToPOCUser(issue, email);
+        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService, emailTemplateEngine, issueService);
+        issueAssignmentService.assignIssueToPOCUser(issue);
 
         new Verifications() {
             {
@@ -151,7 +153,7 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
     }
 
     @Test
-    public void itSendsAAssignedEmailIfAnUsersAccepts(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService, @Mocked TemplateEngine emailTemplateEngine) {
+    public void itSendsAAssignedEmailIfAnUsersAccepts(@Mocked TelephoneService telephoneService, @Mocked EmailSenderService emailSenderService, @Mocked TemplateEngine emailTemplateEngine, @Mocked IssueService issueService) {
         MailingGroupPocUser.createIt("mailing_group_id", mailingGroup.getInteger("id"), "poc_user_id", pocUser1.getInteger("id"));
         final String[] expectedTo = { pocUser1.getString("email_address") };
         new Expectations() {
@@ -163,8 +165,8 @@ public class IssueAssignmentServiceTest extends AbstractIntegrationTest {
             }
         };
 
-        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService, emailTemplateEngine);
-        issueAssignmentService.assignIssueToPOCUser(issue, email);
+        issueAssignmentService = new IssueAssignmentService(telephoneService, emailSenderService, emailTemplateEngine, issueService);
+        issueAssignmentService.assignIssueToPOCUser(issue);
 
         new Verifications() {
             {
