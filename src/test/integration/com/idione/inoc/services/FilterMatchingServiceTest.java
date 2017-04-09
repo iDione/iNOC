@@ -47,7 +47,7 @@ public class FilterMatchingServiceTest extends AbstractIntegrationTest {
         filterMatchingService.matchFiltersForEmail(client.getInteger("id"), email);
         new Verifications() {
             {
-                issueService.createIssue(anyInt, anyInt);
+                issueService.createIssue((Email) any, (Filter) any);
                 times = 0;
             }
         };
@@ -67,7 +67,7 @@ public class FilterMatchingServiceTest extends AbstractIntegrationTest {
         filterMatchingService.matchFiltersForEmail(client.getInteger("id"), email);
         new Verifications() {
             {
-                issueService.createIssue(anyInt, anyInt);
+                issueService.createIssue((Email) any, (Filter) any);
                 times = 1;
             }
         };
@@ -89,7 +89,7 @@ public class FilterMatchingServiceTest extends AbstractIntegrationTest {
         filterMatchingService.matchFiltersForEmail(client.getInteger("id"), email);
         new Verifications() {
             {
-                issueService.createIssue(anyInt, anyInt);
+                issueService.createIssue((Email) any, (Filter) any);
                 times = 0;
             }
         };

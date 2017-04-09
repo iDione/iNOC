@@ -1,7 +1,10 @@
 package com.idione.inoc.services;
 
+import org.javalite.activejdbc.Base;
 import org.springframework.stereotype.Service;
 
+import com.idione.inoc.models.Email;
+import com.idione.inoc.models.IssueEmail;
 import com.idione.inoc.models.TelephoneCall;
 
 @Service
@@ -22,5 +25,12 @@ public class IssueResponseService {
         } else if (userResponseNumber == ISSUE_DECLINED_RESPONSE) {
             telephoneCall.getIssuePocUser().set("user_response", ISSUE_DECLINED_STATUS).saveIt();
         }
+    }
+
+    public void updateIssueWithEmailResponse(int clientId, Email email) {
+        Base.exec("update issue_emails set status = ?, updated_at = CURRENT_TIMESTAMP "
+                + "from issue_emails ie inner join issues i on ie.issue_id = i.id "
+                + "inner join filters f on i.filter_id = f.id " + "where f.client_id = ? "
+                + "and ie.server_code = ? and ie.status != ?", email.serverStatus(), clientId, email.serverCode(), IssueEmail.RESOLVED_STATUS);
     }
 }

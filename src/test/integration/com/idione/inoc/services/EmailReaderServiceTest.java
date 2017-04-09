@@ -34,6 +34,7 @@ public class EmailReaderServiceTest extends AbstractIntegrationTest {
         emailForm.setEmailText(emailText);
         emailForm.setEmailSubject(emailSubject);
         emailForm.setEmailId(emailId);
+        emailReaderService = new EmailReaderService();
     }
 
     @Test
@@ -44,7 +45,7 @@ public class EmailReaderServiceTest extends AbstractIntegrationTest {
                 filterMatchingService.matchFiltersForEmail(anyInt, (Email)any);
             }
         };
-        emailReaderService = new EmailReaderService(filterMatchingService);
+        emailReaderService.setFilterMatchingService(filterMatchingService);
         emailReaderService.processIssueCreationEmail(clientId, emailForm);
         int afterEmailCount = Email.findAll().size();
         assertThat(afterEmailCount, is(equalTo(beforeEmailCount + 1)));
@@ -57,7 +58,7 @@ public class EmailReaderServiceTest extends AbstractIntegrationTest {
                 filterMatchingService.matchFiltersForEmail(anyInt, (Email)any);
             }
         };
-        emailReaderService = new EmailReaderService(filterMatchingService);
+        emailReaderService.setFilterMatchingService(filterMatchingService);
         emailReaderService.processIssueCreationEmail(clientId, emailForm);
         Email lastEmail = (Email) Email.where("external_email_id = ?", emailId).orderBy("id desc").get(0);
         lastEmail.setEmailText(emailText);
@@ -67,6 +68,44 @@ public class EmailReaderServiceTest extends AbstractIntegrationTest {
             {
                 Email receivedEmail;
                 filterMatchingService.matchFiltersForEmail(clientId, receivedEmail = withCapture());
+                assertThat(lastEmail.getEmailId(), is(equalTo(receivedEmail.getEmailId())));
+                assertThat(lastEmail.getEmailSubject(), is(equalTo(receivedEmail.getEmailSubject())));
+                assertThat(lastEmail.getEmailText(), is(equalTo(receivedEmail.getEmailText())));
+            }
+        };
+    }
+
+    @Test
+    public void processIssueStatusEmailCreatesEmailRecord(@Mocked IssueResponseService issueResponseService) throws Exception {
+        int beforeEmailCount = Email.findAll().size();
+        new Expectations() {
+            {
+                issueResponseService.updateIssueWithEmailResponse(anyInt, (Email)any);
+            }
+        };
+        emailReaderService.setIssueResponseService(issueResponseService);
+        emailReaderService.processIssueStatusEmail(clientId, emailForm);
+        int afterEmailCount = Email.findAll().size();
+        assertThat(afterEmailCount, is(equalTo(beforeEmailCount + 1)));
+    }
+
+    @Test
+    public void processIssueStatusEmailCallsTheIssueResponseService(@Mocked IssueResponseService issueResponseService) throws Exception {
+        new Expectations() {
+            {
+                issueResponseService.updateIssueWithEmailResponse(anyInt, (Email)any);
+            }
+        };
+        emailReaderService.setIssueResponseService(issueResponseService);
+        emailReaderService.processIssueStatusEmail(clientId, emailForm);
+        Email lastEmail = (Email) Email.where("external_email_id = ?", emailId).orderBy("id desc").get(0);
+        lastEmail.setEmailText(emailText);
+        lastEmail.setEmailSubject(emailSubject);
+
+        new Verifications() {
+            {
+                Email receivedEmail;
+                issueResponseService.updateIssueWithEmailResponse(clientId, receivedEmail = withCapture());
                 assertThat(lastEmail.getEmailId(), is(equalTo(receivedEmail.getEmailId())));
                 assertThat(lastEmail.getEmailSubject(), is(equalTo(receivedEmail.getEmailSubject())));
                 assertThat(lastEmail.getEmailText(), is(equalTo(receivedEmail.getEmailText())));

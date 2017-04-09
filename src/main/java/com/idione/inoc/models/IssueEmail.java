@@ -11,11 +11,14 @@ import org.javalite.activejdbc.annotations.Table;
 @Table("issue_emails")
 public class IssueEmail extends Model {
 
+    public static final String OPEN_STATUS = "open";
+    public static final String RESOLVED_STATUS = "resolved";
+
     public Email email() {
-       return parent(Email.class);
+        return parent(Email.class);
     }
 
     public Issue issue() {
         return parent(Issue.class);
-     }
+    }
 }

@@ -28,7 +28,7 @@ public class IssueTest extends AbstractIntegrationTest {
     
     @Test
     public void emailsReturnsAListOfIssueEmails() {
-        Issue issue = issueService.createIssue(email.getInteger("id"), filter.getInteger("id"));
+        Issue issue = issueService.createIssue(email, filter);
         assertThat(issue.emails().size(), is(equalTo(1)));
         assertThat(issue.emails().get(0).getInteger("id"), is(equalTo(email.getInteger("id"))));
     }

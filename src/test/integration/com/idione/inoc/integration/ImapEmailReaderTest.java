@@ -2,12 +2,15 @@ package com.idione.inoc.integration;
 
 import java.io.IOException;
 
+import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.search.MessageIDTerm;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.idione.inoc.forms.EmailForm;
 import com.idione.inoc.test.AbstractIntegrationTest;
 
 @Ignore
@@ -35,6 +38,16 @@ public class ImapEmailReaderTest extends AbstractIntegrationTest {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void itGetsBackSpecificEmail() throws MessagingException, IOException {
+        EmailForm emailForm = emailReader.getMessage("<a78221cc964c8c18df86e1a39021399e@webhooks.twilio.com>");
+        if (emailForm != null) {
+            System.out.println(emailForm.getEmailSubject());
+            System.out.println(emailForm.getEmailText());
+            System.out.println(emailForm.getEmailId());
         }
 
     }

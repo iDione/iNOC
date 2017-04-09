@@ -1,0 +1,1 @@
+ALTER TABLE issue_emails ADD COLUMN updated_at TIMESTAMP;

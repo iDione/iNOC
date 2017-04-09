@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.idione.inoc.models.Email;
+import com.idione.inoc.models.Filter;
 import com.idione.inoc.models.Issue;
 import com.idione.inoc.models.IssueEmail;
 import com.idione.inoc.models.IssueStatusHistory;
@@ -21,15 +22,15 @@ public class IssueService {
         IssueStatusHistory.createIt("issue_id", issue.getInteger("id"), "status", status);
     }
     
-    public Issue createIssue(int emailId, int filterId) {
-        Issue issue = Issue.createIt("email_id", emailId, "filter_id", filterId, "status", Issue.ISSUE_CREATED_STATUS);
-        IssueEmail.createIt("issue_id", issue.getInteger("id"), "email_id", emailId);
+    public Issue createIssue(Email email, Filter filter) {
+        Issue issue = Issue.createIt("email_id", email.getInteger("id"), "filter_id", filter.getInteger("id"), "status", Issue.ISSUE_CREATED_STATUS);
+        IssueEmail.createIt("issue_id", issue.getInteger("id"), "email_id", email.getInteger("id"), "status", IssueEmail.OPEN_STATUS, "server_code", email.serverCode());
         IssueStatusHistory.createIt("issue_id", issue.getInteger("id"), "status", Issue.ISSUE_CREATED_STATUS);
         return issue;
     }
     
     public void addIssueEmail(Issue issue, Email email) {
-        IssueEmail.createIt("issue_id", issue.getInteger("id"), "email_id", email.getInteger("id"));
+        IssueEmail.createIt("issue_id", issue.getInteger("id"), "email_id", email.getInteger("id"), "status", IssueEmail.OPEN_STATUS, "server_code", email.serverCode());
     }
 
     public List<Issue> getAssignableIssues() {

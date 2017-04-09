@@ -22,7 +22,7 @@ public class FilterMatchingService {
         if (matchingFilter != null) {
             Issue openIssue = issueService.getOpenIssueWithSameFilter(matchingFilter.getInteger("id"));
             if (openIssue == null) {
-                issueService.createIssue(email.getEmailId(), matchingFilter.getInteger("id"));
+                issueService.createIssue(email, matchingFilter);
             } else {
                 issueService.addIssueEmail(openIssue, email);
             }

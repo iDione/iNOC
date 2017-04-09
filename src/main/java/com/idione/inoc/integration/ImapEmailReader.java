@@ -18,6 +18,8 @@ import javax.mail.Part;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.search.FlagTerm;
+import javax.mail.search.MessageIDTerm;
+import javax.mail.search.SearchTerm;
 
 import com.idione.inoc.forms.EmailForm;
 
@@ -50,6 +52,18 @@ public class ImapEmailReader {
         inbox.close(true);
         store.close();
         return newEmails;
+    }
+
+    public EmailForm getMessage(String messageId) throws MessagingException, IOException {
+        SearchTerm searchTerm = new MessageIDTerm(messageId);
+        Folder inbox = store.getFolder("Inbox");
+        inbox.open(Folder.READ_ONLY);
+        Message[] messages = inbox.search(searchTerm);
+        if(messages.length > 0){
+            return new EmailForm(messages[0].getHeader("Message-ID")[0], getText(messages[0]), messages[0].getSubject());
+        } else {
+            return null;
+        }
     }
 
     public Message[] getMessages() throws MessagingException {
